@@ -1,0 +1,390 @@
+// ---------------------------------------------------------------------------
+// HardwareManager.cs
+//
+// Owns the physical devices and the routing from timeline/grid values to
+// them. Nothing is touched until Drive HW is turned ON - Connect() runs
+// then (and is retried on each later toggle if devices were missing).
+// Missing devices are reported as a list of messages for diagnostics and are
+// shown in MainWindow by red/green status indicators rather than a popup.
+// Whatever WAS found is driven; missing pieces are silently skipped afterwards,
+// so a partial rig still works.
+//
+// Value routing (all guarded - a serial hiccup never crashes the UI):
+//   * ganged ServoNames  -> every MaestroServo in the gang, mapped through
+//     MaestroServo.MapDelta (centered for -100..100 servos, 0..100 spans)
+//     after configuring the command's ServoSpeed only when it is explicit;
+//     N/C commands preserve the speed/accel profile already active
+//   * individual control -> that one MaestroServo (same mapping), or raw
+//     PWM for the verify sliders
+//   * LeftEyePop / RightEyePop -> the Tic steppers (0..2000 clamped into
+//     the Tic's 0..2100 range)
+//   * RGBCommand         -> the Arduino. Saved/editor color commands remain
+//     Red,Green,Blue, but the serial wire swaps the first two color arguments
+//     to Green,Red,Blue to match ArduinoOpenSaintRGB.ino.
+// ---------------------------------------------------------------------------
+
+using System.Diagnostics;
+
+namespace ServoAnimator
+{
+    public class HardwareManager : IDisposable
+    {
+        /// <summary>True when at least one supported hardware device was found.
+        /// Existing drive paths use this to allow a partially connected rig.</summary>
+        public bool Connected { get; private set; }
+
+        /// <summary>Per-device status used by the Drive HW indicators.</summary>
+        public bool MaestroConnected => _maestroPort != null;
+        public bool ArduinoConnected => _lights != null;
+        public bool LeftTicConnected => _leftTic != null;
+        public bool RightTicConnected => _rightTic != null;
+        public bool AllConnected => MaestroConnected && ArduinoConnected &&
+                                    LeftTicConnected && RightTicConnected;
+
+        private ServoConfiguration _config;
+        // Nod and tilt are complementary: both always resolve into the two neck pistons.
+        private NeckMix.State _neck;
+        private NeckMix.State Neck => _neck ??= new NeckMix.State(() => _config);
+        private string _maestroPort;
+        private RGBLight _lights;
+        private TicController _leftTic, _rightTic;
+        private SerialPortWriter _maestroWriter;
+        private readonly Dictionary<RobotControls, MaestroServo> _servos = new();
+
+        // Which of the four configured speed/accel profiles is currently
+        // active on each Maestro channel.  Position-only (N/C) commands do
+        // not alter this state.  Reconfigure() re-sends the active profile
+        // so saved speed/acceleration edits take effect immediately.
+        private readonly Dictionary<RobotControls, ServoSpeed> _activeSpeedByControl = new();
+
+        internal async Task HoldControllerMotionAsync()
+        {
+            // Hold the current commanded pulse, keeping torque. Never send a
+            // guessed home target or disable pulses as a collision response.
+            var profiles = new Dictionary<RobotControls, ServoSpeed>(_activeSpeedByControl);
+            var maestro = _maestroWriter == null ? Task.CompletedTask : _maestroWriter.Exclusive(port =>
+            { HoldMaestroMotion(port, _config, profiles); return true; });
+            var steppers = Task.Run(() => { _leftTic?.HaltAndHold(); _rightTic?.HaltAndHold(); });
+            await Task.WhenAll(maestro, steppers);
+        }
+
+        internal static void HoldMaestroMotion(IMaestroCalibrationPort port, ServoConfiguration config, IReadOnlyDictionary<RobotControls, ServoSpeed> profiles)
+        {
+            foreach (var entry in config.Servos.Where(s => (int)s.Control is >= 0 and <= 23).DistinctBy(s => s.MaestroPort))
+            {
+                int pulse = port.Position(entry.MaestroPort);
+                if (pulse == 0) continue; // Leave already-disabled channels disabled.
+                if (pulse is < 2000 or > 9600) throw new InvalidOperationException("Invalid Maestro position while holding motion.");
+                int index = (int)profiles.GetValueOrDefault(entry.Control, ServoSpeed.Default);
+                port.Configure(entry.MaestroPort, 0, 0); port.Target(entry.MaestroPort, pulse);
+                port.Configure(entry.MaestroPort, entry.Speeds[index], entry.Accels[index]);
+            }
+        }
+
+        internal Task<List<SpeedCalibrationResult>> CalibrateSpeedsAsync(ServoConfigEntry entry, SpeedCalibrationData data,
+            SpeedCalibrationPlan plan, IProgress<SpeedCalibrationProgress> progress, CancellationToken cancellation)
+        {
+            if (!MaestroConnected || _maestroWriter == null) throw new InvalidOperationException("Connect the Maestro before calibrating.");
+            SpeedCalibrationRunner.Validate(entry, plan);
+            if (!data.MiniMaestro && entry.MaestroPort > 5) throw new InvalidOperationException("Micro Maestro channels are 0–5.");
+            var channels = _config.Servos.Where(s => (int)s.Control is >= 0 and <= 23)
+                .Select(s => s.MaestroPort).Where(ch => data.MiniMaestro || ch < 6).ToArray();
+            if (channels.Distinct().Count() != channels.Length) throw new InvalidOperationException("Resolve duplicate Maestro port assignments before calibrating.");
+            var restore = _activeSpeedByControl.GetValueOrDefault(entry.Control, ServoSpeed.Default);
+            return _maestroWriter.Exclusive(port =>
+            {
+                // Clearing the software queue cannot stop a ramp already accepted by
+                // the Maestro. Require all outputs to have settled before testing.
+                var before = channels.Select(port.Position).ToArray();
+                if (cancellation.WaitHandle.WaitOne(250)) cancellation.ThrowIfCancellationRequested();
+                if (channels.Where((ch, i) => port.Position(ch) != before[i]).Any())
+                    throw new InvalidOperationException("A Maestro output is still moving. Wait for existing moves to finish before calibration.");
+                return SpeedCalibrationRunner.Run(port, entry, data, plan, _maestroPort, restore, progress, cancellation);
+            });
+        }
+
+        /// <summary>
+        /// Find the devices and build the servo objects from the current
+        /// configuration. Returns a list of problems (empty = everything
+        /// found) for diagnostics; MainWindow represents device availability
+        /// with status indicators. Safe to call repeatedly - each call rescans.
+        /// </summary>
+        public List<string> Connect(ServoConfiguration config, string configFolder)
+        {
+            CloseSerialConnections();
+            _config = config;
+            var problems = new List<string>();
+            _servos.Clear();
+            _activeSpeedByControl.Clear();
+            _maestroPort = null;
+            _lights = null;
+            _leftTic = _rightTic = null;
+            Connected = false;
+
+            FoundDevices found;
+            try
+            {
+                // The TIC\ folder (ticcmd + settings) lives in the CONFIG
+                // folder, not the exe folder.
+                found = UsbDeviceFinder.Find(config.LeftTicSerialNumber,
+                                             configFolder);
+            }
+            catch (Exception ex)
+            {
+                problems.Add("USB scan failed: " + ex.Message);
+                return problems;
+            }
+
+            _maestroPort = found.MaestroPort;
+            _lights = found.Lights;
+            _leftTic = found.LeftTic;
+            _rightTic = found.RightTic;
+
+            if (_maestroPort == null)
+                problems.Add("Pololu Maestro servo card not found (no matching COM port).");
+            if (_lights == null)
+                problems.Add("Arduino Nano (CH340) RGB controller not found.");
+            if (_leftTic == null)
+                problems.Add("Left Tic T249 eye-pop controller not found.");
+            if (_rightTic == null)
+                problems.Add("Right Tic T249 eye-pop controller not found.");
+
+            // Build a MaestroServo per configured PWM channel (eye pops and
+            // RGB ids have no ServoConfigEntry and are skipped naturally).
+            if (_maestroPort != null)
+            {
+                _maestroWriter = new SerialPortWriter(_maestroPort, 115200);
+                foreach (var entry in config.Servos)
+                {
+                    try
+                    {
+                        var s = new MaestroServo(entry, _maestroPort, _maestroWriter);
+                        s.ConfigureSpeed(ServoSpeed.Default);
+                        _servos[entry.Control] = s;
+                        _activeSpeedByControl[entry.Control] = ServoSpeed.Default;
+                    }
+                    catch (Exception ex)
+                    {
+                        problems.Add($"Servo {ControlLabels.Text(entry.Control.ToString())}: {ex.Message}");
+                    }
+                }
+            }
+
+            Connected = _maestroPort != null || _lights != null ||
+                        _leftTic != null || _rightTic != null;
+            return problems;
+        }
+
+        /// <summary>The configuration changed (Servo Configuration window
+        /// saved/loaded): rebuild the servo objects from the new ranges and
+        /// re-apply each channel's currently active speed/accel profile.
+        /// Gang-relative directions take effect
+        /// immediately since they're looked up at drive time.</summary>
+        public void Reconfigure(ServoConfiguration config)
+        {
+            _config = config;
+            if (_maestroPort == null) return;
+
+            // Keep the profile that is currently active on each physical
+            // channel.  Rebuilding the MaestroServo picks up PWM ranges,
+            // direction, and the newly saved speed/accel arrays; re-sending
+            // the active profile applies speed/acceleration edits immediately.
+            var active = new Dictionary<RobotControls, ServoSpeed>(_activeSpeedByControl);
+            _servos.Clear();
+            foreach (var entry in config.Servos)
+            {
+                try
+                {
+                    var s = new MaestroServo(entry, _maestroPort, _maestroWriter);
+                    ServoSpeed pick = active.TryGetValue(entry.Control, out var previous) &&
+                                      previous != ServoSpeed.NoChange
+                        ? previous : ServoSpeed.Default;
+                    s.ConfigureSpeed(pick);
+                    _servos[entry.Control] = s;
+                    _activeSpeedByControl[entry.Control] = pick;
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine($"[hw reconfigure {ControlLabels.Text(entry.Control.ToString())}] {ex.Message}");
+                }
+            }
+        }
+
+        // -------------------- drive routing --------------------
+
+        /// <summary>Ganged command: drive every physical servo the
+        /// ServoName gangs together.</summary>
+        public void DriveGang(ServoNames servo, ServoSpeed speed, int value)
+        {
+            if (ServoCommand.IsUrdfOnly(servo)) return;
+            if (servo == ServoNames.LeftEyePop) { DriveEyePop(_leftTic, value); return; }
+            if (servo == ServoNames.RightEyePop) { DriveEyePop(_rightTic, value); return; }
+            if (servo == ServoNames.BothEyePop)
+            {
+                DriveEyePop(_leftTic, value);
+                DriveEyePop(_rightTic, value);
+                return;
+            }
+
+            if (NeckMix.IsNeckParent(servo))
+            {
+                Neck.SetParent(servo, value);
+                DrivePiston(RobotControls.NeckTiltLeft, speed, Neck.Left);
+                DrivePiston(RobotControls.NeckTiltRight, speed, Neck.Right);
+                return;
+            }
+            bool centered = ServoCommand.RangeFor(servo).Min < 0;
+            foreach (var control in ServoConfiguration.ControlsFor(servo))
+                DriveControlValue(servo, control, speed, value, centered);
+        }
+
+        /// <summary>One neck piston, in NeckNodUp child units (see NeckMix).</summary>
+        private void DrivePiston(RobotControls piston, ServoSpeed speed, double nodUnits) =>
+            DriveControlRaw(ServoNames.NeckNodUp, piston, speed, (int)Math.Round(nodUnits), centered: true);
+
+        /// <summary>Individual-control command (same -100..100 / 0..100
+        /// scale as its gang). The parent ServoName supplies the
+        /// GANG-RELATIVE direction for this control.</summary>
+        public void DriveControlValue(ServoNames gang, RobotControls control,
+                                      ServoSpeed speed, int value, bool centered)
+        {
+            if (ServoCommand.IsUrdfOnly(gang)) return;
+            if (NeckMix.IsNeckParent(gang) && NeckMix.IsPiston(control))
+            {
+                // A direct piston value: replace that piston and keep nod/tilt consistent with the pair.
+                Neck.SetPiston(gang, control, value);
+                DrivePiston(control, speed, control == RobotControls.NeckTiltLeft ? Neck.Left : Neck.Right);
+                return;
+            }
+            DriveControlRaw(gang, control, speed, value, centered);
+        }
+
+        private void DriveControlRaw(ServoNames gang, RobotControls control, ServoSpeed speed, int value, bool centered)
+        {
+            // Eye-pop controls route to the Tics, not the Maestro.
+            if (control == RobotControls.LeftEyePop) { DriveEyePop(_leftTic, value); return; }
+            if (control == RobotControls.RightEyePop) { DriveEyePop(_rightTic, value); return; }
+
+            if (!_servos.TryGetValue(control, out var s)) return;
+            bool gangReversed = _config?.GangReversed(gang, control) ?? false;
+            Guard(() =>
+            {
+                if (speed != ServoSpeed.NoChange)
+                {
+                    s.ConfigureSpeed(speed);
+                    _activeSpeedByControl[control] = speed;
+                }
+                s.GoValue(s.MapDelta(value, gangReversed, centered));
+            }, ControlLabels.Text(control.ToString()));
+        }
+
+        /// <summary>Push the speed/accel pair (indexed by the ServoSpeed
+        /// enum) to every Maestro servo in a gang - the grid's Speed
+        /// picklist in Drive HW. Compact protocol 0x87 (speed) + 0x89
+        /// (accel) per channel.</summary>
+        public void ConfigureGangSpeed(ServoNames servo, ServoSpeed speed)
+        {
+            if (ServoCommand.IsUrdfOnly(servo)) return;
+            if (speed == ServoSpeed.NoChange) return;
+            foreach (var control in ServoConfiguration.ControlsFor(servo))
+                ConfigureControlSpeed(control, speed);
+        }
+
+        /// <summary>Push one explicit speed/accel profile to a single Maestro
+        /// child servo.  Used by individual-control commands in Edit Commands.</summary>
+        public void ConfigureControlSpeed(RobotControls control, ServoSpeed speed)
+        {
+            if (speed == ServoSpeed.NoChange) return;
+            if (_servos.TryGetValue(control, out var s))
+                Guard(() =>
+                {
+                    s.ConfigureSpeed(speed);
+                    _activeSpeedByControl[control] = speed;
+                }, ControlLabels.Text(control.ToString()));
+        }
+
+        /// <summary>Disable command targeting a whole gang: turn OFF every
+        /// Maestro servo the ServoName drives (the Tic eye pops have no
+        /// disable path and are skipped).</summary>
+        public void DisableGang(ServoNames servo)
+        {
+            foreach (var control in ServoConfiguration.ControlsFor(servo))
+                DisableControl(control);
+        }
+
+        /// <summary>Disable command targeting one child servo.</summary>
+        public void DisableControl(RobotControls control)
+        {
+            if (_servos.TryGetValue(control, out var s))
+                Guard(s.DisableServo, ControlLabels.Text(control.ToString()));
+        }
+
+        /// <summary>Disable PWM on EVERY Maestro servo channel (the
+        /// "Disable All" button): 0xAA 0x0C 0x0F channel per servo -
+        /// the servos go limp until next driven.</summary>
+        public void DisableAll()
+        {
+            foreach (var s in _servos.Values)
+                Guard(s.DisableServo, s.Name.ToString());
+        }
+
+        /// <summary>Return the physical robot to its configured home state.
+        /// Maestro channels go directly to each Servo Configuration Default PWM
+        /// without changing their active speed/accel profile; both Tic eye pops
+        /// go to zero; and the Arduino receives ClearAll.</summary>
+        public void ResetAll()
+        {
+            foreach (var s in _servos.Values)
+                Guard(s.GoHome, s.Name.ToString());
+
+            DriveEyePop(_leftTic, 0);
+            DriveEyePop(_rightTic, 0);
+            DriveRgb("ClearAll");
+        }
+
+        /// <summary>Raw PWM (the verify sliders).</summary>
+        public void DriveControlPwm(RobotControls control, int pwm)
+        {
+            if (!_servos.TryGetValue(control, out var s)) return;
+            Guard(() => s.GoValue(pwm), ControlLabels.Text(control.ToString()));
+        }
+
+        /// <summary>RGB command text. Editor commands use Red,Green,Blue;
+        /// color-bearing commands are rotated to Green,Red,Blue on the serial
+        /// wire to match ArduinoOpenSaintRGB.ino.</summary>
+        public void DriveRgb(string commandText)
+        {
+            if (_lights == null || string.IsNullOrWhiteSpace(commandText)) return;
+            string wireCommand = RgbCommandWireFormat.ToArduinoWireOrder(commandText);
+            Guard(() => _lights.Command(wireCommand), "RGB");
+        }
+
+        private static void DriveEyePop(TicController tic, int value)
+        {
+            if (tic == null) return;
+            try { tic.MoveToPosition(value); }
+            catch (Exception ex) { Debug.WriteLine("[hw eyepop] " + ex.Message); }
+        }
+
+        private static void Guard(Action act, string what)
+        {
+            try { act(); }
+            catch (Exception ex) { Debug.WriteLine($"[hw {what}] {ex.Message}"); }
+        }
+
+        private void CloseSerialConnections()
+        {
+            try { _lights?.Dispose(); } catch { }
+            try { _maestroWriter?.Dispose(); } catch { }
+            _lights = null;
+            _maestroWriter = null;
+        }
+
+        public void Dispose()
+        {
+            CloseSerialConnections();
+            _servos.Clear();
+            Connected = false;
+        }
+    }
+}

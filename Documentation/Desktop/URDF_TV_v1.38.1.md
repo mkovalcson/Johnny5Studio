@@ -1,0 +1,13 @@
+# URDF TV — 1.38.1
+
+Added three URDF-only timeline commands for the backdrop TV (Matrix Construct `backdrop_tv_screen_link`, a 0.57 × 0.43 m, 4:3 screen facing +X):
+
+- **URDF TV Front** `{"seconds":3,"fill":0.85,"screen":"backdrop_tv_screen_link"}` blends the camera from its normal position to a square-on shot of the screen, at the distance that makes the screen fill `fill` of the view in its limiting direction. The robot is detached from the scene while the camera is within its bounds (plus 0.15 m) and while facing the TV, which also stops WPF re-rendering the 3D scene for servo updates during a show.
+- **TV Show** `{"path":…,"fit":"Contain","startSeconds":0,"loop":false,"volume":100}` draws an image (BitmapImage, decoded at up to 1920 px) or video (MediaElement) in a WPF layer above the viewport, positioned from the projected screen corners, so it is never rendered in 3D. Media is imported into `Config/TvMedia`. Video follows the transport: it plays at the editor's rate while running, re-seeks on drift over 0.15 s, and seeks while paused/scrubbing. Only the API/undocked output view plays sound.
+- **URDF TV Return** `{"seconds":3}` fades the show out over 0.3 s and blends back to the timeline camera.
+
+Evaluation is stateless (`TvTimeline.StateAt`): the latest Front/Return at or before the cursor decides the blend weight, and each glide starts from the weight in effect, so overlapping commands continue smoothly. The latest TV Show since the latest Front supplies the media; video time is `cursor − max(show time, arrival) + startSeconds`. The camera blend is applied inside `UpdateCamera`, after the normal framing and stage adjustments, so it composes with existing URDF framing commands. API: `insert_tv_front`, `insert_tv_show`, `insert_tv_return`; `get_state.urdf.tv` reports availability, blend, robot visibility and the screen's pixel rectangle.
+
+Also fixed Fall Apart saving an unintended `"describe"` field; text saved by 1.37.1 with that field still loads.
+
+Validation: Release build succeeded with the existing two CS0649 warnings. `--tv` passed 40 assertions (settings, glide/fade/media timing, overlapping glides, loop/hold, the real backdrop's screen geometry and fit maths, and a windowless view entering TV mode with the robot hidden and returning exactly). `--fall-apart` passed 82. General (6,596), recent features (466), new-feature UI (86) and body/audio (139) passed; `--editor-api`, `--urdf-model`, `--urdf-presentation` and `--controllers` stop at the same first assertions as before this change. Video playback, sound and on-screen alignment need a manual check in the editor; no physical robot was driven.

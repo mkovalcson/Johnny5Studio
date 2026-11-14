@@ -1,0 +1,10 @@
+{
+  "source": "builtin",
+  "applications": [{
+    "app_key": "local.johnny5vr.viewer.direct",
+    "launch_type": "binary",
+    "binary_path_windows": "../Johnny5VR.exe",
+    "is_dashboard_overlay": false,
+    "strings": { "en_us": { "name": "Johnny 5 VR Viewer — Direct Index" } }
+  }]
+}

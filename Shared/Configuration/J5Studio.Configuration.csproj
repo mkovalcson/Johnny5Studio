@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+    <AssemblyName>J5Studio.Configuration</AssemblyName>
+    <RootNamespace>ServoAnimator</RootNamespace>
+    <Description>J5 Studio shared configuration models, migration, scenes and portable file handling.</Description>
+  </PropertyGroup>
+  <ItemGroup><ProjectReference Include="../Controls/J5Studio.Controls.csproj" /></ItemGroup>
+</Project>

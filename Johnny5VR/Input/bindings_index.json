@@ -1,0 +1,101 @@
+{
+  "controller_type": "knuckles",
+  "category": "steamvr_input",
+  "name": "Johnny 5 VR \u2014 Index walking and snap turn",
+  "description": "Index controls: A menu, B back/stop, trigger select/capture, left stick walk, right stick snap turn. Shared skeletal input.",
+  "options": {},
+  "bindings": {
+    "/actions/navigation": {
+      "sources": [
+        {
+          "path": "/user/hand/left/input/thumbstick",
+          "mode": "joystick",
+          "inputs": {
+            "position": {
+              "output": "/actions/navigation/in/move"
+            },
+            "click": {
+              "output": "/actions/navigation/in/grab"
+            }
+          }
+        },
+        {
+          "path": "/user/hand/right/input/thumbstick",
+          "mode": "joystick",
+          "inputs": {
+            "position": {
+              "output": "/actions/navigation/in/turn"
+            },
+            "click": {
+              "output": "/actions/navigation/in/grab"
+            }
+          }
+        },
+        {
+          "path": "/user/hand/left/input/a",
+          "mode": "button",
+          "inputs": {
+            "click": {
+              "output": "/actions/navigation/in/menu"
+            }
+          }
+        },
+        {
+          "path": "/user/hand/left/input/b",
+          "mode": "button",
+          "inputs": {
+            "click": {
+              "output": "/actions/navigation/in/back"
+            }
+          }
+        },
+        {
+          "path": "/user/hand/left/input/trigger",
+          "mode": "button",
+          "inputs": {
+            "click": {
+              "output": "/actions/navigation/in/select"
+            }
+          }
+        },
+        {
+          "path": "/user/hand/right/input/a",
+          "mode": "button",
+          "inputs": {
+            "click": {
+              "output": "/actions/navigation/in/menu"
+            }
+          }
+        },
+        {
+          "path": "/user/hand/right/input/b",
+          "mode": "button",
+          "inputs": {
+            "click": {
+              "output": "/actions/navigation/in/back"
+            }
+          }
+        },
+        {
+          "path": "/user/hand/right/input/trigger",
+          "mode": "button",
+          "inputs": {
+            "click": {
+              "output": "/actions/navigation/in/select"
+            }
+          }
+        }
+      ],
+      "skeleton": [
+        {
+          "output": "/actions/navigation/in/hand_left",
+          "path": "/user/hand/left/input/skeleton/left"
+        },
+        {
+          "output": "/actions/navigation/in/hand_right",
+          "path": "/user/hand/right/input/skeleton/right"
+        }
+      ]
+    }
+  }
+}

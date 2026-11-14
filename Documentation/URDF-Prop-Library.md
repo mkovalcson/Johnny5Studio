@@ -1,0 +1,9 @@
+# URDF Prop Library
+
+In either J5 Studio Desktop or VR Editor, open **URDF Scene Setup → Background**, select a **3D URDF backdrop**, then open **Props / Prop Library**. Choose **One-button remote** and **Add to stage**. The remote is a 14 cm charcoal handset with one raised red button. Its base sits at the origin of its model, so a height of zero places it on the floor. The button is visual only.
+
+Each instance has independent X and Y room coordinates, height above the floor, yaw, pitch, roll, and scale. Add the same model more than once if needed. Use **Update placement** to finish one object before selecting another, **Remove from stage** to remove an instance, or **Apply to setup** to preview the arrangement. Then use Scene Setup's **Apply** for the current setup, **Save Scene** for a reusable complete scene, or **Save Background Only** for a reusable background with those props. The source backdrop URDF is unchanged.
+
+Use **Import URDF** in the prop window or open **URDF Prop Library** from the Animation Library menu. Imported URDFs and their referenced local OBJ/STL meshes and URDF texture files are copied into their own folder under **Config/LibraryProps**. A model can also use URDF primitive shapes. Resolve ROS package URIs to local files before importing. Library imports are independent of scene edits, so cancelling a placement leaves an imported asset in the library. Props are static scenery; standalone VR uses its existing URDF material colors.
+
+Props appear in live VR Editor scenes as part of the backdrop and in standalone VR when a sequence loads a saved 3D scene. Movie/sequence ZIPs reference installed prop models in the same manner as other installed URDF models. On another computer, copy the relevant **Config/LibraryProps** folders with their assets, or install the referenced URDF model separately. The built-in remote is added automatically when the library first opens or a saved scene first uses it.

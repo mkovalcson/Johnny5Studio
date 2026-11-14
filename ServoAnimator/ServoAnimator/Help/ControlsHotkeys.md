@@ -1,0 +1,95 @@
+# Controls and Hotkeys
+
+## Context help
+
+**F1** opens context-sensitive Help for the focused editor section. Help is disabled while playback is running or paused.
+
+## Movie
+
+Movie arrow shortcuts apply when the movie timeline or its transport controls have focus, or while movie playback is active. Sliders, lists, menus, and text fields retain their normal arrow keys. Holding a movie transport key does not repeatedly trigger it.
+
+- Up Arrow: Play / pause / resume movie sequence.
+
+- Right Arrow: Load and play next sequence.
+
+- Left Arrow: Restart current sequence; at a sequence boundary move to the previous sequence.
+
+- Down Arrow: Move to the beginning of the movie.
+
+## Timeline mouse controls
+
+- Left click: position the cursor.
+
+- Mouse wheel: zoom around the timeline cursor (also used by the zoom buttons); Fit and timeline boundaries can reposition it.
+
+- Middle drag: pan.
+
+- Right click: context actions.
+
+- Drag a command triangle: move its commands; persistent groups move together and use their assigned group colors.
+
+- Double-left-click a command triangle: open Edit Commands for that time group.
+
+## Spline Editor
+
+- Left-drag a point vertically: change value.
+
+- Right-drag a point horizontally: change time.
+
+- Ctrl+left-click or double-left-click a spline line: add a point.
+
+- Delete: remove the selected point.
+
+- Double-left-click a selected point: open Edit Commands at its time.
+
+- Show all (when displayed): restore every hidden Spline line.
+
+## Movie blocks
+
+- Left-drag: reorder block.
+
+- Right-click a block: remove it.
+
+- Right-click a sequence boundary: insert.
+
+## Editing
+
+- Ctrl+O: Open Sequence.
+
+- Ctrl+Shift+O: Open Movie.
+
+- Ctrl+S: Save the active Sequence or Movie.
+
+- Ctrl+Shift+S: Save the active document As.
+
+- Space: Play/pause the Sequence when a timeline or background has focus.
+
+- Ctrl+Z: Undo the most recent action. **Edit > Undo History** lists the ten most recent actions; select an older entry to undo it and every newer action.
+
+- Ctrl+Y: Redo.
+
+- Delete in Commands at Cursor: remove selected command.
+
+- Double-click a command: edit the command group.
+
+An asterisk beside a Sequence or Movie filename indicates unsaved changes.
+
+## Capture and meeting shortcuts
+
+- A controller button mapped to REC starts/stops a take after Ready to Record.
+
+- F9 in the editor starts/stops an armed webcam or mixed webcam/controller take.
+
+- Escape while armed returns to recording configuration.
+
+- In Drive HW, Escape is the emergency stop for playback and servos.
+
+- Stop meeting is the primary control for ending Meeting mode. A selected controller's mapped Stop/Disable action also ends it.
+
+- F1 in Webcam Face Tracking, its mapping grid or piston settings opens the relevant face/piston topic. F1 in recording microphone controls opens Recording Audio. F1 in Meeting Configuration opens Meeting Mode.
+
+Help remains unavailable during sequence playback/active take recording; stop the take before requesting help.
+
+## Background control
+
+For global Movie arrows and independently permitted URDF/physical controller output, see **Focus Control and Background Input**. In Drive HW, Escape stops playback and disables servos.

@@ -1,0 +1,4947 @@
+{
+  "ServoConfigEntry": {
+    "control": "LeftEyeVent",
+    "maestroPort": 0,
+    "reversed": false,
+    "defaultPwm": 1500,
+    "minPwm": 500,
+    "maxPwm": 2400,
+    "speeds": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "accels": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  "UrdfMotionSetting": {
+    "Servo": 0,
+    "Control": 1000,
+    "MinExtent": 0,
+    "MaxExtent": 0,
+    "ZeroExtent": 0,
+    "Unit": "deg",
+    "ReverseOverride": null
+  },
+  "UrdfFraming": {
+    "HorizontalPercent": 0,
+    "VerticalPercent": 0,
+    "SpinDegrees": 0,
+    "RotateDegrees": 0,
+    "Yaw": 0,
+    "Pitch": 0,
+    "Distance": 1.15
+  },
+  "UrdfStageSettings": {
+    "ModelFile": "\u003CConfig\u003E\\Models/Scenery/MatrixConstruct/MatrixConstruct_backdrop.urdf",
+    "MovementMode": "RobotCentric",
+    "PreserveRobotFraming": true,
+    "RobotFraming": null,
+    "RobotX": 0,
+    "RobotY": 0,
+    "HeadingDegrees": 0,
+    "FloorHeight": -1.078381,
+    "DetectFloor": true,
+    "ViewPanX": 0,
+    "ViewPanY": 0,
+    "ViewPanZ": 0,
+    "ViewZoomPercent": 100,
+    "ViewYawDegrees": 0,
+    "EdgeMarginPercent": 20
+  },
+  "UrdfPresentationSettings": {
+    "Stage": {
+      "ModelFile": "\u003CConfig\u003E\\Models/Scenery/MatrixConstruct/MatrixConstruct_backdrop.urdf",
+      "MovementMode": "RobotCentric",
+      "PreserveRobotFraming": true,
+      "RobotFraming": null,
+      "RobotX": 0,
+      "RobotY": 0,
+      "HeadingDegrees": 0,
+      "FloorHeight": -1.078381,
+      "DetectFloor": true,
+      "ViewPanX": 0,
+      "ViewPanY": 0,
+      "ViewPanZ": 0,
+      "ViewZoomPercent": 100,
+      "ViewYawDegrees": 0,
+      "EdgeMarginPercent": 20
+    },
+    "BackgroundMode": "Studio",
+    "BackgroundColor": "#00FF00",
+    "BackgroundImage": "",
+    "ImageLayout": "Cover",
+    "CleanUndockedView": false,
+    "BackgroundMotionSpeed": 1,
+    "BackgroundFrameRate": 15,
+    "BackgroundZoomMinimum": 110,
+    "BackgroundZoomMaximum": 150,
+    "BackgroundPanAmount": 75,
+    "BackgroundTargetSeconds": 8,
+    "BackgroundSeed": 1,
+    "BackgroundRotation": false,
+    "BackgroundHalfTurns": false
+  },
+  "UrdfRenderingSettings": {
+    "SelectedRenderer": "Wpf",
+    "WeatheringLevel": 0,
+    "RobotFinish": "Original",
+    "DefaultAccessory": "None",
+    "Wpf": {
+      "Brightness": 1,
+      "AmbientLight": 1,
+      "KeyLight": 1,
+      "Highlights": 1,
+      "Gamma": 1,
+      "Contrast": 1,
+      "LensReflectivity": 1,
+      "AntiAliasing": 2,
+      "AntiAliasingMode": "Msaa",
+      "FxaaQuality": 3
+    },
+    "Direct3D11": {
+      "Brightness": 1,
+      "AmbientLight": 1,
+      "KeyLight": 1,
+      "Highlights": 1,
+      "Gamma": 1,
+      "Contrast": 1,
+      "LensReflectivity": 1,
+      "AntiAliasing": 2,
+      "AntiAliasingMode": "Msaa",
+      "FxaaQuality": 3
+    }
+  },
+  "UrdfRenderProfile": {
+    "Brightness": 1,
+    "AmbientLight": 1,
+    "KeyLight": 1,
+    "Highlights": 1,
+    "Gamma": 1,
+    "Contrast": 1,
+    "LensReflectivity": 1,
+    "AntiAliasing": 2,
+    "AntiAliasingMode": "Msaa",
+    "FxaaQuality": 3
+  },
+  "BackgroundLibraryItem": {
+    "Name": "",
+    "Category": "",
+    "Description": "",
+    "RobotModelFile": "",
+    "Settings": {
+      "SceneFile": "",
+      "Background": {
+        "Stage": {
+          "ModelFile": "\u003CConfig\u003E\\Models/Scenery/MatrixConstruct/MatrixConstruct_backdrop.urdf",
+          "MovementMode": "RobotCentric",
+          "PreserveRobotFraming": true,
+          "RobotFraming": null,
+          "RobotX": 0,
+          "RobotY": 0,
+          "HeadingDegrees": 0,
+          "FloorHeight": -1.078381,
+          "DetectFloor": true,
+          "ViewPanX": 0,
+          "ViewPanY": 0,
+          "ViewPanZ": 0,
+          "ViewZoomPercent": 100,
+          "ViewYawDegrees": 0,
+          "EdgeMarginPercent": 20
+        },
+        "BackgroundMode": "Studio",
+        "BackgroundColor": "#00FF00",
+        "BackgroundImage": "",
+        "ImageLayout": "Cover",
+        "CleanUndockedView": false,
+        "BackgroundMotionSpeed": 1,
+        "BackgroundFrameRate": 15,
+        "BackgroundZoomMinimum": 110,
+        "BackgroundZoomMaximum": 150,
+        "BackgroundPanAmount": 75,
+        "BackgroundTargetSeconds": 8,
+        "BackgroundSeed": 1,
+        "BackgroundRotation": false,
+        "BackgroundHalfTurns": false
+      },
+      "Framing": null
+    }
+  },
+  "ServoDefault": {
+    "servos": [
+      {
+        "control": "NoseBasket",
+        "maestroPort": 9,
+        "reversed": false,
+        "defaultPwm": 850,
+        "minPwm": 850,
+        "maxPwm": 1150,
+        "speeds": [
+          100,
+          50,
+          0,
+          50
+        ],
+        "accels": [
+          30,
+          15,
+          0,
+          15
+        ]
+      },
+      {
+        "control": "NoseBody",
+        "maestroPort": 8,
+        "reversed": true,
+        "defaultPwm": 1200,
+        "minPwm": 1000,
+        "maxPwm": 1500,
+        "speeds": [
+          100,
+          50,
+          0,
+          50
+        ],
+        "accels": [
+          30,
+          15,
+          0,
+          15
+        ]
+      },
+      {
+        "control": "NeckTiltLeft",
+        "maestroPort": 4,
+        "reversed": false,
+        "defaultPwm": 1533,
+        "minPwm": 1445,
+        "maxPwm": 1594,
+        "speeds": [
+          20,
+          15,
+          0,
+          10
+        ],
+        "accels": [
+          10,
+          6,
+          0,
+          5
+        ]
+      },
+      {
+        "control": "NeckTiltRight",
+        "maestroPort": 13,
+        "reversed": true,
+        "defaultPwm": 1480,
+        "minPwm": 1400,
+        "maxPwm": 1564,
+        "speeds": [
+          20,
+          15,
+          0,
+          10
+        ],
+        "accels": [
+          10,
+          6,
+          0,
+          5
+        ]
+      },
+      {
+        "control": "NeckTurn",
+        "maestroPort": 22,
+        "reversed": false,
+        "defaultPwm": 1325,
+        "minPwm": 850,
+        "maxPwm": 1740,
+        "speeds": [
+          90,
+          30,
+          0,
+          45
+        ],
+        "accels": [
+          10,
+          10,
+          0,
+          15
+        ]
+      },
+      {
+        "control": "LeftLensHorizontal",
+        "maestroPort": 2,
+        "reversed": false,
+        "defaultPwm": 1450,
+        "minPwm": 650,
+        "maxPwm": 2250,
+        "speeds": [
+          0,
+          60,
+          0,
+          20
+        ],
+        "accels": [
+          0,
+          25,
+          0,
+          5
+        ]
+      },
+      {
+        "control": "RightLensHorizontal",
+        "maestroPort": 15,
+        "reversed": false,
+        "defaultPwm": 1450,
+        "minPwm": 650,
+        "maxPwm": 2250,
+        "speeds": [
+          0,
+          60,
+          0,
+          20
+        ],
+        "accels": [
+          0,
+          25,
+          0,
+          5
+        ]
+      },
+      {
+        "control": "LeftLensVertical",
+        "maestroPort": 3,
+        "reversed": true,
+        "defaultPwm": 1400,
+        "minPwm": 600,
+        "maxPwm": 2200,
+        "speeds": [
+          0,
+          60,
+          0,
+          20
+        ],
+        "accels": [
+          0,
+          25,
+          0,
+          5
+        ]
+      },
+      {
+        "control": "RightLensVertical",
+        "maestroPort": 14,
+        "reversed": false,
+        "defaultPwm": 1520,
+        "minPwm": 720,
+        "maxPwm": 2320,
+        "speeds": [
+          0,
+          60,
+          0,
+          20
+        ],
+        "accels": [
+          0,
+          25,
+          0,
+          5
+        ]
+      },
+      {
+        "control": "LeftIris",
+        "maestroPort": 1,
+        "reversed": false,
+        "defaultPwm": 1575,
+        "minPwm": 1350,
+        "maxPwm": 1950,
+        "speeds": [
+          90,
+          90,
+          0,
+          10
+        ],
+        "accels": [
+          15,
+          15,
+          0,
+          5
+        ]
+      },
+      {
+        "control": "RightIris",
+        "maestroPort": 16,
+        "reversed": false,
+        "defaultPwm": 975,
+        "minPwm": 750,
+        "maxPwm": 1350,
+        "speeds": [
+          90,
+          90,
+          0,
+          10
+        ],
+        "accels": [
+          15,
+          15,
+          0,
+          5
+        ]
+      },
+      {
+        "control": "BrowLeftTopOpen",
+        "maestroPort": 6,
+        "reversed": true,
+        "defaultPwm": 1523,
+        "minPwm": 920,
+        "maxPwm": 1770,
+        "speeds": [
+          60,
+          10,
+          0,
+          2
+        ],
+        "accels": [
+          15,
+          5,
+          0,
+          3
+        ]
+      },
+      {
+        "control": "BrowRightTopOpen",
+        "maestroPort": 11,
+        "reversed": false,
+        "defaultPwm": 866,
+        "minPwm": 637,
+        "maxPwm": 1417,
+        "speeds": [
+          60,
+          10,
+          0,
+          2
+        ],
+        "accels": [
+          15,
+          5,
+          0,
+          3
+        ]
+      },
+      {
+        "control": "BrowLeftTopTilt",
+        "maestroPort": 7,
+        "reversed": true,
+        "defaultPwm": 1800,
+        "minPwm": 910,
+        "maxPwm": 1900,
+        "speeds": [
+          40,
+          10,
+          0,
+          2
+        ],
+        "accels": [
+          10,
+          5,
+          0,
+          3
+        ]
+      },
+      {
+        "control": "BrowRightTopTilt",
+        "maestroPort": 10,
+        "reversed": false,
+        "defaultPwm": 1100,
+        "minPwm": 1000,
+        "maxPwm": 1990,
+        "speeds": [
+          40,
+          10,
+          0,
+          2
+        ],
+        "accels": [
+          10,
+          5,
+          0,
+          3
+        ]
+      },
+      {
+        "control": "BrowLeftBottomOpen",
+        "maestroPort": 5,
+        "reversed": false,
+        "defaultPwm": 1750,
+        "minPwm": 940,
+        "maxPwm": 2050,
+        "speeds": [
+          60,
+          10,
+          0,
+          2
+        ],
+        "accels": [
+          15,
+          5,
+          0,
+          3
+        ]
+      },
+      {
+        "control": "BrowRightBottomOpen",
+        "maestroPort": 12,
+        "reversed": true,
+        "defaultPwm": 1100,
+        "minPwm": 700,
+        "maxPwm": 1910,
+        "speeds": [
+          60,
+          10,
+          0,
+          2
+        ],
+        "accels": [
+          15,
+          5,
+          0,
+          3
+        ]
+      },
+      {
+        "control": "LeftEyeVent",
+        "maestroPort": 0,
+        "reversed": false,
+        "defaultPwm": 1765,
+        "minPwm": 1765,
+        "maxPwm": 2086,
+        "speeds": [
+          40,
+          10,
+          0,
+          10
+        ],
+        "accels": [
+          20,
+          5,
+          0,
+          5
+        ]
+      },
+      {
+        "control": "RightEyeVent",
+        "maestroPort": 17,
+        "reversed": true,
+        "defaultPwm": 1125,
+        "minPwm": 835,
+        "maxPwm": 1125,
+        "speeds": [
+          40,
+          10,
+          0,
+          10
+        ],
+        "accels": [
+          20,
+          5,
+          0,
+          5
+        ]
+      },
+      {
+        "control": "MFR_Rotate",
+        "maestroPort": 21,
+        "reversed": true,
+        "defaultPwm": 1320,
+        "minPwm": 800,
+        "maxPwm": 1865,
+        "speeds": [
+          0,
+          1,
+          0,
+          10
+        ],
+        "accels": [
+          0,
+          1,
+          0,
+          20
+        ]
+      },
+      {
+        "control": "MFR_UpDown",
+        "maestroPort": 20,
+        "reversed": true,
+        "defaultPwm": 550,
+        "minPwm": 550,
+        "maxPwm": 1070,
+        "speeds": [
+          100,
+          50,
+          0,
+          50
+        ],
+        "accels": [
+          30,
+          25,
+          0,
+          25
+        ]
+      },
+      {
+        "control": "Whip_Antenna_RaiseLower",
+        "maestroPort": 18,
+        "reversed": true,
+        "defaultPwm": 2200,
+        "minPwm": 1620,
+        "maxPwm": 2200,
+        "speeds": [
+          100,
+          20,
+          0,
+          50
+        ],
+        "accels": [
+          30,
+          5,
+          0,
+          25
+        ]
+      },
+      {
+        "control": "Whip_Antenna_Rotate",
+        "maestroPort": 19,
+        "reversed": false,
+        "defaultPwm": 1400,
+        "minPwm": 500,
+        "maxPwm": 2300,
+        "speeds": [
+          0,
+          0,
+          0,
+          10
+        ],
+        "accels": [
+          0,
+          0,
+          0,
+          20
+        ]
+      },
+      {
+        "control": "Microphone_RaiseLower",
+        "maestroPort": 23,
+        "reversed": false,
+        "defaultPwm": 1625,
+        "minPwm": 1625,
+        "maxPwm": 2298,
+        "speeds": [
+          0,
+          0,
+          0,
+          50
+        ],
+        "accels": [
+          0,
+          0,
+          0,
+          25
+        ]
+      }
+    ],
+    "gangDirections": [
+      {
+        "servo": "FlapsOpen",
+        "control": "BrowLeftTopOpen",
+        "reversed": true
+      },
+      {
+        "servo": "FlapsOpen",
+        "control": "BrowRightTopOpen",
+        "reversed": true
+      },
+      {
+        "servo": "FlapsOpen",
+        "control": "BrowLeftBottomOpen",
+        "reversed": false
+      },
+      {
+        "servo": "FlapsOpen",
+        "control": "BrowRightBottomOpen",
+        "reversed": false
+      },
+      {
+        "servo": "FlapTiltUp",
+        "control": "BrowLeftTopTilt",
+        "reversed": false
+      },
+      {
+        "servo": "FlapTiltUp",
+        "control": "BrowRightTopTilt",
+        "reversed": false
+      },
+      {
+        "servo": "IrisClose",
+        "control": "LeftIris",
+        "reversed": false
+      },
+      {
+        "servo": "IrisClose",
+        "control": "RightIris",
+        "reversed": false
+      },
+      {
+        "servo": "EyesHorizontalRight",
+        "control": "LeftLensHorizontal",
+        "reversed": true
+      },
+      {
+        "servo": "EyesHorizontalRight",
+        "control": "RightLensHorizontal",
+        "reversed": true
+      },
+      {
+        "servo": "EyesVerticalUp",
+        "control": "LeftLensVertical",
+        "reversed": true
+      },
+      {
+        "servo": "EyesVerticalUp",
+        "control": "RightLensVertical",
+        "reversed": true
+      },
+      {
+        "servo": "VentsOpen",
+        "control": "LeftEyeVent",
+        "reversed": true
+      },
+      {
+        "servo": "VentsOpen",
+        "control": "RightEyeVent",
+        "reversed": false
+      },
+      {
+        "servo": "NeckTiltRight",
+        "control": "NeckTiltLeft",
+        "reversed": true
+      },
+      {
+        "servo": "NeckTiltRight",
+        "control": "NeckTiltRight",
+        "reversed": true
+      },
+      {
+        "servo": "NeckNodUp",
+        "control": "NeckTiltLeft",
+        "reversed": false
+      },
+      {
+        "servo": "NeckNodUp",
+        "control": "NeckTiltRight",
+        "reversed": true
+      }
+    ],
+    "leftTicSerialNumber": "00475552"
+  },
+  "UrdfDefault": {
+    "Version": 10,
+    "AudioLedGain": 1,
+    "Presentation": {
+      "Stage": {
+        "ModelFile": "\u003CConfig\u003E\\Models/Scenery/MatrixConstruct/MatrixConstruct_backdrop.urdf",
+        "MovementMode": "RobotCentric",
+        "PreserveRobotFraming": true,
+        "RobotFraming": null,
+        "RobotX": 0,
+        "RobotY": 0,
+        "HeadingDegrees": 0,
+        "FloorHeight": -1.078381,
+        "DetectFloor": true,
+        "ViewPanX": 0,
+        "ViewPanY": 0,
+        "ViewPanZ": 0,
+        "ViewZoomPercent": 100,
+        "ViewYawDegrees": 0,
+        "EdgeMarginPercent": 20
+      },
+      "BackgroundMode": "Studio",
+      "BackgroundColor": "#00FF00",
+      "BackgroundImage": "",
+      "ImageLayout": "Cover",
+      "CleanUndockedView": false,
+      "BackgroundMotionSpeed": 1,
+      "BackgroundFrameRate": 15,
+      "BackgroundZoomMinimum": 110,
+      "BackgroundZoomMaximum": 150,
+      "BackgroundPanAmount": 75,
+      "BackgroundTargetSeconds": 8,
+      "BackgroundSeed": 1,
+      "BackgroundRotation": false,
+      "BackgroundHalfTurns": false
+    },
+    "BodyMotions": {},
+    "EyeLightIntensity": 1,
+    "VentLightIntensity": 1,
+    "Rendering": {
+      "SelectedRenderer": "Wpf",
+      "WeatheringLevel": 0,
+      "RobotFinish": "Original",
+      "DefaultAccessory": "None",
+      "Wpf": {
+        "Brightness": 1,
+        "AmbientLight": 1,
+        "KeyLight": 1,
+        "Highlights": 1,
+        "Gamma": 1,
+        "Contrast": 1,
+        "LensReflectivity": 1,
+        "AntiAliasing": 2,
+        "AntiAliasingMode": "Msaa",
+        "FxaaQuality": 3
+      },
+      "Direct3D11": {
+        "Brightness": 1,
+        "AmbientLight": 1,
+        "KeyLight": 1,
+        "Highlights": 1,
+        "Gamma": 1,
+        "Contrast": 1,
+        "LensReflectivity": 1,
+        "AntiAliasing": 2,
+        "AntiAliasingMode": "Msaa",
+        "FxaaQuality": 3
+      }
+    },
+    "Motions": [
+      {
+        "Servo": 0,
+        "Control": 22,
+        "MinExtent": -90,
+        "MaxExtent": 90,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 1,
+        "Control": 4,
+        "MinExtent": -15,
+        "MaxExtent": 15,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 1,
+        "Control": 13,
+        "MinExtent": -15,
+        "MaxExtent": 15,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 2,
+        "Control": 4,
+        "MinExtent": -12,
+        "MaxExtent": 12,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 2,
+        "Control": 13,
+        "MinExtent": -12,
+        "MaxExtent": 12,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 3,
+        "Control": 6,
+        "MinExtent": -42,
+        "MaxExtent": 90,
+        "ZeroExtent": 22.563139931740615,
+        "Unit": "deg",
+        "ReverseOverride": true
+      },
+      {
+        "Servo": 3,
+        "Control": 11,
+        "MinExtent": -90,
+        "MaxExtent": 42,
+        "ZeroExtent": -22.563139931740615,
+        "Unit": "deg",
+        "ReverseOverride": false
+      },
+      {
+        "Servo": 3,
+        "Control": 5,
+        "MinExtent": -42,
+        "MaxExtent": 90,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": true
+      },
+      {
+        "Servo": 3,
+        "Control": 12,
+        "MinExtent": -90,
+        "MaxExtent": 42,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": false
+      },
+      {
+        "Servo": 4,
+        "Control": 7,
+        "MinExtent": -7.883959044368574,
+        "MaxExtent": 90,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": false
+      },
+      {
+        "Servo": 4,
+        "Control": 10,
+        "MinExtent": -7.883959044368574,
+        "MaxExtent": 90,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 5,
+        "Control": 1,
+        "MinExtent": 29.526239067055418,
+        "MaxExtent": 100,
+        "ZeroExtent": 64.76311953352771,
+        "Unit": "%",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 5,
+        "Control": 16,
+        "MinExtent": 29.526239067055418,
+        "MaxExtent": 100,
+        "ZeroExtent": 64.76311953352771,
+        "Unit": "%",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 6,
+        "Control": 3,
+        "MinExtent": -12,
+        "MaxExtent": 12,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": true
+      },
+      {
+        "Servo": 6,
+        "Control": 14,
+        "MinExtent": -12,
+        "MaxExtent": 12,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": true
+      },
+      {
+        "Servo": 7,
+        "Control": 2,
+        "MinExtent": -12,
+        "MaxExtent": 12,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 7,
+        "Control": 15,
+        "MinExtent": -12,
+        "MaxExtent": 12,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 8,
+        "Control": 0,
+        "MinExtent": 0,
+        "MaxExtent": 30,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": false
+      },
+      {
+        "Servo": 8,
+        "Control": 17,
+        "MinExtent": 0,
+        "MaxExtent": 30,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 9,
+        "Control": 8,
+        "MinExtent": -19.174061433447143,
+        "MaxExtent": 15.843003412969232,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": true
+      },
+      {
+        "Servo": 10,
+        "Control": 9,
+        "MinExtent": -37.30716723549508,
+        "MaxExtent": -22.563139931740615,
+        "ZeroExtent": -22.563139931740615,
+        "Unit": "deg",
+        "ReverseOverride": true
+      },
+      {
+        "Servo": 11,
+        "Control": 20,
+        "MinExtent": 22.4299065420561,
+        "MaxExtent": 65.1053864168618,
+        "ZeroExtent": 22.4299065420561,
+        "Unit": "mm",
+        "ReverseOverride": false
+      },
+      {
+        "Servo": 12,
+        "Control": 21,
+        "MinExtent": -99.25233644859817,
+        "MaxExtent": 93.36448598130833,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 13,
+        "Control": 23,
+        "MinExtent": 0,
+        "MaxExtent": 10,
+        "ZeroExtent": 0,
+        "Unit": "mm",
+        "ReverseOverride": false
+      },
+      {
+        "Servo": 14,
+        "Control": 18,
+        "MinExtent": 12.342627635745693,
+        "MaxExtent": 57.20244071985785,
+        "ZeroExtent": 12.342627635745693,
+        "Unit": "mm",
+        "ReverseOverride": false
+      },
+      {
+        "Servo": 15,
+        "Control": 19,
+        "MinExtent": -90,
+        "MaxExtent": 90,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": false
+      },
+      {
+        "Servo": 16,
+        "Control": 200,
+        "MinExtent": 2,
+        "MaxExtent": 90.46728971962642,
+        "ZeroExtent": 2,
+        "Unit": "mm",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 17,
+        "Control": 201,
+        "MinExtent": 2,
+        "MaxExtent": 90.46728971962612,
+        "ZeroExtent": 2,
+        "Unit": "mm",
+        "ReverseOverride": null
+      }
+    ]
+  },
+  "ModelSettings": {
+    "ActiveSceneFile": "LibraryScenes\\Scene-Sylogist Backdrop.json",
+    "ModelFile": "\u003CConfig\u003E\\Models\\Robots\\Johnny5FullBody\\johnny5_head.urdf",
+    "Framing": {
+      "\u003CConfig\u003E\\Models\\Robots\\Johnny5Head\\johnny5_head.urdf": {
+        "HorizontalPercent": 0,
+        "VerticalPercent": 0,
+        "SpinDegrees": 0,
+        "RotateDegrees": 0,
+        "Yaw": 0,
+        "Pitch": 0,
+        "Distance": 1.3278615198128596
+      },
+      "\u003CConfig\u003E\\Models\\Robots\\Johnny5FullBody\\johnny5_head.urdf": {
+        "HorizontalPercent": -11.590801927952972,
+        "VerticalPercent": -53.47105500046636,
+        "SpinDegrees": 0,
+        "RotateDegrees": 0,
+        "Yaw": 39.32799999999739,
+        "Pitch": 0.2101076355976091,
+        "Distance": 6.2459558848299634
+      }
+    }
+  },
+  "ServoConfig.json": {
+    "servos": [
+      {
+        "control": "NoseBasket",
+        "maestroPort": 9,
+        "reversed": false,
+        "defaultPwm": 850,
+        "minPwm": 850,
+        "maxPwm": 1150,
+        "speeds": [
+          100,
+          50,
+          0,
+          50
+        ],
+        "accels": [
+          30,
+          15,
+          0,
+          15
+        ]
+      },
+      {
+        "control": "NoseBody",
+        "maestroPort": 8,
+        "reversed": true,
+        "defaultPwm": 1200,
+        "minPwm": 1000,
+        "maxPwm": 1500,
+        "speeds": [
+          100,
+          50,
+          0,
+          50
+        ],
+        "accels": [
+          30,
+          15,
+          0,
+          15
+        ]
+      },
+      {
+        "control": "NeckTiltLeft",
+        "maestroPort": 4,
+        "reversed": false,
+        "defaultPwm": 1533,
+        "minPwm": 1445,
+        "maxPwm": 1594,
+        "speeds": [
+          20,
+          15,
+          0,
+          10
+        ],
+        "accels": [
+          10,
+          6,
+          0,
+          5
+        ]
+      },
+      {
+        "control": "NeckTiltRight",
+        "maestroPort": 13,
+        "reversed": true,
+        "defaultPwm": 1480,
+        "minPwm": 1400,
+        "maxPwm": 1564,
+        "speeds": [
+          20,
+          15,
+          0,
+          10
+        ],
+        "accels": [
+          10,
+          6,
+          0,
+          5
+        ]
+      },
+      {
+        "control": "NeckTurn",
+        "maestroPort": 22,
+        "reversed": false,
+        "defaultPwm": 1325,
+        "minPwm": 850,
+        "maxPwm": 1740,
+        "speeds": [
+          90,
+          30,
+          0,
+          45
+        ],
+        "accels": [
+          10,
+          10,
+          0,
+          15
+        ]
+      },
+      {
+        "control": "LeftLensHorizontal",
+        "maestroPort": 2,
+        "reversed": false,
+        "defaultPwm": 1450,
+        "minPwm": 650,
+        "maxPwm": 2250,
+        "speeds": [
+          0,
+          60,
+          0,
+          20
+        ],
+        "accels": [
+          0,
+          25,
+          0,
+          5
+        ]
+      },
+      {
+        "control": "RightLensHorizontal",
+        "maestroPort": 15,
+        "reversed": false,
+        "defaultPwm": 1450,
+        "minPwm": 650,
+        "maxPwm": 2250,
+        "speeds": [
+          0,
+          60,
+          0,
+          20
+        ],
+        "accels": [
+          0,
+          25,
+          0,
+          5
+        ]
+      },
+      {
+        "control": "LeftLensVertical",
+        "maestroPort": 3,
+        "reversed": true,
+        "defaultPwm": 1400,
+        "minPwm": 600,
+        "maxPwm": 2200,
+        "speeds": [
+          0,
+          60,
+          0,
+          20
+        ],
+        "accels": [
+          0,
+          25,
+          0,
+          5
+        ]
+      },
+      {
+        "control": "RightLensVertical",
+        "maestroPort": 14,
+        "reversed": false,
+        "defaultPwm": 1520,
+        "minPwm": 720,
+        "maxPwm": 2320,
+        "speeds": [
+          0,
+          60,
+          0,
+          20
+        ],
+        "accels": [
+          0,
+          25,
+          0,
+          5
+        ]
+      },
+      {
+        "control": "LeftIris",
+        "maestroPort": 1,
+        "reversed": false,
+        "defaultPwm": 1575,
+        "minPwm": 1350,
+        "maxPwm": 1950,
+        "speeds": [
+          90,
+          90,
+          0,
+          10
+        ],
+        "accels": [
+          15,
+          15,
+          0,
+          5
+        ]
+      },
+      {
+        "control": "RightIris",
+        "maestroPort": 16,
+        "reversed": false,
+        "defaultPwm": 975,
+        "minPwm": 750,
+        "maxPwm": 1350,
+        "speeds": [
+          90,
+          90,
+          0,
+          10
+        ],
+        "accels": [
+          15,
+          15,
+          0,
+          5
+        ]
+      },
+      {
+        "control": "BrowLeftTopOpen",
+        "maestroPort": 6,
+        "reversed": true,
+        "defaultPwm": 1523,
+        "minPwm": 920,
+        "maxPwm": 1770,
+        "speeds": [
+          60,
+          10,
+          0,
+          2
+        ],
+        "accels": [
+          15,
+          5,
+          0,
+          3
+        ]
+      },
+      {
+        "control": "BrowRightTopOpen",
+        "maestroPort": 11,
+        "reversed": false,
+        "defaultPwm": 866,
+        "minPwm": 637,
+        "maxPwm": 1417,
+        "speeds": [
+          60,
+          10,
+          0,
+          2
+        ],
+        "accels": [
+          15,
+          5,
+          0,
+          3
+        ]
+      },
+      {
+        "control": "BrowLeftTopTilt",
+        "maestroPort": 7,
+        "reversed": true,
+        "defaultPwm": 1800,
+        "minPwm": 910,
+        "maxPwm": 1900,
+        "speeds": [
+          40,
+          10,
+          0,
+          2
+        ],
+        "accels": [
+          10,
+          5,
+          0,
+          3
+        ]
+      },
+      {
+        "control": "BrowRightTopTilt",
+        "maestroPort": 10,
+        "reversed": false,
+        "defaultPwm": 1100,
+        "minPwm": 1000,
+        "maxPwm": 1990,
+        "speeds": [
+          40,
+          10,
+          0,
+          2
+        ],
+        "accels": [
+          10,
+          5,
+          0,
+          3
+        ]
+      },
+      {
+        "control": "BrowLeftBottomOpen",
+        "maestroPort": 5,
+        "reversed": false,
+        "defaultPwm": 1750,
+        "minPwm": 940,
+        "maxPwm": 2050,
+        "speeds": [
+          60,
+          10,
+          0,
+          2
+        ],
+        "accels": [
+          15,
+          5,
+          0,
+          3
+        ]
+      },
+      {
+        "control": "BrowRightBottomOpen",
+        "maestroPort": 12,
+        "reversed": true,
+        "defaultPwm": 1100,
+        "minPwm": 700,
+        "maxPwm": 1910,
+        "speeds": [
+          60,
+          10,
+          0,
+          2
+        ],
+        "accels": [
+          15,
+          5,
+          0,
+          3
+        ]
+      },
+      {
+        "control": "LeftEyeVent",
+        "maestroPort": 0,
+        "reversed": false,
+        "defaultPwm": 1765,
+        "minPwm": 1765,
+        "maxPwm": 2086,
+        "speeds": [
+          40,
+          10,
+          0,
+          10
+        ],
+        "accels": [
+          20,
+          5,
+          0,
+          5
+        ]
+      },
+      {
+        "control": "RightEyeVent",
+        "maestroPort": 17,
+        "reversed": true,
+        "defaultPwm": 1125,
+        "minPwm": 835,
+        "maxPwm": 1125,
+        "speeds": [
+          40,
+          10,
+          0,
+          10
+        ],
+        "accels": [
+          20,
+          5,
+          0,
+          5
+        ]
+      },
+      {
+        "control": "MFR_Rotate",
+        "maestroPort": 21,
+        "reversed": true,
+        "defaultPwm": 1320,
+        "minPwm": 800,
+        "maxPwm": 1865,
+        "speeds": [
+          0,
+          1,
+          0,
+          10
+        ],
+        "accels": [
+          0,
+          1,
+          0,
+          20
+        ]
+      },
+      {
+        "control": "MFR_UpDown",
+        "maestroPort": 20,
+        "reversed": true,
+        "defaultPwm": 550,
+        "minPwm": 550,
+        "maxPwm": 1070,
+        "speeds": [
+          100,
+          50,
+          0,
+          50
+        ],
+        "accels": [
+          30,
+          25,
+          0,
+          25
+        ]
+      },
+      {
+        "control": "Whip_Antenna_RaiseLower",
+        "maestroPort": 18,
+        "reversed": true,
+        "defaultPwm": 2200,
+        "minPwm": 1620,
+        "maxPwm": 2200,
+        "speeds": [
+          100,
+          20,
+          0,
+          50
+        ],
+        "accels": [
+          30,
+          5,
+          0,
+          25
+        ]
+      },
+      {
+        "control": "Whip_Antenna_Rotate",
+        "maestroPort": 19,
+        "reversed": false,
+        "defaultPwm": 1400,
+        "minPwm": 500,
+        "maxPwm": 2300,
+        "speeds": [
+          0,
+          0,
+          0,
+          10
+        ],
+        "accels": [
+          0,
+          0,
+          0,
+          20
+        ]
+      },
+      {
+        "control": "Microphone_RaiseLower",
+        "maestroPort": 23,
+        "reversed": false,
+        "defaultPwm": 1625,
+        "minPwm": 1625,
+        "maxPwm": 2298,
+        "speeds": [
+          0,
+          0,
+          0,
+          50
+        ],
+        "accels": [
+          0,
+          0,
+          0,
+          25
+        ]
+      }
+    ],
+    "gangDirections": [
+      {
+        "servo": "FlapsOpen",
+        "control": "BrowLeftTopOpen",
+        "reversed": true
+      },
+      {
+        "servo": "FlapsOpen",
+        "control": "BrowRightTopOpen",
+        "reversed": true
+      },
+      {
+        "servo": "FlapsOpen",
+        "control": "BrowLeftBottomOpen",
+        "reversed": false
+      },
+      {
+        "servo": "FlapsOpen",
+        "control": "BrowRightBottomOpen",
+        "reversed": false
+      },
+      {
+        "servo": "FlapTiltUp",
+        "control": "BrowLeftTopTilt",
+        "reversed": false
+      },
+      {
+        "servo": "FlapTiltUp",
+        "control": "BrowRightTopTilt",
+        "reversed": false
+      },
+      {
+        "servo": "IrisClose",
+        "control": "LeftIris",
+        "reversed": false
+      },
+      {
+        "servo": "IrisClose",
+        "control": "RightIris",
+        "reversed": false
+      },
+      {
+        "servo": "EyesHorizontalRight",
+        "control": "LeftLensHorizontal",
+        "reversed": true
+      },
+      {
+        "servo": "EyesHorizontalRight",
+        "control": "RightLensHorizontal",
+        "reversed": true
+      },
+      {
+        "servo": "EyesVerticalUp",
+        "control": "LeftLensVertical",
+        "reversed": true
+      },
+      {
+        "servo": "EyesVerticalUp",
+        "control": "RightLensVertical",
+        "reversed": true
+      },
+      {
+        "servo": "VentsOpen",
+        "control": "LeftEyeVent",
+        "reversed": true
+      },
+      {
+        "servo": "VentsOpen",
+        "control": "RightEyeVent",
+        "reversed": false
+      },
+      {
+        "servo": "NeckTiltRight",
+        "control": "NeckTiltLeft",
+        "reversed": true
+      },
+      {
+        "servo": "NeckTiltRight",
+        "control": "NeckTiltRight",
+        "reversed": true
+      },
+      {
+        "servo": "NeckNodUp",
+        "control": "NeckTiltLeft",
+        "reversed": false
+      },
+      {
+        "servo": "NeckNodUp",
+        "control": "NeckTiltRight",
+        "reversed": true
+      }
+    ],
+    "leftTicSerialNumber": "00475552"
+  },
+  "URDFconfig.json": {
+    "Version": 10,
+    "AudioLedGain": 1.2530120481927711,
+    "Presentation": {
+      "Stage": {
+        "ModelFile": "Models/Scenery/MatrixConstruct/MatrixConstruct_backdrop.urdf",
+        "MovementMode": "RobotCentric",
+        "PreserveRobotFraming": true,
+        "RobotFraming": {
+          "HorizontalPercent": 5.35,
+          "VerticalPercent": 2.758620689655106,
+          "SpinDegrees": 0,
+          "RotateDegrees": 0,
+          "Yaw": 13.023999999999074,
+          "Pitch": 0.2401076355976083,
+          "Distance": 0.723973193845794
+        },
+        "RobotX": 0,
+        "RobotY": 0,
+        "HeadingDegrees": 0,
+        "FloorHeight": -1.078381,
+        "DetectFloor": true,
+        "ViewPanX": 0,
+        "ViewPanY": 0,
+        "ViewPanZ": 0,
+        "ViewZoomPercent": 100,
+        "ViewYawDegrees": 0,
+        "EdgeMarginPercent": 20
+      },
+      "BackgroundMode": "Studio",
+      "BackgroundColor": "#00FF00",
+      "BackgroundImage": "Backdrops\\Sylogist_TeamsBackdrop_8-18f7b690a3b048b2b55b0de2a625d6aa-420de53d55f09db2.png",
+      "ImageLayout": "Cover",
+      "CleanUndockedView": true,
+      "BackgroundMotionSpeed": 1.2000000000000002,
+      "BackgroundFrameRate": 15,
+      "BackgroundZoomMinimum": 110,
+      "BackgroundZoomMaximum": 200,
+      "BackgroundPanAmount": 95,
+      "BackgroundTargetSeconds": 8,
+      "BackgroundSeed": 1,
+      "BackgroundRotation": false,
+      "BackgroundHalfTurns": false
+    },
+    "BodyMotions": {
+      "WaistLean": {
+        "MinDegrees": -20.05352282957881,
+        "MaxDegrees": 20.05352282957881,
+        "Reverse": false
+      },
+      "ChestTilt": {
+        "MinDegrees": -20.05352282957881,
+        "MaxDegrees": 20.05352282957881,
+        "Reverse": false
+      },
+      "NeckLift": {
+        "MinDegrees": -20.05352282957881,
+        "MaxDegrees": 45.05352282957882,
+        "Reverse": false
+      },
+      "ShoulderPitchLeft": {
+        "MinDegrees": -57.29577951308232,
+        "MaxDegrees": 114.59155902616465,
+        "Reverse": false
+      },
+      "ShoulderRaiseLeft": {
+        "MinDegrees": -5.729577951308232,
+        "MaxDegrees": 68.75493541569878,
+        "Reverse": false
+      },
+      "ArmTwistLeft": {
+        "MinDegrees": -89.95437383553926,
+        "MaxDegrees": 89.95437383553926,
+        "Reverse": false
+      },
+      "ElbowLeft": {
+        "MinDegrees": -57.29577951308232,
+        "MaxDegrees": 68.75493541569878,
+        "Reverse": false
+      },
+      "WristPitchLeft": {
+        "MinDegrees": -57.29577951308232,
+        "MaxDegrees": 57.29577951308232,
+        "Reverse": false
+      },
+      "WristRollLeft": {
+        "MinDegrees": -179.90874767107852,
+        "MaxDegrees": 179.90874767107852,
+        "Reverse": false
+      },
+      "FingerSpreadUpperLeft": {
+        "MinDegrees": -11.459155902616464,
+        "MaxDegrees": 34.37746770784939,
+        "Reverse": false
+      },
+      "FingerSpreadLowerLeft": {
+        "MinDegrees": -11.459155902616464,
+        "MaxDegrees": 34.37746770784939,
+        "Reverse": false
+      },
+      "FingerCurlUpperLeft": {
+        "MinDegrees": -17.188733853924695,
+        "MaxDegrees": 45.83662361046586,
+        "Reverse": false
+      },
+      "FingerTipCurlUpperLeft": {
+        "MinDegrees": -17.188733853924695,
+        "MaxDegrees": 57.29577951308232,
+        "Reverse": false
+      },
+      "FingerCurlLowerLeft": {
+        "MinDegrees": -17.188733853924695,
+        "MaxDegrees": 45.83662361046586,
+        "Reverse": false
+      },
+      "FingerTipCurlLowerLeft": {
+        "MinDegrees": -17.188733853924695,
+        "MaxDegrees": 57.29577951308232,
+        "Reverse": false
+      },
+      "ThumbCurlLeft": {
+        "MinDegrees": -17.188733853924695,
+        "MaxDegrees": 45.83662361046586,
+        "Reverse": false
+      },
+      "ShoulderPitchRight": {
+        "MinDegrees": -57.29577951308232,
+        "MaxDegrees": 114.59155902616465,
+        "Reverse": false
+      },
+      "ShoulderRaiseRight": {
+        "MinDegrees": -5.729577951308232,
+        "MaxDegrees": 68.75493541569878,
+        "Reverse": false
+      },
+      "ArmTwistRight": {
+        "MinDegrees": -89.95437383553926,
+        "MaxDegrees": 89.95437383553926,
+        "Reverse": false
+      },
+      "ElbowRight": {
+        "MinDegrees": -57.29577951308232,
+        "MaxDegrees": 68.75493541569878,
+        "Reverse": false
+      },
+      "WristPitchRight": {
+        "MinDegrees": -57.29577951308232,
+        "MaxDegrees": 57.29577951308232,
+        "Reverse": false
+      },
+      "WristRollRight": {
+        "MinDegrees": -179.90874767107852,
+        "MaxDegrees": 179.90874767107852,
+        "Reverse": false
+      },
+      "FingerSpreadUpperRight": {
+        "MinDegrees": -11.459155902616464,
+        "MaxDegrees": 34.37746770784939,
+        "Reverse": false
+      },
+      "FingerSpreadLowerRight": {
+        "MinDegrees": -11.459155902616464,
+        "MaxDegrees": 34.37746770784939,
+        "Reverse": false
+      },
+      "FingerCurlUpperRight": {
+        "MinDegrees": -17.188733853924695,
+        "MaxDegrees": 45.83662361046586,
+        "Reverse": false
+      },
+      "FingerTipCurlUpperRight": {
+        "MinDegrees": -17.188733853924695,
+        "MaxDegrees": 57.29577951308232,
+        "Reverse": false
+      },
+      "FingerCurlLowerRight": {
+        "MinDegrees": -17.188733853924695,
+        "MaxDegrees": 45.83662361046586,
+        "Reverse": false
+      },
+      "FingerTipCurlLowerRight": {
+        "MinDegrees": -17.188733853924695,
+        "MaxDegrees": 57.29577951308232,
+        "Reverse": false
+      },
+      "ThumbCurlRight": {
+        "MinDegrees": -17.188733853924695,
+        "MaxDegrees": 45.83662361046586,
+        "Reverse": false
+      },
+      "WaistSwivel": {
+        "MinDegrees": -89.95437383553926,
+        "MaxDegrees": 89.95437383553926,
+        "Reverse": false
+      },
+      "ShoulderRotateLeft": {
+        "MinDegrees": -57.29577951308232,
+        "MaxDegrees": 205,
+        "Reverse": false
+      },
+      "ShoulderRotateRight": {
+        "MinDegrees": -57.29577951308232,
+        "MaxDegrees": 205,
+        "Reverse": false
+      },
+      "ThumbTipCurlLeft": {
+        "MinDegrees": -17.188733853924695,
+        "MaxDegrees": 74.48451336700703,
+        "Reverse": false
+      },
+      "ThumbTipCurlRight": {
+        "MinDegrees": -17.188733853924695,
+        "MaxDegrees": 74.48451336700703,
+        "Reverse": false
+      },
+      "FingerEndCurlUpperLeft": {
+        "MinDegrees": -17.188733853924695,
+        "MaxDegrees": 45.83662361046586,
+        "Reverse": false
+      },
+      "FingerEndCurlUpperRight": {
+        "MinDegrees": -17.188733853924695,
+        "MaxDegrees": 45.83662361046586,
+        "Reverse": false
+      },
+      "FingerEndCurlLowerLeft": {
+        "MinDegrees": -17.188733853924695,
+        "MaxDegrees": 45.83662361046586,
+        "Reverse": false
+      },
+      "FingerEndCurlLowerRight": {
+        "MinDegrees": -17.188733853924695,
+        "MaxDegrees": 45.83662361046586,
+        "Reverse": false
+      },
+      "ShoulderHugLeft": {
+        "MinDegrees": -28.64788975654116,
+        "MaxDegrees": 28.64788975654116,
+        "Reverse": false
+      },
+      "ShoulderHugRight": {
+        "MinDegrees": -28.64788975654116,
+        "MaxDegrees": 28.64788975654116,
+        "Reverse": false
+      },
+      "PanelsOpen": {
+        "MinDegrees": 0,
+        "MaxDegrees": 100.26761414789407,
+        "Reverse": false
+      },
+      "LaserLower": {
+        "MinDegrees": 0,
+        "MaxDegrees": 70,
+        "Reverse": false
+      }
+    },
+    "EyeLightIntensity": 11.377510040160644,
+    "VentLightIntensity": 20,
+    "Rendering": {
+      "SelectedRenderer": "Direct3D11",
+      "WeatheringLevel": 0,
+      "RobotFinish": "GoldJohnny",
+      "DefaultAccessory": "Toolbox",
+      "Wpf": {
+        "Brightness": 1,
+        "AmbientLight": 1,
+        "KeyLight": 1,
+        "Highlights": 1,
+        "Gamma": 1,
+        "Contrast": 1,
+        "LensReflectivity": 1,
+        "AntiAliasing": 2,
+        "AntiAliasingMode": "Msaa",
+        "FxaaQuality": 3
+      },
+      "Direct3D11": {
+        "Brightness": 1.6830357142857144,
+        "AmbientLight": 2.517857142857143,
+        "KeyLight": 0.30357142857142805,
+        "Highlights": 0.3125000000000001,
+        "Gamma": 2.104910714285715,
+        "Contrast": 1.0625000000000002,
+        "LensReflectivity": 0.5089285714285715,
+        "AntiAliasing": 3,
+        "AntiAliasingMode": "Msaa",
+        "FxaaQuality": 3
+      }
+    },
+    "Motions": [
+      {
+        "Servo": 0,
+        "Control": 22,
+        "MinExtent": -90,
+        "MaxExtent": 90,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 1,
+        "Control": 4,
+        "MinExtent": -19,
+        "MaxExtent": 19,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 1,
+        "Control": 13,
+        "MinExtent": -19,
+        "MaxExtent": 19,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 2,
+        "Control": 4,
+        "MinExtent": -17,
+        "MaxExtent": 12,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 2,
+        "Control": 13,
+        "MinExtent": -17,
+        "MaxExtent": 12,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 3,
+        "Control": 6,
+        "MinExtent": -42,
+        "MaxExtent": 90,
+        "ZeroExtent": 22.563139931740615,
+        "Unit": "deg",
+        "ReverseOverride": true
+      },
+      {
+        "Servo": 3,
+        "Control": 11,
+        "MinExtent": -90,
+        "MaxExtent": 42,
+        "ZeroExtent": -22.563139931740615,
+        "Unit": "deg",
+        "ReverseOverride": false
+      },
+      {
+        "Servo": 3,
+        "Control": 5,
+        "MinExtent": -42,
+        "MaxExtent": 90,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": true
+      },
+      {
+        "Servo": 3,
+        "Control": 12,
+        "MinExtent": -90,
+        "MaxExtent": 42,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": false
+      },
+      {
+        "Servo": 4,
+        "Control": 7,
+        "MinExtent": -7.883959044368574,
+        "MaxExtent": 90,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": false
+      },
+      {
+        "Servo": 4,
+        "Control": 10,
+        "MinExtent": -7.883959044368574,
+        "MaxExtent": 90,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 5,
+        "Control": 1,
+        "MinExtent": 29.526239067055418,
+        "MaxExtent": 100,
+        "ZeroExtent": 64.76311953352771,
+        "Unit": "%",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 5,
+        "Control": 16,
+        "MinExtent": 29.526239067055418,
+        "MaxExtent": 100,
+        "ZeroExtent": 64.76311953352771,
+        "Unit": "%",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 6,
+        "Control": 3,
+        "MinExtent": -12,
+        "MaxExtent": 12,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": true
+      },
+      {
+        "Servo": 6,
+        "Control": 14,
+        "MinExtent": -12,
+        "MaxExtent": 12,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": true
+      },
+      {
+        "Servo": 7,
+        "Control": 2,
+        "MinExtent": -12,
+        "MaxExtent": 12,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 7,
+        "Control": 15,
+        "MinExtent": -12,
+        "MaxExtent": 12,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 8,
+        "Control": 0,
+        "MinExtent": 0,
+        "MaxExtent": 30,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": false
+      },
+      {
+        "Servo": 8,
+        "Control": 17,
+        "MinExtent": 0,
+        "MaxExtent": 30,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 9,
+        "Control": 8,
+        "MinExtent": -19.174061433447143,
+        "MaxExtent": 15.843003412969232,
+        "ZeroExtent": -2.960626473895265,
+        "Unit": "deg",
+        "ReverseOverride": true
+      },
+      {
+        "Servo": 10,
+        "Control": 9,
+        "MinExtent": -37.30716723549508,
+        "MaxExtent": -22.563139931740615,
+        "ZeroExtent": -22.563139931740615,
+        "Unit": "deg",
+        "ReverseOverride": true
+      },
+      {
+        "Servo": 11,
+        "Control": 20,
+        "MinExtent": 22.42990654205612,
+        "MaxExtent": 65.10538641686182,
+        "ZeroExtent": 22.42990654205612,
+        "Unit": "mm",
+        "ReverseOverride": false
+      },
+      {
+        "Servo": 12,
+        "Control": 21,
+        "MinExtent": -99.25233644859817,
+        "MaxExtent": 93.36448598130833,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 13,
+        "Control": 23,
+        "MinExtent": 0,
+        "MaxExtent": 10,
+        "ZeroExtent": 0,
+        "Unit": "mm",
+        "ReverseOverride": false
+      },
+      {
+        "Servo": 14,
+        "Control": 18,
+        "MinExtent": 12.342627635745693,
+        "MaxExtent": 57.20244071985785,
+        "ZeroExtent": 12.342627635745693,
+        "Unit": "mm",
+        "ReverseOverride": false
+      },
+      {
+        "Servo": 15,
+        "Control": 19,
+        "MinExtent": -90,
+        "MaxExtent": 90,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": false
+      },
+      {
+        "Servo": 16,
+        "Control": 200,
+        "MinExtent": 2,
+        "MaxExtent": 90.46728971962642,
+        "ZeroExtent": 2,
+        "Unit": "mm",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 17,
+        "Control": 201,
+        "MinExtent": 2,
+        "MaxExtent": 90.46728971962612,
+        "ZeroExtent": 2,
+        "Unit": "mm",
+        "ReverseOverride": null
+      }
+    ]
+  },
+  "Scenes": {
+    "LibraryScenes\\Scene-Max Headroom.json": {
+      "Name": "Max Headroom",
+      "Category": "Moving Background",
+      "Description": "",
+      "RobotModelFile": "Models/Robots/Johnny5FullBody/johnny5_head.urdf",
+      "Settings": {
+        "SceneFile": "",
+        "Background": {
+          "Stage": {
+            "ModelFile": "Models/Scenery/MatrixConstruct/MatrixConstruct_backdrop.urdf",
+            "MovementMode": "RobotCentric",
+            "PreserveRobotFraming": true,
+            "RobotFraming": {
+              "HorizontalPercent": -11.021897810218947,
+              "VerticalPercent": -21.27007299270081,
+              "SpinDegrees": 0,
+              "RotateDegrees": 0,
+              "Yaw": 0,
+              "Pitch": 0,
+              "Distance": 1.15
+            },
+            "RobotX": 0,
+            "RobotY": 0,
+            "HeadingDegrees": 0,
+            "FloorHeight": -1.078381,
+            "DetectFloor": true,
+            "ViewPanX": 0,
+            "ViewPanY": 0,
+            "ViewPanZ": 0,
+            "ViewZoomPercent": 100,
+            "ViewYawDegrees": 0,
+            "EdgeMarginPercent": 20
+          },
+          "BackgroundMode": "MovingImage",
+          "BackgroundColor": "#00FF00",
+          "BackgroundImage": "UrdfBackgrounds\\maxresdefault-13480ae568f8440c8569416a2f4de44d.jpg",
+          "ImageLayout": "Cover",
+          "CleanUndockedView": true,
+          "BackgroundMotionSpeed": 1.2000000000000002,
+          "BackgroundFrameRate": 15,
+          "BackgroundZoomMinimum": 110,
+          "BackgroundZoomMaximum": 200,
+          "BackgroundPanAmount": 95,
+          "BackgroundTargetSeconds": 8,
+          "BackgroundSeed": 1,
+          "BackgroundRotation": false,
+          "BackgroundHalfTurns": false
+        },
+        "Framing": {
+          "HorizontalPercent": -11.021897810218947,
+          "VerticalPercent": -21.27007299270081,
+          "SpinDegrees": 0,
+          "RotateDegrees": 0,
+          "Yaw": 0,
+          "Pitch": 0,
+          "Distance": 1.15
+        }
+      }
+    },
+    "LibraryScenes\\Scene-Sylogist Backdrop.json": {
+      "Name": "Sylogist Backdrop",
+      "Category": "Corporate",
+      "Description": "",
+      "RobotModelFile": "Models/Robots/Johnny5FullBody/johnny5_head.urdf",
+      "Settings": {
+        "SceneFile": "",
+        "Background": {
+          "Stage": {
+            "ModelFile": "Models/Scenery/MatrixConstruct/MatrixConstruct_backdrop.urdf",
+            "MovementMode": "RobotCentric",
+            "PreserveRobotFraming": true,
+            "RobotFraming": {
+              "HorizontalPercent": -11.021897810218947,
+              "VerticalPercent": -21.27007299270081,
+              "SpinDegrees": 0,
+              "RotateDegrees": 0,
+              "Yaw": 0,
+              "Pitch": 0,
+              "Distance": 1.15
+            },
+            "RobotX": 0,
+            "RobotY": 0,
+            "HeadingDegrees": 0,
+            "FloorHeight": -1.078381,
+            "DetectFloor": true,
+            "ViewPanX": 0,
+            "ViewPanY": 0,
+            "ViewPanZ": 0,
+            "ViewZoomPercent": 100,
+            "ViewYawDegrees": 0,
+            "EdgeMarginPercent": 20
+          },
+          "BackgroundMode": "Image",
+          "BackgroundColor": "#00FF00",
+          "BackgroundImage": "UrdfBackgrounds\\Sylogist_TeamsBackdrop_8-18f7b690a3b048b2b55b0de2a625d6aa.png",
+          "ImageLayout": "Cover",
+          "CleanUndockedView": true,
+          "BackgroundMotionSpeed": 1.2000000000000002,
+          "BackgroundFrameRate": 15,
+          "BackgroundZoomMinimum": 110,
+          "BackgroundZoomMaximum": 200,
+          "BackgroundPanAmount": 95,
+          "BackgroundTargetSeconds": 8,
+          "BackgroundSeed": 1,
+          "BackgroundRotation": false,
+          "BackgroundHalfTurns": false
+        },
+        "Framing": {
+          "HorizontalPercent": -11.021897810218947,
+          "VerticalPercent": -21.27007299270081,
+          "SpinDegrees": 0,
+          "RotateDegrees": 0,
+          "Yaw": 0,
+          "Pitch": 0,
+          "Distance": 1.15
+        }
+      }
+    },
+    "LibraryBackgrounds\\Background-Default Moving head.json": {
+      "Name": "Default Moving head",
+      "Category": "Head Only",
+      "Description": "This is for normal animation of the physical model.",
+      "RobotModelFile": "",
+      "Settings": {
+        "SceneFile": "",
+        "Background": {
+          "Stage": {
+            "ModelFile": "Models/Scenery/MatrixConstruct/MatrixConstruct_backdrop.urdf",
+            "MovementMode": "RobotCentric",
+            "PreserveRobotFraming": true,
+            "RobotFraming": null,
+            "RobotX": 0,
+            "RobotY": 0,
+            "HeadingDegrees": 0,
+            "FloorHeight": -1.078381,
+            "DetectFloor": true,
+            "ViewPanX": 0,
+            "ViewPanY": 0,
+            "ViewPanZ": 0,
+            "ViewZoomPercent": 100,
+            "ViewYawDegrees": 0,
+            "EdgeMarginPercent": 20
+          },
+          "BackgroundMode": "Studio",
+          "BackgroundColor": "#00FF00",
+          "BackgroundImage": "UrdfBackgrounds\\maxresdefault-13480ae568f8440c8569416a2f4de44d.jpg",
+          "ImageLayout": "Cover",
+          "CleanUndockedView": true,
+          "BackgroundMotionSpeed": 1.2000000000000002,
+          "BackgroundFrameRate": 15,
+          "BackgroundZoomMinimum": 110,
+          "BackgroundZoomMaximum": 200,
+          "BackgroundPanAmount": 95,
+          "BackgroundTargetSeconds": 8,
+          "BackgroundSeed": 1,
+          "BackgroundRotation": false,
+          "BackgroundHalfTurns": false
+        },
+        "Framing": null
+      }
+    },
+    "LibraryBackgrounds\\Background-Matrix Construct.json": {
+      "Name": "Matrix Construct",
+      "Category": "Full Body",
+      "Description": "J5 can move around in this environment.",
+      "RobotModelFile": "",
+      "Settings": {
+        "SceneFile": "",
+        "Background": {
+          "Stage": {
+            "ModelFile": "Models/Scenery/MatrixConstruct/MatrixConstruct_backdrop.urdf",
+            "MovementMode": "RobotCentric",
+            "PreserveRobotFraming": true,
+            "RobotFraming": null,
+            "RobotX": 0,
+            "RobotY": 0,
+            "HeadingDegrees": 0,
+            "FloorHeight": -1.078381,
+            "DetectFloor": true,
+            "ViewPanX": 0,
+            "ViewPanY": 0,
+            "ViewPanZ": 0,
+            "ViewZoomPercent": 100,
+            "ViewYawDegrees": 0,
+            "EdgeMarginPercent": 20
+          },
+          "BackgroundMode": "Urdf3D",
+          "BackgroundColor": "#00FF00",
+          "BackgroundImage": "UrdfBackgrounds\\maxresdefault-13480ae568f8440c8569416a2f4de44d.jpg",
+          "ImageLayout": "Cover",
+          "CleanUndockedView": true,
+          "BackgroundMotionSpeed": 1.2000000000000002,
+          "BackgroundFrameRate": 15,
+          "BackgroundZoomMinimum": 110,
+          "BackgroundZoomMaximum": 200,
+          "BackgroundPanAmount": 95,
+          "BackgroundTargetSeconds": 8,
+          "BackgroundSeed": 1,
+          "BackgroundRotation": false,
+          "BackgroundHalfTurns": false
+        },
+        "Framing": null
+      }
+    }
+  },
+  "Legacy1": {
+    "Version": 10,
+    "AudioLedGain": 1,
+    "Presentation": {
+      "Stage": {
+        "ModelFile": "\u003CConfig\u003E\\Models/Scenery/MatrixConstruct/MatrixConstruct_backdrop.urdf",
+        "MovementMode": "RobotCentric",
+        "PreserveRobotFraming": true,
+        "RobotFraming": null,
+        "RobotX": 0,
+        "RobotY": 0,
+        "HeadingDegrees": 0,
+        "FloorHeight": -1.078381,
+        "DetectFloor": true,
+        "ViewPanX": 0,
+        "ViewPanY": 0,
+        "ViewPanZ": 0,
+        "ViewZoomPercent": 100,
+        "ViewYawDegrees": 0,
+        "EdgeMarginPercent": 20
+      },
+      "BackgroundMode": "Studio",
+      "BackgroundColor": "#00FF00",
+      "BackgroundImage": "",
+      "ImageLayout": "Cover",
+      "CleanUndockedView": false,
+      "BackgroundMotionSpeed": 1,
+      "BackgroundFrameRate": 15,
+      "BackgroundZoomMinimum": 110,
+      "BackgroundZoomMaximum": 150,
+      "BackgroundPanAmount": 75,
+      "BackgroundTargetSeconds": 8,
+      "BackgroundSeed": 1,
+      "BackgroundRotation": false,
+      "BackgroundHalfTurns": false
+    },
+    "BodyMotions": {},
+    "EyeLightIntensity": 1,
+    "VentLightIntensity": 1,
+    "Rendering": {
+      "SelectedRenderer": "Wpf",
+      "WeatheringLevel": 0,
+      "RobotFinish": "Original",
+      "DefaultAccessory": "None",
+      "Wpf": {
+        "Brightness": 1,
+        "AmbientLight": 1,
+        "KeyLight": 1,
+        "Highlights": 1,
+        "Gamma": 1,
+        "Contrast": 1,
+        "LensReflectivity": 1,
+        "AntiAliasing": 2,
+        "AntiAliasingMode": "Msaa",
+        "FxaaQuality": 3
+      },
+      "Direct3D11": {
+        "Brightness": 1,
+        "AmbientLight": 1,
+        "KeyLight": 1,
+        "Highlights": 1,
+        "Gamma": 1,
+        "Contrast": 1,
+        "LensReflectivity": 1,
+        "AntiAliasing": 2,
+        "AntiAliasingMode": "Msaa",
+        "FxaaQuality": 3
+      }
+    },
+    "Motions": [
+      {
+        "Servo": 0,
+        "Control": 22,
+        "MinExtent": -90,
+        "MaxExtent": 90,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 1,
+        "Control": 4,
+        "MinExtent": -15,
+        "MaxExtent": 15,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 1,
+        "Control": 13,
+        "MinExtent": -15,
+        "MaxExtent": 15,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 2,
+        "Control": 4,
+        "MinExtent": -10,
+        "MaxExtent": 10,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 2,
+        "Control": 13,
+        "MinExtent": -10,
+        "MaxExtent": 10,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 3,
+        "Control": 6,
+        "MinExtent": -42,
+        "MaxExtent": 90,
+        "ZeroExtent": 22.563139931740615,
+        "Unit": "deg",
+        "ReverseOverride": true
+      },
+      {
+        "Servo": 3,
+        "Control": 11,
+        "MinExtent": -90,
+        "MaxExtent": 42,
+        "ZeroExtent": -22.563139931740615,
+        "Unit": "deg",
+        "ReverseOverride": false
+      },
+      {
+        "Servo": 3,
+        "Control": 5,
+        "MinExtent": -42,
+        "MaxExtent": 90,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": true
+      },
+      {
+        "Servo": 3,
+        "Control": 12,
+        "MinExtent": -90,
+        "MaxExtent": 42,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": false
+      },
+      {
+        "Servo": 4,
+        "Control": 7,
+        "MinExtent": -7.883959044368574,
+        "MaxExtent": 90,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": false
+      },
+      {
+        "Servo": 4,
+        "Control": 10,
+        "MinExtent": -7.883959044368574,
+        "MaxExtent": 90,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 5,
+        "Control": 1,
+        "MinExtent": 15,
+        "MaxExtent": 85,
+        "ZeroExtent": 50,
+        "Unit": "%",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 5,
+        "Control": 16,
+        "MinExtent": 15,
+        "MaxExtent": 85,
+        "ZeroExtent": 50,
+        "Unit": "%",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 6,
+        "Control": 3,
+        "MinExtent": -12,
+        "MaxExtent": 12,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": true
+      },
+      {
+        "Servo": 6,
+        "Control": 14,
+        "MinExtent": -12,
+        "MaxExtent": 12,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": true
+      },
+      {
+        "Servo": 7,
+        "Control": 2,
+        "MinExtent": -12,
+        "MaxExtent": 12,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 7,
+        "Control": 15,
+        "MinExtent": -12,
+        "MaxExtent": 12,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 8,
+        "Control": 0,
+        "MinExtent": 0,
+        "MaxExtent": 30,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": false
+      },
+      {
+        "Servo": 8,
+        "Control": 17,
+        "MinExtent": 0,
+        "MaxExtent": 30,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 9,
+        "Control": 8,
+        "MinExtent": -19.174061433447143,
+        "MaxExtent": 15.843003412969232,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": true
+      },
+      {
+        "Servo": 10,
+        "Control": 9,
+        "MinExtent": -37.30716723549508,
+        "MaxExtent": -22.563139931740615,
+        "ZeroExtent": -37.30716723549508,
+        "Unit": "deg",
+        "ReverseOverride": true
+      },
+      {
+        "Servo": 11,
+        "Control": 20,
+        "MinExtent": 22.4299065420561,
+        "MaxExtent": 65.1053864168618,
+        "ZeroExtent": 22.4299065420561,
+        "Unit": "mm",
+        "ReverseOverride": false
+      },
+      {
+        "Servo": 12,
+        "Control": 21,
+        "MinExtent": -99.25233644859817,
+        "MaxExtent": 93.36448598130833,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 13,
+        "Control": 23,
+        "MinExtent": 0,
+        "MaxExtent": 10,
+        "ZeroExtent": 0,
+        "Unit": "mm",
+        "ReverseOverride": false
+      },
+      {
+        "Servo": 14,
+        "Control": 18,
+        "MinExtent": 12.342627635745693,
+        "MaxExtent": 57.20244071985785,
+        "ZeroExtent": 12.342627635745693,
+        "Unit": "mm",
+        "ReverseOverride": false
+      },
+      {
+        "Servo": 15,
+        "Control": 19,
+        "MinExtent": -90,
+        "MaxExtent": 90,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": false
+      },
+      {
+        "Servo": 16,
+        "Control": 200,
+        "MinExtent": 2,
+        "MaxExtent": 90.46728971962642,
+        "ZeroExtent": 2,
+        "Unit": "mm",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 17,
+        "Control": 201,
+        "MinExtent": 2,
+        "MaxExtent": 90.46728971962612,
+        "ZeroExtent": 2,
+        "Unit": "mm",
+        "ReverseOverride": null
+      }
+    ]
+  },
+  "Legacy2": {
+    "Version": 10,
+    "AudioLedGain": 1,
+    "Presentation": {
+      "Stage": {
+        "ModelFile": "\u003CConfig\u003E\\Models/Scenery/MatrixConstruct/MatrixConstruct_backdrop.urdf",
+        "MovementMode": "RobotCentric",
+        "PreserveRobotFraming": true,
+        "RobotFraming": null,
+        "RobotX": 0,
+        "RobotY": 0,
+        "HeadingDegrees": 0,
+        "FloorHeight": -1.078381,
+        "DetectFloor": true,
+        "ViewPanX": 0,
+        "ViewPanY": 0,
+        "ViewPanZ": 0,
+        "ViewZoomPercent": 100,
+        "ViewYawDegrees": 0,
+        "EdgeMarginPercent": 20
+      },
+      "BackgroundMode": "Studio",
+      "BackgroundColor": "#00FF00",
+      "BackgroundImage": "",
+      "ImageLayout": "Cover",
+      "CleanUndockedView": false,
+      "BackgroundMotionSpeed": 1,
+      "BackgroundFrameRate": 15,
+      "BackgroundZoomMinimum": 110,
+      "BackgroundZoomMaximum": 150,
+      "BackgroundPanAmount": 75,
+      "BackgroundTargetSeconds": 8,
+      "BackgroundSeed": 1,
+      "BackgroundRotation": false,
+      "BackgroundHalfTurns": false
+    },
+    "BodyMotions": {},
+    "EyeLightIntensity": 1,
+    "VentLightIntensity": 1,
+    "Rendering": {
+      "SelectedRenderer": "Wpf",
+      "WeatheringLevel": 0,
+      "RobotFinish": "Original",
+      "DefaultAccessory": "None",
+      "Wpf": {
+        "Brightness": 1,
+        "AmbientLight": 1,
+        "KeyLight": 1,
+        "Highlights": 1,
+        "Gamma": 1,
+        "Contrast": 1,
+        "LensReflectivity": 1,
+        "AntiAliasing": 2,
+        "AntiAliasingMode": "Msaa",
+        "FxaaQuality": 3
+      },
+      "Direct3D11": {
+        "Brightness": 1,
+        "AmbientLight": 1,
+        "KeyLight": 1,
+        "Highlights": 1,
+        "Gamma": 1,
+        "Contrast": 1,
+        "LensReflectivity": 1,
+        "AntiAliasing": 2,
+        "AntiAliasingMode": "Msaa",
+        "FxaaQuality": 3
+      }
+    },
+    "Motions": [
+      {
+        "Servo": 0,
+        "Control": 22,
+        "MinExtent": -90,
+        "MaxExtent": 90,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 1,
+        "Control": 4,
+        "MinExtent": -15,
+        "MaxExtent": 15,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 1,
+        "Control": 13,
+        "MinExtent": -15,
+        "MaxExtent": 15,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 2,
+        "Control": 4,
+        "MinExtent": -10,
+        "MaxExtent": 10,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 2,
+        "Control": 13,
+        "MinExtent": -10,
+        "MaxExtent": 10,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 3,
+        "Control": 6,
+        "MinExtent": -42,
+        "MaxExtent": 90,
+        "ZeroExtent": 22.563139931740615,
+        "Unit": "deg",
+        "ReverseOverride": true
+      },
+      {
+        "Servo": 3,
+        "Control": 11,
+        "MinExtent": -90,
+        "MaxExtent": 42,
+        "ZeroExtent": -22.563139931740615,
+        "Unit": "deg",
+        "ReverseOverride": false
+      },
+      {
+        "Servo": 3,
+        "Control": 5,
+        "MinExtent": -42,
+        "MaxExtent": 90,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": true
+      },
+      {
+        "Servo": 3,
+        "Control": 12,
+        "MinExtent": -90,
+        "MaxExtent": 42,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": false
+      },
+      {
+        "Servo": 4,
+        "Control": 7,
+        "MinExtent": -7.883959044368574,
+        "MaxExtent": 90,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": false
+      },
+      {
+        "Servo": 4,
+        "Control": 10,
+        "MinExtent": -7.883959044368574,
+        "MaxExtent": 90,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 5,
+        "Control": 1,
+        "MinExtent": 15,
+        "MaxExtent": 85,
+        "ZeroExtent": 50,
+        "Unit": "%",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 5,
+        "Control": 16,
+        "MinExtent": 15,
+        "MaxExtent": 85,
+        "ZeroExtent": 50,
+        "Unit": "%",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 6,
+        "Control": 3,
+        "MinExtent": -12,
+        "MaxExtent": 12,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": true
+      },
+      {
+        "Servo": 6,
+        "Control": 14,
+        "MinExtent": -12,
+        "MaxExtent": 12,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": true
+      },
+      {
+        "Servo": 7,
+        "Control": 2,
+        "MinExtent": -12,
+        "MaxExtent": 12,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 7,
+        "Control": 15,
+        "MinExtent": -12,
+        "MaxExtent": 12,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 8,
+        "Control": 0,
+        "MinExtent": 0,
+        "MaxExtent": 30,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": false
+      },
+      {
+        "Servo": 8,
+        "Control": 17,
+        "MinExtent": 0,
+        "MaxExtent": 30,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 9,
+        "Control": 8,
+        "MinExtent": -19.174061433447143,
+        "MaxExtent": 15.843003412969232,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": true
+      },
+      {
+        "Servo": 10,
+        "Control": 9,
+        "MinExtent": -37.30716723549508,
+        "MaxExtent": -22.563139931740615,
+        "ZeroExtent": -37.30716723549508,
+        "Unit": "deg",
+        "ReverseOverride": true
+      },
+      {
+        "Servo": 11,
+        "Control": 20,
+        "MinExtent": 22.4299065420561,
+        "MaxExtent": 65.1053864168618,
+        "ZeroExtent": 22.4299065420561,
+        "Unit": "mm",
+        "ReverseOverride": false
+      },
+      {
+        "Servo": 12,
+        "Control": 21,
+        "MinExtent": -99.25233644859817,
+        "MaxExtent": 93.36448598130833,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 13,
+        "Control": 23,
+        "MinExtent": 0,
+        "MaxExtent": 10,
+        "ZeroExtent": 0,
+        "Unit": "mm",
+        "ReverseOverride": false
+      },
+      {
+        "Servo": 14,
+        "Control": 18,
+        "MinExtent": 12.342627635745693,
+        "MaxExtent": 57.20244071985785,
+        "ZeroExtent": 12.342627635745693,
+        "Unit": "mm",
+        "ReverseOverride": false
+      },
+      {
+        "Servo": 15,
+        "Control": 19,
+        "MinExtent": -90,
+        "MaxExtent": 90,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": false
+      },
+      {
+        "Servo": 16,
+        "Control": 200,
+        "MinExtent": 2,
+        "MaxExtent": 90.46728971962642,
+        "ZeroExtent": 2,
+        "Unit": "mm",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 17,
+        "Control": 201,
+        "MinExtent": 2,
+        "MaxExtent": 90.46728971962612,
+        "ZeroExtent": 2,
+        "Unit": "mm",
+        "ReverseOverride": null
+      }
+    ]
+  },
+  "Legacy6": {
+    "Version": 10,
+    "AudioLedGain": 1,
+    "Presentation": {
+      "Stage": {
+        "ModelFile": "\u003CConfig\u003E\\Models/Scenery/MatrixConstruct/MatrixConstruct_backdrop.urdf",
+        "MovementMode": "RobotCentric",
+        "PreserveRobotFraming": true,
+        "RobotFraming": null,
+        "RobotX": 0,
+        "RobotY": 0,
+        "HeadingDegrees": 0,
+        "FloorHeight": -1.078381,
+        "DetectFloor": true,
+        "ViewPanX": 0,
+        "ViewPanY": 0,
+        "ViewPanZ": 0,
+        "ViewZoomPercent": 100,
+        "ViewYawDegrees": 0,
+        "EdgeMarginPercent": 20
+      },
+      "BackgroundMode": "Studio",
+      "BackgroundColor": "#00FF00",
+      "BackgroundImage": "",
+      "ImageLayout": "Cover",
+      "CleanUndockedView": false,
+      "BackgroundMotionSpeed": 1,
+      "BackgroundFrameRate": 15,
+      "BackgroundZoomMinimum": 110,
+      "BackgroundZoomMaximum": 150,
+      "BackgroundPanAmount": 75,
+      "BackgroundTargetSeconds": 8,
+      "BackgroundSeed": 1,
+      "BackgroundRotation": false,
+      "BackgroundHalfTurns": false
+    },
+    "BodyMotions": {},
+    "EyeLightIntensity": 1,
+    "VentLightIntensity": 1,
+    "Rendering": {
+      "SelectedRenderer": "Wpf",
+      "WeatheringLevel": 0,
+      "RobotFinish": "Original",
+      "DefaultAccessory": "None",
+      "Wpf": {
+        "Brightness": 1,
+        "AmbientLight": 1,
+        "KeyLight": 1,
+        "Highlights": 1,
+        "Gamma": 1,
+        "Contrast": 1,
+        "LensReflectivity": 1,
+        "AntiAliasing": 2,
+        "AntiAliasingMode": "Msaa",
+        "FxaaQuality": 3
+      },
+      "Direct3D11": {
+        "Brightness": 1,
+        "AmbientLight": 1,
+        "KeyLight": 1,
+        "Highlights": 1,
+        "Gamma": 1,
+        "Contrast": 1,
+        "LensReflectivity": 1,
+        "AntiAliasing": 2,
+        "AntiAliasingMode": "Msaa",
+        "FxaaQuality": 3
+      }
+    },
+    "Motions": [
+      {
+        "Servo": 0,
+        "Control": 22,
+        "MinExtent": -90,
+        "MaxExtent": 90,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 1,
+        "Control": 4,
+        "MinExtent": -15,
+        "MaxExtent": 15,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 1,
+        "Control": 13,
+        "MinExtent": -15,
+        "MaxExtent": 15,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 2,
+        "Control": 4,
+        "MinExtent": -10,
+        "MaxExtent": 10,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 2,
+        "Control": 13,
+        "MinExtent": -10,
+        "MaxExtent": 10,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 3,
+        "Control": 6,
+        "MinExtent": -42,
+        "MaxExtent": 90,
+        "ZeroExtent": 22.563139931740615,
+        "Unit": "deg",
+        "ReverseOverride": true
+      },
+      {
+        "Servo": 3,
+        "Control": 11,
+        "MinExtent": -90,
+        "MaxExtent": 42,
+        "ZeroExtent": -22.563139931740615,
+        "Unit": "deg",
+        "ReverseOverride": false
+      },
+      {
+        "Servo": 3,
+        "Control": 5,
+        "MinExtent": -42,
+        "MaxExtent": 90,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": true
+      },
+      {
+        "Servo": 3,
+        "Control": 12,
+        "MinExtent": -90,
+        "MaxExtent": 42,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": false
+      },
+      {
+        "Servo": 4,
+        "Control": 7,
+        "MinExtent": -7.883959044368574,
+        "MaxExtent": 90,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": false
+      },
+      {
+        "Servo": 4,
+        "Control": 10,
+        "MinExtent": -7.883959044368574,
+        "MaxExtent": 90,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 5,
+        "Control": 1,
+        "MinExtent": 15,
+        "MaxExtent": 85,
+        "ZeroExtent": 50,
+        "Unit": "%",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 5,
+        "Control": 16,
+        "MinExtent": 15,
+        "MaxExtent": 85,
+        "ZeroExtent": 50,
+        "Unit": "%",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 6,
+        "Control": 3,
+        "MinExtent": -12,
+        "MaxExtent": 12,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": true
+      },
+      {
+        "Servo": 6,
+        "Control": 14,
+        "MinExtent": -12,
+        "MaxExtent": 12,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": true
+      },
+      {
+        "Servo": 7,
+        "Control": 2,
+        "MinExtent": -12,
+        "MaxExtent": 12,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 7,
+        "Control": 15,
+        "MinExtent": -12,
+        "MaxExtent": 12,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 8,
+        "Control": 0,
+        "MinExtent": 0,
+        "MaxExtent": 30,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": false
+      },
+      {
+        "Servo": 8,
+        "Control": 17,
+        "MinExtent": 0,
+        "MaxExtent": 30,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 9,
+        "Control": 8,
+        "MinExtent": -19.174061433447143,
+        "MaxExtent": 15.843003412969232,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": true
+      },
+      {
+        "Servo": 10,
+        "Control": 9,
+        "MinExtent": -37.30716723549508,
+        "MaxExtent": -22.563139931740615,
+        "ZeroExtent": -37.30716723549508,
+        "Unit": "deg",
+        "ReverseOverride": true
+      },
+      {
+        "Servo": 11,
+        "Control": 20,
+        "MinExtent": 22.4299065420561,
+        "MaxExtent": 65.1053864168618,
+        "ZeroExtent": 22.4299065420561,
+        "Unit": "mm",
+        "ReverseOverride": false
+      },
+      {
+        "Servo": 12,
+        "Control": 21,
+        "MinExtent": -99.25233644859817,
+        "MaxExtent": 93.36448598130833,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 13,
+        "Control": 23,
+        "MinExtent": 0,
+        "MaxExtent": 10,
+        "ZeroExtent": 0,
+        "Unit": "mm",
+        "ReverseOverride": false
+      },
+      {
+        "Servo": 14,
+        "Control": 18,
+        "MinExtent": 12.342627635745693,
+        "MaxExtent": 57.20244071985785,
+        "ZeroExtent": 12.342627635745693,
+        "Unit": "mm",
+        "ReverseOverride": false
+      },
+      {
+        "Servo": 15,
+        "Control": 19,
+        "MinExtent": -90,
+        "MaxExtent": 90,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": false
+      },
+      {
+        "Servo": 16,
+        "Control": 200,
+        "MinExtent": 2,
+        "MaxExtent": 90.46728971962642,
+        "ZeroExtent": 2,
+        "Unit": "mm",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 17,
+        "Control": 201,
+        "MinExtent": 2,
+        "MaxExtent": 90.46728971962612,
+        "ZeroExtent": 2,
+        "Unit": "mm",
+        "ReverseOverride": null
+      }
+    ]
+  },
+  "Legacy7": {
+    "Version": 10,
+    "AudioLedGain": 1,
+    "Presentation": {
+      "Stage": {
+        "ModelFile": "\u003CConfig\u003E\\Models/Scenery/MatrixConstruct/MatrixConstruct_backdrop.urdf",
+        "MovementMode": "RobotCentric",
+        "PreserveRobotFraming": true,
+        "RobotFraming": null,
+        "RobotX": 0,
+        "RobotY": 0,
+        "HeadingDegrees": 0,
+        "FloorHeight": -1.078381,
+        "DetectFloor": true,
+        "ViewPanX": 0,
+        "ViewPanY": 0,
+        "ViewPanZ": 0,
+        "ViewZoomPercent": 100,
+        "ViewYawDegrees": 0,
+        "EdgeMarginPercent": 20
+      },
+      "BackgroundMode": "Studio",
+      "BackgroundColor": "#00FF00",
+      "BackgroundImage": "",
+      "ImageLayout": "Cover",
+      "CleanUndockedView": false,
+      "BackgroundMotionSpeed": 1,
+      "BackgroundFrameRate": 15,
+      "BackgroundZoomMinimum": 110,
+      "BackgroundZoomMaximum": 150,
+      "BackgroundPanAmount": 75,
+      "BackgroundTargetSeconds": 8,
+      "BackgroundSeed": 1,
+      "BackgroundRotation": false,
+      "BackgroundHalfTurns": false
+    },
+    "BodyMotions": {},
+    "EyeLightIntensity": 1,
+    "VentLightIntensity": 1,
+    "Rendering": {
+      "SelectedRenderer": "Wpf",
+      "WeatheringLevel": 0,
+      "RobotFinish": "Original",
+      "DefaultAccessory": "None",
+      "Wpf": {
+        "Brightness": 1,
+        "AmbientLight": 1,
+        "KeyLight": 1,
+        "Highlights": 1,
+        "Gamma": 1,
+        "Contrast": 1,
+        "LensReflectivity": 1,
+        "AntiAliasing": 2,
+        "AntiAliasingMode": "Msaa",
+        "FxaaQuality": 3
+      },
+      "Direct3D11": {
+        "Brightness": 1,
+        "AmbientLight": 1,
+        "KeyLight": 1,
+        "Highlights": 1,
+        "Gamma": 1,
+        "Contrast": 1,
+        "LensReflectivity": 1,
+        "AntiAliasing": 2,
+        "AntiAliasingMode": "Msaa",
+        "FxaaQuality": 3
+      }
+    },
+    "Motions": [
+      {
+        "Servo": 0,
+        "Control": 22,
+        "MinExtent": -90,
+        "MaxExtent": 90,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 1,
+        "Control": 4,
+        "MinExtent": -15,
+        "MaxExtent": 15,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 1,
+        "Control": 13,
+        "MinExtent": -15,
+        "MaxExtent": 15,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 2,
+        "Control": 4,
+        "MinExtent": -10,
+        "MaxExtent": 10,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 2,
+        "Control": 13,
+        "MinExtent": -10,
+        "MaxExtent": 10,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 3,
+        "Control": 6,
+        "MinExtent": -42,
+        "MaxExtent": 90,
+        "ZeroExtent": 22.563139931740615,
+        "Unit": "deg",
+        "ReverseOverride": true
+      },
+      {
+        "Servo": 3,
+        "Control": 11,
+        "MinExtent": -90,
+        "MaxExtent": 42,
+        "ZeroExtent": -22.563139931740615,
+        "Unit": "deg",
+        "ReverseOverride": false
+      },
+      {
+        "Servo": 3,
+        "Control": 5,
+        "MinExtent": -42,
+        "MaxExtent": 90,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": true
+      },
+      {
+        "Servo": 3,
+        "Control": 12,
+        "MinExtent": -90,
+        "MaxExtent": 42,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": false
+      },
+      {
+        "Servo": 4,
+        "Control": 7,
+        "MinExtent": -7.883959044368574,
+        "MaxExtent": 90,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": false
+      },
+      {
+        "Servo": 4,
+        "Control": 10,
+        "MinExtent": -7.883959044368574,
+        "MaxExtent": 90,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 5,
+        "Control": 1,
+        "MinExtent": 15,
+        "MaxExtent": 85,
+        "ZeroExtent": 64.76311953352771,
+        "Unit": "%",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 5,
+        "Control": 16,
+        "MinExtent": 15,
+        "MaxExtent": 85,
+        "ZeroExtent": 64.76311953352771,
+        "Unit": "%",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 6,
+        "Control": 3,
+        "MinExtent": -12,
+        "MaxExtent": 12,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": true
+      },
+      {
+        "Servo": 6,
+        "Control": 14,
+        "MinExtent": -12,
+        "MaxExtent": 12,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": true
+      },
+      {
+        "Servo": 7,
+        "Control": 2,
+        "MinExtent": -12,
+        "MaxExtent": 12,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 7,
+        "Control": 15,
+        "MinExtent": -12,
+        "MaxExtent": 12,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 8,
+        "Control": 0,
+        "MinExtent": 0,
+        "MaxExtent": 30,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": false
+      },
+      {
+        "Servo": 8,
+        "Control": 17,
+        "MinExtent": 0,
+        "MaxExtent": 30,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 9,
+        "Control": 8,
+        "MinExtent": -19.174061433447143,
+        "MaxExtent": 15.843003412969232,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": true
+      },
+      {
+        "Servo": 10,
+        "Control": 9,
+        "MinExtent": -37.30716723549508,
+        "MaxExtent": -22.563139931740615,
+        "ZeroExtent": -22.563139931740615,
+        "Unit": "deg",
+        "ReverseOverride": true
+      },
+      {
+        "Servo": 11,
+        "Control": 20,
+        "MinExtent": 22.4299065420561,
+        "MaxExtent": 65.1053864168618,
+        "ZeroExtent": 22.4299065420561,
+        "Unit": "mm",
+        "ReverseOverride": false
+      },
+      {
+        "Servo": 12,
+        "Control": 21,
+        "MinExtent": -99.25233644859817,
+        "MaxExtent": 93.36448598130833,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 13,
+        "Control": 23,
+        "MinExtent": 0,
+        "MaxExtent": 10,
+        "ZeroExtent": 0,
+        "Unit": "mm",
+        "ReverseOverride": false
+      },
+      {
+        "Servo": 14,
+        "Control": 18,
+        "MinExtent": 12.342627635745693,
+        "MaxExtent": 57.20244071985785,
+        "ZeroExtent": 12.342627635745693,
+        "Unit": "mm",
+        "ReverseOverride": false
+      },
+      {
+        "Servo": 15,
+        "Control": 19,
+        "MinExtent": -90,
+        "MaxExtent": 90,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": false
+      },
+      {
+        "Servo": 16,
+        "Control": 200,
+        "MinExtent": 2,
+        "MaxExtent": 90.46728971962642,
+        "ZeroExtent": 2,
+        "Unit": "mm",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 17,
+        "Control": 201,
+        "MinExtent": 2,
+        "MaxExtent": 90.46728971962612,
+        "ZeroExtent": 2,
+        "Unit": "mm",
+        "ReverseOverride": null
+      }
+    ]
+  },
+  "Legacy9": {
+    "Version": 10,
+    "AudioLedGain": 1,
+    "Presentation": {
+      "Stage": {
+        "ModelFile": "\u003CConfig\u003E\\Models/Scenery/MatrixConstruct/MatrixConstruct_backdrop.urdf",
+        "MovementMode": "RobotCentric",
+        "PreserveRobotFraming": true,
+        "RobotFraming": null,
+        "RobotX": 0,
+        "RobotY": 0,
+        "HeadingDegrees": 0,
+        "FloorHeight": -1.078381,
+        "DetectFloor": true,
+        "ViewPanX": 0,
+        "ViewPanY": 0,
+        "ViewPanZ": 0,
+        "ViewZoomPercent": 100,
+        "ViewYawDegrees": 0,
+        "EdgeMarginPercent": 20
+      },
+      "BackgroundMode": "Studio",
+      "BackgroundColor": "#00FF00",
+      "BackgroundImage": "",
+      "ImageLayout": "Cover",
+      "CleanUndockedView": false,
+      "BackgroundMotionSpeed": 1,
+      "BackgroundFrameRate": 15,
+      "BackgroundZoomMinimum": 110,
+      "BackgroundZoomMaximum": 150,
+      "BackgroundPanAmount": 75,
+      "BackgroundTargetSeconds": 8,
+      "BackgroundSeed": 1,
+      "BackgroundRotation": false,
+      "BackgroundHalfTurns": false
+    },
+    "BodyMotions": {},
+    "EyeLightIntensity": 1,
+    "VentLightIntensity": 1,
+    "Rendering": {
+      "SelectedRenderer": "Wpf",
+      "WeatheringLevel": 0,
+      "RobotFinish": "Original",
+      "DefaultAccessory": "None",
+      "Wpf": {
+        "Brightness": 1,
+        "AmbientLight": 1,
+        "KeyLight": 1,
+        "Highlights": 1,
+        "Gamma": 1,
+        "Contrast": 1,
+        "LensReflectivity": 1,
+        "AntiAliasing": 2,
+        "AntiAliasingMode": "Msaa",
+        "FxaaQuality": 3
+      },
+      "Direct3D11": {
+        "Brightness": 1,
+        "AmbientLight": 1,
+        "KeyLight": 1,
+        "Highlights": 1,
+        "Gamma": 1,
+        "Contrast": 1,
+        "LensReflectivity": 1,
+        "AntiAliasing": 2,
+        "AntiAliasingMode": "Msaa",
+        "FxaaQuality": 3
+      }
+    },
+    "Motions": [
+      {
+        "Servo": 0,
+        "Control": 22,
+        "MinExtent": -90,
+        "MaxExtent": 90,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 1,
+        "Control": 4,
+        "MinExtent": -15,
+        "MaxExtent": 15,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 1,
+        "Control": 13,
+        "MinExtent": -15,
+        "MaxExtent": 15,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 2,
+        "Control": 4,
+        "MinExtent": -10,
+        "MaxExtent": 10,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 2,
+        "Control": 13,
+        "MinExtent": -10,
+        "MaxExtent": 10,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 3,
+        "Control": 6,
+        "MinExtent": -42,
+        "MaxExtent": 90,
+        "ZeroExtent": 22.563139931740615,
+        "Unit": "deg",
+        "ReverseOverride": true
+      },
+      {
+        "Servo": 3,
+        "Control": 11,
+        "MinExtent": -90,
+        "MaxExtent": 42,
+        "ZeroExtent": -22.563139931740615,
+        "Unit": "deg",
+        "ReverseOverride": false
+      },
+      {
+        "Servo": 3,
+        "Control": 5,
+        "MinExtent": -42,
+        "MaxExtent": 90,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": true
+      },
+      {
+        "Servo": 3,
+        "Control": 12,
+        "MinExtent": -90,
+        "MaxExtent": 42,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": false
+      },
+      {
+        "Servo": 4,
+        "Control": 7,
+        "MinExtent": -7.883959044368574,
+        "MaxExtent": 90,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": false
+      },
+      {
+        "Servo": 4,
+        "Control": 10,
+        "MinExtent": -7.883959044368574,
+        "MaxExtent": 90,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 5,
+        "Control": 1,
+        "MinExtent": 15,
+        "MaxExtent": 85,
+        "ZeroExtent": 64.76311953352771,
+        "Unit": "%",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 5,
+        "Control": 16,
+        "MinExtent": 15,
+        "MaxExtent": 85,
+        "ZeroExtent": 64.76311953352771,
+        "Unit": "%",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 6,
+        "Control": 3,
+        "MinExtent": -12,
+        "MaxExtent": 12,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": true
+      },
+      {
+        "Servo": 6,
+        "Control": 14,
+        "MinExtent": -12,
+        "MaxExtent": 12,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": true
+      },
+      {
+        "Servo": 7,
+        "Control": 2,
+        "MinExtent": -12,
+        "MaxExtent": 12,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 7,
+        "Control": 15,
+        "MinExtent": -12,
+        "MaxExtent": 12,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 8,
+        "Control": 0,
+        "MinExtent": 0,
+        "MaxExtent": 30,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": false
+      },
+      {
+        "Servo": 8,
+        "Control": 17,
+        "MinExtent": 0,
+        "MaxExtent": 30,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 9,
+        "Control": 8,
+        "MinExtent": -19.174061433447143,
+        "MaxExtent": 15.843003412969232,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": true
+      },
+      {
+        "Servo": 10,
+        "Control": 9,
+        "MinExtent": -37.30716723549508,
+        "MaxExtent": -22.563139931740615,
+        "ZeroExtent": -22.563139931740615,
+        "Unit": "deg",
+        "ReverseOverride": true
+      },
+      {
+        "Servo": 11,
+        "Control": 20,
+        "MinExtent": 22.4299065420561,
+        "MaxExtent": 65.1053864168618,
+        "ZeroExtent": 22.4299065420561,
+        "Unit": "mm",
+        "ReverseOverride": false
+      },
+      {
+        "Servo": 12,
+        "Control": 21,
+        "MinExtent": -99.25233644859817,
+        "MaxExtent": 93.36448598130833,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 13,
+        "Control": 23,
+        "MinExtent": 0,
+        "MaxExtent": 10,
+        "ZeroExtent": 0,
+        "Unit": "mm",
+        "ReverseOverride": false
+      },
+      {
+        "Servo": 14,
+        "Control": 18,
+        "MinExtent": 12.342627635745693,
+        "MaxExtent": 57.20244071985785,
+        "ZeroExtent": 12.342627635745693,
+        "Unit": "mm",
+        "ReverseOverride": false
+      },
+      {
+        "Servo": 15,
+        "Control": 19,
+        "MinExtent": -90,
+        "MaxExtent": 90,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": false
+      },
+      {
+        "Servo": 16,
+        "Control": 200,
+        "MinExtent": 2,
+        "MaxExtent": 90.46728971962642,
+        "ZeroExtent": 2,
+        "Unit": "mm",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 17,
+        "Control": 201,
+        "MinExtent": 2,
+        "MaxExtent": 90.46728971962612,
+        "ZeroExtent": 2,
+        "Unit": "mm",
+        "ReverseOverride": null
+      }
+    ]
+  },
+  "Legacy10": {
+    "Version": 10,
+    "AudioLedGain": 1,
+    "Presentation": {
+      "Stage": {
+        "ModelFile": "\u003CConfig\u003E\\Models/Scenery/MatrixConstruct/MatrixConstruct_backdrop.urdf",
+        "MovementMode": "RobotCentric",
+        "PreserveRobotFraming": true,
+        "RobotFraming": null,
+        "RobotX": 0,
+        "RobotY": 0,
+        "HeadingDegrees": 0,
+        "FloorHeight": -1.078381,
+        "DetectFloor": true,
+        "ViewPanX": 0,
+        "ViewPanY": 0,
+        "ViewPanZ": 0,
+        "ViewZoomPercent": 100,
+        "ViewYawDegrees": 0,
+        "EdgeMarginPercent": 20
+      },
+      "BackgroundMode": "Studio",
+      "BackgroundColor": "#00FF00",
+      "BackgroundImage": "",
+      "ImageLayout": "Cover",
+      "CleanUndockedView": false,
+      "BackgroundMotionSpeed": 1,
+      "BackgroundFrameRate": 15,
+      "BackgroundZoomMinimum": 110,
+      "BackgroundZoomMaximum": 150,
+      "BackgroundPanAmount": 75,
+      "BackgroundTargetSeconds": 8,
+      "BackgroundSeed": 1,
+      "BackgroundRotation": false,
+      "BackgroundHalfTurns": false
+    },
+    "BodyMotions": {},
+    "EyeLightIntensity": 1,
+    "VentLightIntensity": 1,
+    "Rendering": {
+      "SelectedRenderer": "Wpf",
+      "WeatheringLevel": 0,
+      "RobotFinish": "Original",
+      "DefaultAccessory": "None",
+      "Wpf": {
+        "Brightness": 1,
+        "AmbientLight": 1,
+        "KeyLight": 1,
+        "Highlights": 1,
+        "Gamma": 1,
+        "Contrast": 1,
+        "LensReflectivity": 1,
+        "AntiAliasing": 2,
+        "AntiAliasingMode": "Msaa",
+        "FxaaQuality": 3
+      },
+      "Direct3D11": {
+        "Brightness": 1,
+        "AmbientLight": 1,
+        "KeyLight": 1,
+        "Highlights": 1,
+        "Gamma": 1,
+        "Contrast": 1,
+        "LensReflectivity": 1,
+        "AntiAliasing": 2,
+        "AntiAliasingMode": "Msaa",
+        "FxaaQuality": 3
+      }
+    },
+    "Motions": [
+      {
+        "Servo": 0,
+        "Control": 22,
+        "MinExtent": -90,
+        "MaxExtent": 90,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 1,
+        "Control": 4,
+        "MinExtent": -15,
+        "MaxExtent": 15,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 1,
+        "Control": 13,
+        "MinExtent": -15,
+        "MaxExtent": 15,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 2,
+        "Control": 4,
+        "MinExtent": -10,
+        "MaxExtent": 10,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": false
+      },
+      {
+        "Servo": 2,
+        "Control": 13,
+        "MinExtent": -10,
+        "MaxExtent": 10,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 3,
+        "Control": 6,
+        "MinExtent": -42,
+        "MaxExtent": 90,
+        "ZeroExtent": 22.563139931740615,
+        "Unit": "deg",
+        "ReverseOverride": true
+      },
+      {
+        "Servo": 3,
+        "Control": 11,
+        "MinExtent": -90,
+        "MaxExtent": 42,
+        "ZeroExtent": -22.563139931740615,
+        "Unit": "deg",
+        "ReverseOverride": false
+      },
+      {
+        "Servo": 3,
+        "Control": 5,
+        "MinExtent": -42,
+        "MaxExtent": 90,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": true
+      },
+      {
+        "Servo": 3,
+        "Control": 12,
+        "MinExtent": -90,
+        "MaxExtent": 42,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": false
+      },
+      {
+        "Servo": 4,
+        "Control": 7,
+        "MinExtent": -7.883959044368574,
+        "MaxExtent": 90,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": false
+      },
+      {
+        "Servo": 4,
+        "Control": 10,
+        "MinExtent": -7.883959044368574,
+        "MaxExtent": 90,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 5,
+        "Control": 1,
+        "MinExtent": 15,
+        "MaxExtent": 85,
+        "ZeroExtent": 64.76311953352771,
+        "Unit": "%",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 5,
+        "Control": 16,
+        "MinExtent": 15,
+        "MaxExtent": 85,
+        "ZeroExtent": 64.76311953352771,
+        "Unit": "%",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 6,
+        "Control": 3,
+        "MinExtent": -12,
+        "MaxExtent": 12,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": true
+      },
+      {
+        "Servo": 6,
+        "Control": 14,
+        "MinExtent": -12,
+        "MaxExtent": 12,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": true
+      },
+      {
+        "Servo": 7,
+        "Control": 2,
+        "MinExtent": -12,
+        "MaxExtent": 12,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 7,
+        "Control": 15,
+        "MinExtent": -12,
+        "MaxExtent": 12,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 8,
+        "Control": 0,
+        "MinExtent": 0,
+        "MaxExtent": 30,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": false
+      },
+      {
+        "Servo": 8,
+        "Control": 17,
+        "MinExtent": 0,
+        "MaxExtent": 30,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 9,
+        "Control": 8,
+        "MinExtent": -19.174061433447143,
+        "MaxExtent": 15.843003412969232,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": true
+      },
+      {
+        "Servo": 10,
+        "Control": 9,
+        "MinExtent": -37.30716723549508,
+        "MaxExtent": -22.563139931740615,
+        "ZeroExtent": -22.563139931740615,
+        "Unit": "deg",
+        "ReverseOverride": true
+      },
+      {
+        "Servo": 11,
+        "Control": 20,
+        "MinExtent": 22.4299065420561,
+        "MaxExtent": 65.1053864168618,
+        "ZeroExtent": 22.4299065420561,
+        "Unit": "mm",
+        "ReverseOverride": false
+      },
+      {
+        "Servo": 12,
+        "Control": 21,
+        "MinExtent": -99.25233644859817,
+        "MaxExtent": 93.36448598130833,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 13,
+        "Control": 23,
+        "MinExtent": 0,
+        "MaxExtent": 10,
+        "ZeroExtent": 0,
+        "Unit": "mm",
+        "ReverseOverride": false
+      },
+      {
+        "Servo": 14,
+        "Control": 18,
+        "MinExtent": 12.342627635745693,
+        "MaxExtent": 57.20244071985785,
+        "ZeroExtent": 12.342627635745693,
+        "Unit": "mm",
+        "ReverseOverride": false
+      },
+      {
+        "Servo": 15,
+        "Control": 19,
+        "MinExtent": -90,
+        "MaxExtent": 90,
+        "ZeroExtent": 0,
+        "Unit": "deg",
+        "ReverseOverride": false
+      },
+      {
+        "Servo": 16,
+        "Control": 200,
+        "MinExtent": 2,
+        "MaxExtent": 90.46728971962642,
+        "ZeroExtent": 2,
+        "Unit": "mm",
+        "ReverseOverride": null
+      },
+      {
+        "Servo": 17,
+        "Control": 201,
+        "MinExtent": 2,
+        "MaxExtent": 90.46728971962612,
+        "ZeroExtent": 2,
+        "Unit": "mm",
+        "ReverseOverride": null
+      }
+    ]
+  },
+  "PartialServos": {
+    "servos": [
+      {
+        "control": "NeckTurn",
+        "maestroPort": 22,
+        "reversed": false,
+        "defaultPwm": 999,
+        "minPwm": 500,
+        "maxPwm": 2400,
+        "speeds": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "accels": [
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "control": "NoseBasket",
+        "maestroPort": 9,
+        "reversed": false,
+        "defaultPwm": 850,
+        "minPwm": 850,
+        "maxPwm": 1150,
+        "speeds": [
+          100,
+          50,
+          0,
+          50
+        ],
+        "accels": [
+          30,
+          15,
+          0,
+          15
+        ]
+      },
+      {
+        "control": "NoseBody",
+        "maestroPort": 8,
+        "reversed": true,
+        "defaultPwm": 1200,
+        "minPwm": 1000,
+        "maxPwm": 1500,
+        "speeds": [
+          100,
+          50,
+          0,
+          50
+        ],
+        "accels": [
+          30,
+          15,
+          0,
+          15
+        ]
+      },
+      {
+        "control": "NeckTiltLeft",
+        "maestroPort": 4,
+        "reversed": false,
+        "defaultPwm": 1533,
+        "minPwm": 1445,
+        "maxPwm": 1594,
+        "speeds": [
+          20,
+          15,
+          0,
+          10
+        ],
+        "accels": [
+          10,
+          6,
+          0,
+          5
+        ]
+      },
+      {
+        "control": "NeckTiltRight",
+        "maestroPort": 13,
+        "reversed": true,
+        "defaultPwm": 1480,
+        "minPwm": 1400,
+        "maxPwm": 1564,
+        "speeds": [
+          20,
+          15,
+          0,
+          10
+        ],
+        "accels": [
+          10,
+          6,
+          0,
+          5
+        ]
+      },
+      {
+        "control": "LeftLensHorizontal",
+        "maestroPort": 2,
+        "reversed": false,
+        "defaultPwm": 1450,
+        "minPwm": 650,
+        "maxPwm": 2250,
+        "speeds": [
+          0,
+          60,
+          0,
+          20
+        ],
+        "accels": [
+          0,
+          25,
+          0,
+          5
+        ]
+      },
+      {
+        "control": "RightLensHorizontal",
+        "maestroPort": 15,
+        "reversed": false,
+        "defaultPwm": 1450,
+        "minPwm": 650,
+        "maxPwm": 2250,
+        "speeds": [
+          0,
+          60,
+          0,
+          20
+        ],
+        "accels": [
+          0,
+          25,
+          0,
+          5
+        ]
+      },
+      {
+        "control": "LeftLensVertical",
+        "maestroPort": 3,
+        "reversed": true,
+        "defaultPwm": 1400,
+        "minPwm": 600,
+        "maxPwm": 2200,
+        "speeds": [
+          0,
+          60,
+          0,
+          20
+        ],
+        "accels": [
+          0,
+          25,
+          0,
+          5
+        ]
+      },
+      {
+        "control": "RightLensVertical",
+        "maestroPort": 14,
+        "reversed": false,
+        "defaultPwm": 1520,
+        "minPwm": 720,
+        "maxPwm": 2320,
+        "speeds": [
+          0,
+          60,
+          0,
+          20
+        ],
+        "accels": [
+          0,
+          25,
+          0,
+          5
+        ]
+      },
+      {
+        "control": "LeftIris",
+        "maestroPort": 1,
+        "reversed": false,
+        "defaultPwm": 1575,
+        "minPwm": 1350,
+        "maxPwm": 1950,
+        "speeds": [
+          90,
+          90,
+          0,
+          10
+        ],
+        "accels": [
+          15,
+          15,
+          0,
+          5
+        ]
+      },
+      {
+        "control": "RightIris",
+        "maestroPort": 16,
+        "reversed": false,
+        "defaultPwm": 975,
+        "minPwm": 750,
+        "maxPwm": 1350,
+        "speeds": [
+          90,
+          90,
+          0,
+          10
+        ],
+        "accels": [
+          15,
+          15,
+          0,
+          5
+        ]
+      },
+      {
+        "control": "BrowLeftTopOpen",
+        "maestroPort": 6,
+        "reversed": true,
+        "defaultPwm": 1523,
+        "minPwm": 920,
+        "maxPwm": 1770,
+        "speeds": [
+          60,
+          10,
+          0,
+          2
+        ],
+        "accels": [
+          15,
+          5,
+          0,
+          3
+        ]
+      },
+      {
+        "control": "BrowRightTopOpen",
+        "maestroPort": 11,
+        "reversed": false,
+        "defaultPwm": 866,
+        "minPwm": 637,
+        "maxPwm": 1417,
+        "speeds": [
+          60,
+          10,
+          0,
+          2
+        ],
+        "accels": [
+          15,
+          5,
+          0,
+          3
+        ]
+      },
+      {
+        "control": "BrowLeftTopTilt",
+        "maestroPort": 7,
+        "reversed": true,
+        "defaultPwm": 1800,
+        "minPwm": 910,
+        "maxPwm": 1900,
+        "speeds": [
+          40,
+          10,
+          0,
+          2
+        ],
+        "accels": [
+          10,
+          5,
+          0,
+          3
+        ]
+      },
+      {
+        "control": "BrowRightTopTilt",
+        "maestroPort": 10,
+        "reversed": false,
+        "defaultPwm": 1100,
+        "minPwm": 1000,
+        "maxPwm": 1990,
+        "speeds": [
+          40,
+          10,
+          0,
+          2
+        ],
+        "accels": [
+          10,
+          5,
+          0,
+          3
+        ]
+      },
+      {
+        "control": "BrowLeftBottomOpen",
+        "maestroPort": 5,
+        "reversed": false,
+        "defaultPwm": 1750,
+        "minPwm": 940,
+        "maxPwm": 2050,
+        "speeds": [
+          60,
+          10,
+          0,
+          2
+        ],
+        "accels": [
+          15,
+          5,
+          0,
+          3
+        ]
+      },
+      {
+        "control": "BrowRightBottomOpen",
+        "maestroPort": 12,
+        "reversed": true,
+        "defaultPwm": 1100,
+        "minPwm": 700,
+        "maxPwm": 1910,
+        "speeds": [
+          60,
+          10,
+          0,
+          2
+        ],
+        "accels": [
+          15,
+          5,
+          0,
+          3
+        ]
+      },
+      {
+        "control": "LeftEyeVent",
+        "maestroPort": 0,
+        "reversed": false,
+        "defaultPwm": 1765,
+        "minPwm": 1765,
+        "maxPwm": 2086,
+        "speeds": [
+          40,
+          10,
+          0,
+          10
+        ],
+        "accels": [
+          20,
+          5,
+          0,
+          5
+        ]
+      },
+      {
+        "control": "RightEyeVent",
+        "maestroPort": 17,
+        "reversed": true,
+        "defaultPwm": 1125,
+        "minPwm": 835,
+        "maxPwm": 1125,
+        "speeds": [
+          40,
+          10,
+          0,
+          10
+        ],
+        "accels": [
+          20,
+          5,
+          0,
+          5
+        ]
+      },
+      {
+        "control": "MFR_Rotate",
+        "maestroPort": 21,
+        "reversed": true,
+        "defaultPwm": 1320,
+        "minPwm": 800,
+        "maxPwm": 1865,
+        "speeds": [
+          0,
+          1,
+          0,
+          10
+        ],
+        "accels": [
+          0,
+          1,
+          0,
+          20
+        ]
+      },
+      {
+        "control": "MFR_UpDown",
+        "maestroPort": 20,
+        "reversed": true,
+        "defaultPwm": 550,
+        "minPwm": 550,
+        "maxPwm": 1070,
+        "speeds": [
+          100,
+          50,
+          0,
+          50
+        ],
+        "accels": [
+          30,
+          25,
+          0,
+          25
+        ]
+      },
+      {
+        "control": "Whip_Antenna_RaiseLower",
+        "maestroPort": 18,
+        "reversed": true,
+        "defaultPwm": 2200,
+        "minPwm": 1620,
+        "maxPwm": 2200,
+        "speeds": [
+          100,
+          20,
+          0,
+          50
+        ],
+        "accels": [
+          30,
+          5,
+          0,
+          25
+        ]
+      },
+      {
+        "control": "Whip_Antenna_Rotate",
+        "maestroPort": 19,
+        "reversed": false,
+        "defaultPwm": 1400,
+        "minPwm": 500,
+        "maxPwm": 2300,
+        "speeds": [
+          0,
+          0,
+          0,
+          10
+        ],
+        "accels": [
+          0,
+          0,
+          0,
+          20
+        ]
+      },
+      {
+        "control": "Microphone_RaiseLower",
+        "maestroPort": 23,
+        "reversed": false,
+        "defaultPwm": 1625,
+        "minPwm": 1625,
+        "maxPwm": 2298,
+        "speeds": [
+          0,
+          0,
+          0,
+          50
+        ],
+        "accels": [
+          0,
+          0,
+          0,
+          25
+        ]
+      }
+    ],
+    "gangDirections": [
+      {
+        "servo": "FlapsOpen",
+        "control": "BrowLeftTopOpen",
+        "reversed": true
+      },
+      {
+        "servo": "FlapsOpen",
+        "control": "BrowRightTopOpen",
+        "reversed": true
+      },
+      {
+        "servo": "FlapsOpen",
+        "control": "BrowLeftBottomOpen",
+        "reversed": false
+      },
+      {
+        "servo": "FlapsOpen",
+        "control": "BrowRightBottomOpen",
+        "reversed": false
+      },
+      {
+        "servo": "FlapTiltUp",
+        "control": "BrowLeftTopTilt",
+        "reversed": false
+      },
+      {
+        "servo": "FlapTiltUp",
+        "control": "BrowRightTopTilt",
+        "reversed": false
+      },
+      {
+        "servo": "IrisClose",
+        "control": "LeftIris",
+        "reversed": false
+      },
+      {
+        "servo": "IrisClose",
+        "control": "RightIris",
+        "reversed": false
+      },
+      {
+        "servo": "EyesHorizontalRight",
+        "control": "LeftLensHorizontal",
+        "reversed": true
+      },
+      {
+        "servo": "EyesHorizontalRight",
+        "control": "RightLensHorizontal",
+        "reversed": true
+      },
+      {
+        "servo": "EyesVerticalUp",
+        "control": "LeftLensVertical",
+        "reversed": true
+      },
+      {
+        "servo": "EyesVerticalUp",
+        "control": "RightLensVertical",
+        "reversed": true
+      },
+      {
+        "servo": "VentsOpen",
+        "control": "LeftEyeVent",
+        "reversed": true
+      },
+      {
+        "servo": "VentsOpen",
+        "control": "RightEyeVent",
+        "reversed": false
+      },
+      {
+        "servo": "NeckTiltRight",
+        "control": "NeckTiltLeft",
+        "reversed": true
+      },
+      {
+        "servo": "NeckTiltRight",
+        "control": "NeckTiltRight",
+        "reversed": true
+      },
+      {
+        "servo": "NeckNodUp",
+        "control": "NeckTiltLeft",
+        "reversed": false
+      },
+      {
+        "servo": "NeckNodUp",
+        "control": "NeckTiltRight",
+        "reversed": true
+      }
+    ],
+    "leftTicSerialNumber": "00475552"
+  }
+}

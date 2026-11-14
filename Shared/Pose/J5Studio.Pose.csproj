@@ -1,0 +1,4 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><TargetFramework>net10.0-windows</TargetFramework><ImplicitUsings>enable</ImplicitUsings><Nullable>disable</Nullable><AssemblyName>J5Studio.Pose</AssemblyName><RootNamespace>ServoAnimator</RootNamespace><Description>Shared physical pose, neck mixing, timeline continuity and ground motion evaluation.</Description></PropertyGroup>
+  <ItemGroup><ProjectReference Include="../Animation/J5Studio.Animation.csproj" /></ItemGroup>
+</Project>

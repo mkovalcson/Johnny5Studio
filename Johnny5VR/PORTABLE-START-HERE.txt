@@ -1,0 +1,262 @@
+JOHNNY 5 VR VIEWER + VR ANIMATION EDITOR - PORTABLE 0.9.0
+
+Windows x64 / SteamVR / Bigscreen Beyond 2e / Index controllers
+
+GET STARTED
+
+Extract the complete ZIP into a NEW writable folder on your gaming PC.
+
+Do not run inside the ZIP or overwrite an older release folder.
+
+Open "J5 Studio VR Player.cmd" or Johnny5VR.exe. The desktop preview works
+
+without SteamVR. Start SteamVR with your headset/controllers connected,
+
+then select "Start SteamVR" in the viewer.
+
+The ZIP includes its own .NET runtime, VR editor, both robot models,
+
+3D backdrops, required visual/collision meshes, calibration, library,
+
+movies/sequences, audio, backdrop images and the referenced video.
+
+It excludes source CAD, unused source drawings and documentation archives.
+
+SteamVR, Beyond drivers/utility and your graphics driver must already work
+
+on the gaming PC. Eye tracking and foveated rendering are not used.
+
+DISPLAY / POINTER FIXES IN 0.6.1
+
+Menu and editor images use reusable GPU textures. The editor sends its own
+
+WPF-rendered window images, avoiding PrintWindow on WPF surfaces.
+
+Both tracked controller rays remain visible before hitting a panel.
+
+Point the RIGHT controller at menu rows and use Trigger to select, or use
+
+the sticks as before. The left controller points if the right is absent.
+
+Menu image errors retry and keep VR running; the last good image is retained.
+
+POPUP / DIALOG FIX IN 0.6.2
+
+Native Open/Save file pickers, confirmation boxes and popup menus are now
+
+included in the VR editor panel. Point and use Trigger to select them.
+
+WPF configuration windows, dropdowns and context menus remain supported.
+
+Only the dedicated VR editor process is captured.
+
+CONTROLLER POSING - 0.9.0
+
+A > Pose robot with controllers shows all supported controls beside the robot.
+Cyan labels are individual controls; purple labels are ganged controls.
+Select a label with Trigger, release, then hold Trigger on its circular dial.
+Point around the arc to change the value. Other labels hide while adjusting.
+Release Trigger to finish and restore the labels. Right stick up/down makes
+fine adjustments. The dial shows limits, current value and a green zero/default
+marker. Reset default previews zero. X closes the dial. Position/heading use
+pageable ranges; < Range / Range > move the visible range without moving Johnny.
+A > Insert changed pose at cursor adds the affected controls in one Undo step.
+Discard pose preview restores the timeline. Save through the editor as usual.
+Changing cursor, documents or playback clears an uninserted preview.
+
+LASER AND DISASSEMBLY - 0.8.0
+
+Movies and sequences play authored laser bursts, accessory choices and
+fall-apart/reassembly effects in standalone and live editor modes.
+A > Robot effects offers previews without adding timeline commands.
+Pause playback first. Laser preview temporarily displays the laser.
+Clear effect preview restores the timeline/default accessory.
+Disassembly uses the full robot's baked clip; the head-only model lacks it.
+The included model's Meshes/Body/FallApart/fall_apart.json is required.
+For an external Config, copy this runtime asset to the matching model folder.
+Laser audio is mixed independently of voice audio and does not light the mouth.
+
+VR EDITOR
+
+Choose "Open J5 Studio VR Editor" in the desktop viewer or its A-button menu.
+
+Either Index controller's A button opens or closes that menu. Version 0.5.0
+
+corrects the Index legacy A mapping used by direct input mode.
+
+A separate J5 VR Animation Editor opens on the desktop and appears as a
+
+large movable panel in VR. Keep its desktop windows open and unminimized.
+
+Dialogs appear on the same panel. Use the editor's normal timelines,
+
+commands, movie tools, library and configuration dialogs. Scrubbing and
+
+playback control the robot in the VR scene.
+
+Point the RIGHT Index controller at the panel (left is the fallback when
+
+the right controller is unavailable). The cyan ray indicates the pointer.
+
+Trigger-grab the TOP BAR to move the workspace; release to place it.
+
+Trigger-grab a CORNER to stretch proportionally; the opposite corner stays
+
+fixed. Grabs stay captured if you point off the handle.
+
+Layout Lock blocks moving/resizing while keeping editor controls usable.
+
+The toolbar provides sequence Play/Pause, Stop, Undo, Redo, Show Robot
+
+(hides the panel), Bring Here (restores position/size), and Lock Layout.
+
+Inside the editor, Trigger clicks/drags and B right-clicks.
+
+Over timelines, right stick left/right pans time and up/down zooms around
+
+the pointer. Over scrollable panels/lists, up/down scrolls vertically.
+
+A opens the menu, including Show / hide and Bring editor workspace here.
+
+Walking and snap turning pause while interacting with the panel or menu.
+
+Grip and stick click no longer move/resize the workspace. Handles highlight
+
+on hover; a short vibration confirms a grab when supported by SteamVR.
+
+Release controls after dashboard/tracking interruptions before interacting.
+
+Recoverable panel errors release the interaction, report a message, and
+
+leave VR running. Error details are in Diagnostics/viewer.log.
+
+Version 0.5.1 added curved-surface smoothing and rolling caster wheels.
+
+Physical keyboard/mouse remain available; there is no VR keyboard yet.
+
+Windows focus/foreground rules still apply: keep the editor visible and
+
+run viewer and editor at the same privilege level.
+
+The original desktop Animation Editor is unchanged. It still has Face
+
+Tracking, Meeting mode and the 2D URDF window. Only the separate VR copy
+
+omits them. The viewer launches Editor/AnimationEditorPlayer.exe, never
+
+your installed desktop editor.
+
+Physical robot output is disabled in the VR copy; use the desktop editor
+
+for hardware control. Calibration/configuration data still drives VR motion.
+
+The VR editor SAVES into the Config folder selected in the viewer. The
+
+included Config is a portable copy; editing it does not affect files on
+
+your other PC. If you deliberately select a shared Config, saves affect
+
+that shared library. Close another editor using the same documents before
+
+editing them here. The standalone player only reads Config.
+
+The live editor sends evaluated joints, irises, curved lens geometry,
+
+materials, weathering/Gold Johnny, disassembly and scene geometry. TV/video
+
+and image/moving backdrops are displayed as physical surfaces in VR.
+
+Editor camera pan/zoom/framing does not move the headset camera.
+
+Lighting, transparency and the screen-space effects are approximations
+
+in the independent VR renderer; their appearance can differ from WPF/D3D.
+
+The panel currently refreshes at up to 15 fps; headset rendering runs
+
+independently. Editor scene updates do not cap headset pose/render rate.
+
+Closing the viewer asks the editor to close normally. Resolve any editor
+
+save dialogs before the viewer exits. Switching to "Standalone playback"
+
+pauses the editor and leaves its unsaved work open.
+
+MOVIES AND SEQUENCES WITHOUT EDITING
+
+Below the desktop preview choose Movies/Sequences, a title, Load, then
+
+Play/Pause. Stop rewinds. Next advances a movie, exits a looping sequence
+
+or advances an authored trigger manually. In the A-button menu use either
+
+stick up/down to browse, trigger to select, B to go back.
+
+Standalone playback supports calibrated motion, audio, iris opening,
+
+voice-amplitude mouth LEDs, forward/reverse tread belts, turning rollers,
+
+rear caster swivel, and authored eye/vent RGB colors and animations.
+
+Eye and Vent Light Intensity and Audio LED Gain use URDFconfig.json.
+
+Lights remain off until an authored RGB command turns them on. RGB light
+
+patterns pause and seek with the timeline; mouth lights go dark on pause.
+
+Track Forward is in cm/second, matching the editor. Walking the human VR
+
+camera does not move Johnny or animate his tracks.
+
+Finishes, textures, video/TV and image backgrounds
+
+still require LIVE EDITOR mode.
+
+Compatibility details are written to Diagnostics/playback-report.txt.
+
+External hardware triggers require manual Next; hardware speed/collision
+
+simulation is not provided by the standalone player.
+
+NAVIGATION AND SETTINGS
+
+Left stick walks/strafe relative to gaze. Right stick snap turns; return
+
+it to centre before another turn. A menu or editor panel interaction
+
+pauses walking; physical headset movement continues.
+
+Full robot defaults to six feet / 1.8288 m tall. Robot height changes the
+
+robot without resizing the room; Scene scale affects both. Apply scene
+
+updates placement. Save settings stores choices in Settings/viewer.json.
+
+Drag the desktop sidebar divider to resize it; status remains at bottom.
+
+Esc in the viewer stops VR. In editor dialogs Esc retains normal behavior.
+
+VERIFICATION AND LIMITS
+
+Run "Run diagnostics.cmd". Results and errors are in Diagnostics.
+
+The software checks scene import, coordinates, projection, locomotion,
+
+playback, live scene protocol, mouth/RGB lighting, tread/caster motion
+
+and panel pointer mapping. Additional build
+
+checks render real D3D output and launch/capture the dedicated editor.
+
+The new VR editor panel still needs hands-on headset testing on your PC.
+
+Software/desktop checks do not establish stereo comfort or headset speed.
+
+There is no teleportation or rendered controller model yet.
+
+If something fails, send Diagnostics/viewer.log. For controller trouble
+
+include controller-input.txt; for projection include vr-rendering.json.
+
+Keep an older release folder until you have tested the new version.
+

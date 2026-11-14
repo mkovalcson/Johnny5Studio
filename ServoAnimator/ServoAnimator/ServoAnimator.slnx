@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="../../Shared/Animation/J5Studio.Animation.csproj" />
+    <Project Path="../../Shared/Pose/J5Studio.Pose.csproj" />
+  <Project Path="../../Shared/Configuration/J5Studio.Configuration.csproj" />
+  <Project Path="../../Shared/Controls/J5Studio.Controls.csproj" />
+  <Project Path="ServoAnimator.csproj" />
+</Solution>

@@ -1,0 +1,66 @@
+{
+  "action_sets": [
+    {
+      "name": "/actions/navigation",
+      "usage": "leftright"
+    }
+  ],
+  "actions": [
+    {
+      "name": "/actions/navigation/in/move",
+      "type": "vector2",
+      "requirement": "optional"
+    },
+    {
+      "name": "/actions/navigation/in/turn",
+      "type": "vector2",
+      "requirement": "optional"
+    },
+    {
+      "name": "/actions/navigation/in/menu",
+      "type": "boolean",
+      "requirement": "optional"
+    },
+    {
+      "name": "/actions/navigation/in/select",
+      "type": "boolean",
+      "requirement": "optional"
+    },
+    {
+      "name": "/actions/navigation/in/back",
+      "type": "boolean",
+      "requirement": "optional"
+    },
+    {
+      "name": "/actions/navigation/in/grab",
+      "type": "boolean",
+      "requirement": "optional"
+    },
+    {
+      "name": "/actions/navigation/in/hand_left",
+      "type": "skeleton",
+      "skeleton": "/skeleton/hand/left",
+      "requirement": "optional"
+    },
+    {
+      "name": "/actions/navigation/in/hand_right",
+      "type": "skeleton",
+      "skeleton": "/skeleton/hand/right",
+      "requirement": "optional"
+    }
+  ],
+  "default_bindings": [
+    {
+      "controller_type": "knuckles",
+      "binding_url": "bindings_index.json"
+    }
+  ],
+  "localization": [
+    {
+      "language_tag": "en_US",
+      "/actions/navigation": "Move around Johnny 5",
+      "/actions/navigation/in/move": "Walk / strafe (left stick)",
+      "/actions/navigation/in/turn": "Snap turn (right stick)"
+    }
+  ]
+}

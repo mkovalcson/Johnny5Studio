@@ -1,0 +1,4 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><TargetFramework>net10.0-windows</TargetFramework><ImplicitUsings>enable</ImplicitUsings><Nullable>disable</Nullable><AssemblyName>J5Studio.Animation</AssemblyName><RootNamespace>ServoAnimator</RootNamespace><Description>Shared animation documents, command serialization, trim operations and timeline evaluation.</Description></PropertyGroup>
+  <ItemGroup><ProjectReference Include="../Controls/J5Studio.Controls.csproj" /><ProjectReference Include="../Configuration/J5Studio.Configuration.csproj" /></ItemGroup>
+</Project>

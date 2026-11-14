@@ -1,0 +1,288 @@
+{
+  "MotionTracks": [
+    [
+      null,
+      {
+        "Item1": 0,
+        "Item2": 0
+      },
+      {
+        "Item1": 0,
+        "Item2": 0
+      },
+      {
+        "Item1": 0,
+        "Item2": 0
+      },
+      {
+        "Item1": 20,
+        "Item2": 1
+      },
+      {
+        "Item1": 20,
+        "Item2": 1
+      },
+      {
+        "Item1": 20,
+        "Item2": 1
+      },
+      {
+        "Item1": -10,
+        "Item2": 3
+      },
+      {
+        "Item1": -10,
+        "Item2": 3
+      }
+    ],
+    [
+      null,
+      {
+        "Item1": 0,
+        "Item2": 0
+      },
+      {
+        "Item1": 0.020023310000000002,
+        "Item2": 0
+      },
+      {
+        "Item1": 12.916666666666666,
+        "Item2": 0
+      },
+      {
+        "Item1": 20,
+        "Item2": 1
+      },
+      {
+        "Item1": 15.78125,
+        "Item2": 1
+      },
+      {
+        "Item1": -1.40625,
+        "Item2": 1
+      },
+      {
+        "Item1": -10,
+        "Item2": 3
+      },
+      {
+        "Item1": -10,
+        "Item2": 3
+      }
+    ],
+    [
+      null,
+      {
+        "Item1": 5,
+        "Item2": 0
+      },
+      {
+        "Item1": 5,
+        "Item2": 0
+      },
+      {
+        "Item1": 5,
+        "Item2": 0
+      },
+      {
+        "Item1": 25,
+        "Item2": 1
+      },
+      {
+        "Item1": 25,
+        "Item2": 1
+      },
+      {
+        "Item1": 25,
+        "Item2": 1
+      },
+      {
+        "Item1": -5,
+        "Item2": 3
+      },
+      {
+        "Item1": -5,
+        "Item2": 3
+      }
+    ],
+    [
+      null,
+      {
+        "Item1": 5,
+        "Item2": 0
+      },
+      {
+        "Item1": 5,
+        "Item2": 0
+      },
+      {
+        "Item1": 5,
+        "Item2": 0
+      },
+      {
+        "Item1": 25,
+        "Item2": 1
+      },
+      {
+        "Item1": 17.5,
+        "Item2": 1
+      },
+      {
+        "Item1": 2.5,
+        "Item2": 1
+      },
+      {
+        "Item1": -5,
+        "Item2": 3
+      },
+      {
+        "Item1": -5,
+        "Item2": 3
+      }
+    ],
+    [
+      null,
+      {
+        "Item1": 7,
+        "Item2": 0
+      },
+      {
+        "Item1": 7,
+        "Item2": 0
+      },
+      {
+        "Item1": 7,
+        "Item2": 0
+      },
+      {
+        "Item1": 20,
+        "Item2": 1
+      },
+      {
+        "Item1": 20,
+        "Item2": 1
+      },
+      {
+        "Item1": 20,
+        "Item2": 1
+      },
+      {
+        "Item1": 20,
+        "Item2": 1
+      },
+      {
+        "Item1": 20,
+        "Item2": 1
+      }
+    ],
+    [
+      null,
+      {
+        "Item1": 7,
+        "Item2": 0
+      },
+      {
+        "Item1": 7.019986007,
+        "Item2": 0
+      },
+      {
+        "Item1": 14.375,
+        "Item2": 0
+      },
+      {
+        "Item1": 20,
+        "Item2": 1
+      },
+      {
+        "Item1": 20,
+        "Item2": 1
+      },
+      {
+        "Item1": 20,
+        "Item2": 1
+      },
+      {
+        "Item1": 20,
+        "Item2": 1
+      },
+      {
+        "Item1": 20,
+        "Item2": 1
+      }
+    ],
+    [
+      null,
+      null,
+      null,
+      null,
+      {
+        "Item1": 20,
+        "Item2": 1
+      },
+      {
+        "Item1": 20,
+        "Item2": 1
+      },
+      {
+        "Item1": 20,
+        "Item2": 1
+      },
+      {
+        "Item1": 20,
+        "Item2": 1
+      },
+      {
+        "Item1": 20,
+        "Item2": 1
+      }
+    ],
+    [
+      null,
+      null,
+      null,
+      null,
+      {
+        "Item1": 20,
+        "Item2": 1
+      },
+      {
+        "Item1": 20,
+        "Item2": 1
+      },
+      {
+        "Item1": 20,
+        "Item2": 1
+      },
+      {
+        "Item1": 20,
+        "Item2": 1
+      },
+      {
+        "Item1": 20,
+        "Item2": 1
+      }
+    ],
+    [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    ]
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "source": "builtin",
+  "applications": [{
+    "app_key": "local.johnny5vr.viewer",
+    "launch_type": "binary",
+    "binary_path_windows": "../Johnny5VR.exe",
+    "action_manifest_path": "actions.json",
+    "is_dashboard_overlay": false,
+    "strings": { "en_us": { "name": "Johnny 5 VR Viewer" } }
+  }]
+}

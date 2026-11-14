@@ -1,0 +1,5 @@
+{
+  "releaseVersionsToKeep": 2,
+  "publishedVersionsToKeep": 2,
+  "stagingMaxAgeDays": 7
+}

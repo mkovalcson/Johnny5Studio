@@ -1,0 +1,2664 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot name="johnny5_backdrop">
+  <link name="backdrop_root_link" />
+  <!-- ==== Johnny 5 backdrop: open-front stage set ==== -->
+  <material name="backdrop_white"><color rgba="0.950 0.950 0.940 1" /></material>
+  <material name="backdrop_seam"><color rgba="0.660 0.660 0.660 1" /></material>
+  <material name="backdrop_leather"><color rgba="0.360 0.090 0.120 1" /></material>
+  <material name="backdrop_leather_worn"><color rgba="0.520 0.250 0.270 1" /></material>
+  <material name="backdrop_button"><color rgba="0.210 0.050 0.070 1" /></material>
+  <material name="backdrop_wood"><color rgba="0.330 0.200 0.100 1" /></material>
+  <material name="backdrop_wood_dark"><color rgba="0.180 0.110 0.060 1" /></material>
+  <material name="backdrop_screen"><color rgba="0.130 0.160 0.150 1" /></material>
+  <material name="backdrop_screen_glint"><color rgba="0.340 0.400 0.400 1" /></material>
+  <material name="backdrop_bezel"><color rgba="0.100 0.100 0.100 1" /></material>
+  <material name="backdrop_chrome"><color rgba="0.800 0.800 0.820 1" /></material>
+  <material name="backdrop_grille"><color rgba="0.170 0.130 0.100 1" /></material>
+  <link name="backdrop_floor_link">
+    <visual name="backdrop_floor_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="15.24 30.78 0.05" />
+      </geometry>
+      <material name="backdrop_white" />
+    </visual>
+  </link>
+  <joint name="backdrop_floor_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_floor_link" />
+    <origin xyz="-3.62 0 -1.103381" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_wall_back_link">
+    <visual name="backdrop_wall_back_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.15 30.78 6.096" />
+      </geometry>
+      <material name="backdrop_white" />
+    </visual>
+  </link>
+  <joint name="backdrop_wall_back_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_wall_back_link" />
+    <origin xyz="-11.315 0 1.969619" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_wall_left_link">
+    <visual name="backdrop_wall_left_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="15.24 0.15 6.096" />
+      </geometry>
+      <material name="backdrop_white" />
+    </visual>
+  </link>
+  <joint name="backdrop_wall_left_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_wall_left_link" />
+    <origin xyz="-3.62 15.315 1.969619" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_wall_right_link">
+    <visual name="backdrop_wall_right_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="15.24 0.15 6.096" />
+      </geometry>
+      <material name="backdrop_white" />
+    </visual>
+  </link>
+  <joint name="backdrop_wall_right_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_wall_right_link" />
+    <origin xyz="-3.62 -15.315 1.969619" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_floor_seam_y-12_link">
+    <visual name="backdrop_floor_seam_y-12_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="15.24 0.012 0.0015" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_floor_seam_y-12_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_floor_seam_y-12_link" />
+    <origin xyz="-3.62 -14.6304 -1.077631" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_floor_seam_y-11_link">
+    <visual name="backdrop_floor_seam_y-11_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="15.24 0.012 0.0015" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_floor_seam_y-11_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_floor_seam_y-11_link" />
+    <origin xyz="-3.62 -13.4112 -1.077631" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_floor_seam_y-10_link">
+    <visual name="backdrop_floor_seam_y-10_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="15.24 0.012 0.0015" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_floor_seam_y-10_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_floor_seam_y-10_link" />
+    <origin xyz="-3.62 -12.192 -1.077631" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_floor_seam_y-09_link">
+    <visual name="backdrop_floor_seam_y-09_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="15.24 0.012 0.0015" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_floor_seam_y-09_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_floor_seam_y-09_link" />
+    <origin xyz="-3.62 -10.9728 -1.077631" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_floor_seam_y-08_link">
+    <visual name="backdrop_floor_seam_y-08_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="15.24 0.012 0.0015" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_floor_seam_y-08_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_floor_seam_y-08_link" />
+    <origin xyz="-3.62 -9.7536 -1.077631" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_floor_seam_y-07_link">
+    <visual name="backdrop_floor_seam_y-07_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="15.24 0.012 0.0015" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_floor_seam_y-07_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_floor_seam_y-07_link" />
+    <origin xyz="-3.62 -8.5344 -1.077631" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_floor_seam_y-06_link">
+    <visual name="backdrop_floor_seam_y-06_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="15.24 0.012 0.0015" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_floor_seam_y-06_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_floor_seam_y-06_link" />
+    <origin xyz="-3.62 -7.3152 -1.077631" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_floor_seam_y-05_link">
+    <visual name="backdrop_floor_seam_y-05_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="15.24 0.012 0.0015" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_floor_seam_y-05_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_floor_seam_y-05_link" />
+    <origin xyz="-3.62 -6.096 -1.077631" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_floor_seam_y-04_link">
+    <visual name="backdrop_floor_seam_y-04_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="15.24 0.012 0.0015" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_floor_seam_y-04_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_floor_seam_y-04_link" />
+    <origin xyz="-3.62 -4.8768 -1.077631" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_floor_seam_y-03_link">
+    <visual name="backdrop_floor_seam_y-03_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="15.24 0.012 0.0015" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_floor_seam_y-03_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_floor_seam_y-03_link" />
+    <origin xyz="-3.62 -3.6576 -1.077631" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_floor_seam_y-02_link">
+    <visual name="backdrop_floor_seam_y-02_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="15.24 0.012 0.0015" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_floor_seam_y-02_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_floor_seam_y-02_link" />
+    <origin xyz="-3.62 -2.4384 -1.077631" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_floor_seam_y-01_link">
+    <visual name="backdrop_floor_seam_y-01_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="15.24 0.012 0.0015" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_floor_seam_y-01_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_floor_seam_y-01_link" />
+    <origin xyz="-3.62 -1.2192 -1.077631" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_floor_seam_y+00_link">
+    <visual name="backdrop_floor_seam_y+00_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="15.24 0.012 0.0015" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_floor_seam_y+00_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_floor_seam_y+00_link" />
+    <origin xyz="-3.62 0 -1.077631" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_floor_seam_y+01_link">
+    <visual name="backdrop_floor_seam_y+01_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="15.24 0.012 0.0015" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_floor_seam_y+01_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_floor_seam_y+01_link" />
+    <origin xyz="-3.62 1.2192 -1.077631" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_floor_seam_y+02_link">
+    <visual name="backdrop_floor_seam_y+02_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="15.24 0.012 0.0015" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_floor_seam_y+02_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_floor_seam_y+02_link" />
+    <origin xyz="-3.62 2.4384 -1.077631" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_floor_seam_y+03_link">
+    <visual name="backdrop_floor_seam_y+03_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="15.24 0.012 0.0015" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_floor_seam_y+03_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_floor_seam_y+03_link" />
+    <origin xyz="-3.62 3.6576 -1.077631" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_floor_seam_y+04_link">
+    <visual name="backdrop_floor_seam_y+04_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="15.24 0.012 0.0015" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_floor_seam_y+04_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_floor_seam_y+04_link" />
+    <origin xyz="-3.62 4.8768 -1.077631" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_floor_seam_y+05_link">
+    <visual name="backdrop_floor_seam_y+05_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="15.24 0.012 0.0015" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_floor_seam_y+05_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_floor_seam_y+05_link" />
+    <origin xyz="-3.62 6.096 -1.077631" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_floor_seam_y+06_link">
+    <visual name="backdrop_floor_seam_y+06_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="15.24 0.012 0.0015" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_floor_seam_y+06_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_floor_seam_y+06_link" />
+    <origin xyz="-3.62 7.3152 -1.077631" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_floor_seam_y+07_link">
+    <visual name="backdrop_floor_seam_y+07_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="15.24 0.012 0.0015" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_floor_seam_y+07_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_floor_seam_y+07_link" />
+    <origin xyz="-3.62 8.5344 -1.077631" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_floor_seam_y+08_link">
+    <visual name="backdrop_floor_seam_y+08_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="15.24 0.012 0.0015" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_floor_seam_y+08_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_floor_seam_y+08_link" />
+    <origin xyz="-3.62 9.7536 -1.077631" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_floor_seam_y+09_link">
+    <visual name="backdrop_floor_seam_y+09_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="15.24 0.012 0.0015" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_floor_seam_y+09_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_floor_seam_y+09_link" />
+    <origin xyz="-3.62 10.9728 -1.077631" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_floor_seam_y+10_link">
+    <visual name="backdrop_floor_seam_y+10_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="15.24 0.012 0.0015" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_floor_seam_y+10_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_floor_seam_y+10_link" />
+    <origin xyz="-3.62 12.192 -1.077631" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_floor_seam_y+11_link">
+    <visual name="backdrop_floor_seam_y+11_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="15.24 0.012 0.0015" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_floor_seam_y+11_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_floor_seam_y+11_link" />
+    <origin xyz="-3.62 13.4112 -1.077631" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_floor_seam_y+12_link">
+    <visual name="backdrop_floor_seam_y+12_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="15.24 0.012 0.0015" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_floor_seam_y+12_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_floor_seam_y+12_link" />
+    <origin xyz="-3.62 14.6304 -1.077631" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_floor_seam_x01_link">
+    <visual name="backdrop_floor_seam_x01_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.012 30.48 0.0015" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_floor_seam_x01_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_floor_seam_x01_link" />
+    <origin xyz="-10.0208 0 -1.077631" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_floor_seam_x02_link">
+    <visual name="backdrop_floor_seam_x02_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.012 30.48 0.0015" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_floor_seam_x02_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_floor_seam_x02_link" />
+    <origin xyz="-8.8016 0 -1.077631" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_floor_seam_x03_link">
+    <visual name="backdrop_floor_seam_x03_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.012 30.48 0.0015" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_floor_seam_x03_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_floor_seam_x03_link" />
+    <origin xyz="-7.5824 0 -1.077631" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_floor_seam_x04_link">
+    <visual name="backdrop_floor_seam_x04_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.012 30.48 0.0015" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_floor_seam_x04_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_floor_seam_x04_link" />
+    <origin xyz="-6.3632 0 -1.077631" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_floor_seam_x05_link">
+    <visual name="backdrop_floor_seam_x05_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.012 30.48 0.0015" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_floor_seam_x05_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_floor_seam_x05_link" />
+    <origin xyz="-5.144 0 -1.077631" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_floor_seam_x06_link">
+    <visual name="backdrop_floor_seam_x06_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.012 30.48 0.0015" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_floor_seam_x06_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_floor_seam_x06_link" />
+    <origin xyz="-3.9248 0 -1.077631" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_floor_seam_x07_link">
+    <visual name="backdrop_floor_seam_x07_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.012 30.48 0.0015" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_floor_seam_x07_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_floor_seam_x07_link" />
+    <origin xyz="-2.7056 0 -1.077631" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_floor_seam_x08_link">
+    <visual name="backdrop_floor_seam_x08_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.012 30.48 0.0015" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_floor_seam_x08_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_floor_seam_x08_link" />
+    <origin xyz="-1.4864 0 -1.077631" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_floor_seam_x09_link">
+    <visual name="backdrop_floor_seam_x09_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.012 30.48 0.0015" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_floor_seam_x09_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_floor_seam_x09_link" />
+    <origin xyz="-0.2672 0 -1.077631" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_floor_seam_x10_link">
+    <visual name="backdrop_floor_seam_x10_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.012 30.48 0.0015" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_floor_seam_x10_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_floor_seam_x10_link" />
+    <origin xyz="0.952 0 -1.077631" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_floor_seam_x11_link">
+    <visual name="backdrop_floor_seam_x11_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.012 30.48 0.0015" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_floor_seam_x11_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_floor_seam_x11_link" />
+    <origin xyz="2.1712 0 -1.077631" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_floor_seam_x12_link">
+    <visual name="backdrop_floor_seam_x12_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.012 30.48 0.0015" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_floor_seam_x12_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_floor_seam_x12_link" />
+    <origin xyz="3.3904 0 -1.077631" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_back_seam_v-12_link">
+    <visual name="backdrop_back_seam_v-12_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.0015 0.012 6.096" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_back_seam_v-12_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_back_seam_v-12_link" />
+    <origin xyz="-11.23925 -14.6304 1.969619" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_back_seam_v-11_link">
+    <visual name="backdrop_back_seam_v-11_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.0015 0.012 6.096" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_back_seam_v-11_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_back_seam_v-11_link" />
+    <origin xyz="-11.23925 -13.4112 1.969619" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_back_seam_v-10_link">
+    <visual name="backdrop_back_seam_v-10_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.0015 0.012 6.096" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_back_seam_v-10_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_back_seam_v-10_link" />
+    <origin xyz="-11.23925 -12.192 1.969619" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_back_seam_v-09_link">
+    <visual name="backdrop_back_seam_v-09_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.0015 0.012 6.096" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_back_seam_v-09_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_back_seam_v-09_link" />
+    <origin xyz="-11.23925 -10.9728 1.969619" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_back_seam_v-08_link">
+    <visual name="backdrop_back_seam_v-08_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.0015 0.012 6.096" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_back_seam_v-08_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_back_seam_v-08_link" />
+    <origin xyz="-11.23925 -9.7536 1.969619" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_back_seam_v-07_link">
+    <visual name="backdrop_back_seam_v-07_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.0015 0.012 6.096" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_back_seam_v-07_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_back_seam_v-07_link" />
+    <origin xyz="-11.23925 -8.5344 1.969619" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_back_seam_v-06_link">
+    <visual name="backdrop_back_seam_v-06_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.0015 0.012 6.096" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_back_seam_v-06_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_back_seam_v-06_link" />
+    <origin xyz="-11.23925 -7.3152 1.969619" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_back_seam_v-05_link">
+    <visual name="backdrop_back_seam_v-05_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.0015 0.012 6.096" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_back_seam_v-05_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_back_seam_v-05_link" />
+    <origin xyz="-11.23925 -6.096 1.969619" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_back_seam_v-04_link">
+    <visual name="backdrop_back_seam_v-04_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.0015 0.012 6.096" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_back_seam_v-04_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_back_seam_v-04_link" />
+    <origin xyz="-11.23925 -4.8768 1.969619" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_back_seam_v-03_link">
+    <visual name="backdrop_back_seam_v-03_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.0015 0.012 6.096" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_back_seam_v-03_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_back_seam_v-03_link" />
+    <origin xyz="-11.23925 -3.6576 1.969619" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_back_seam_v-02_link">
+    <visual name="backdrop_back_seam_v-02_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.0015 0.012 6.096" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_back_seam_v-02_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_back_seam_v-02_link" />
+    <origin xyz="-11.23925 -2.4384 1.969619" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_back_seam_v-01_link">
+    <visual name="backdrop_back_seam_v-01_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.0015 0.012 6.096" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_back_seam_v-01_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_back_seam_v-01_link" />
+    <origin xyz="-11.23925 -1.2192 1.969619" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_back_seam_v+00_link">
+    <visual name="backdrop_back_seam_v+00_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.0015 0.012 6.096" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_back_seam_v+00_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_back_seam_v+00_link" />
+    <origin xyz="-11.23925 0 1.969619" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_back_seam_v+01_link">
+    <visual name="backdrop_back_seam_v+01_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.0015 0.012 6.096" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_back_seam_v+01_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_back_seam_v+01_link" />
+    <origin xyz="-11.23925 1.2192 1.969619" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_back_seam_v+02_link">
+    <visual name="backdrop_back_seam_v+02_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.0015 0.012 6.096" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_back_seam_v+02_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_back_seam_v+02_link" />
+    <origin xyz="-11.23925 2.4384 1.969619" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_back_seam_v+03_link">
+    <visual name="backdrop_back_seam_v+03_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.0015 0.012 6.096" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_back_seam_v+03_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_back_seam_v+03_link" />
+    <origin xyz="-11.23925 3.6576 1.969619" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_back_seam_v+04_link">
+    <visual name="backdrop_back_seam_v+04_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.0015 0.012 6.096" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_back_seam_v+04_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_back_seam_v+04_link" />
+    <origin xyz="-11.23925 4.8768 1.969619" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_back_seam_v+05_link">
+    <visual name="backdrop_back_seam_v+05_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.0015 0.012 6.096" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_back_seam_v+05_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_back_seam_v+05_link" />
+    <origin xyz="-11.23925 6.096 1.969619" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_back_seam_v+06_link">
+    <visual name="backdrop_back_seam_v+06_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.0015 0.012 6.096" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_back_seam_v+06_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_back_seam_v+06_link" />
+    <origin xyz="-11.23925 7.3152 1.969619" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_back_seam_v+07_link">
+    <visual name="backdrop_back_seam_v+07_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.0015 0.012 6.096" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_back_seam_v+07_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_back_seam_v+07_link" />
+    <origin xyz="-11.23925 8.5344 1.969619" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_back_seam_v+08_link">
+    <visual name="backdrop_back_seam_v+08_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.0015 0.012 6.096" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_back_seam_v+08_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_back_seam_v+08_link" />
+    <origin xyz="-11.23925 9.7536 1.969619" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_back_seam_v+09_link">
+    <visual name="backdrop_back_seam_v+09_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.0015 0.012 6.096" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_back_seam_v+09_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_back_seam_v+09_link" />
+    <origin xyz="-11.23925 10.9728 1.969619" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_back_seam_v+10_link">
+    <visual name="backdrop_back_seam_v+10_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.0015 0.012 6.096" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_back_seam_v+10_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_back_seam_v+10_link" />
+    <origin xyz="-11.23925 12.192 1.969619" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_back_seam_v+11_link">
+    <visual name="backdrop_back_seam_v+11_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.0015 0.012 6.096" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_back_seam_v+11_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_back_seam_v+11_link" />
+    <origin xyz="-11.23925 13.4112 1.969619" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_back_seam_v+12_link">
+    <visual name="backdrop_back_seam_v+12_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.0015 0.012 6.096" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_back_seam_v+12_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_back_seam_v+12_link" />
+    <origin xyz="-11.23925 14.6304 1.969619" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_back_seam_h0_link">
+    <visual name="backdrop_back_seam_h0_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.0015 30.48 0.012" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_back_seam_h0_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_back_seam_h0_link" />
+    <origin xyz="-11.23925 0 1.360019" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_back_seam_h1_link">
+    <visual name="backdrop_back_seam_h1_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.0015 30.48 0.012" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_back_seam_h1_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_back_seam_h1_link" />
+    <origin xyz="-11.23925 0 3.798419" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_left_seam_v01_link">
+    <visual name="backdrop_left_seam_v01_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.012 0.0015 6.096" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_left_seam_v01_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_left_seam_v01_link" />
+    <origin xyz="-10.0208 15.23925 1.969619" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_left_seam_v02_link">
+    <visual name="backdrop_left_seam_v02_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.012 0.0015 6.096" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_left_seam_v02_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_left_seam_v02_link" />
+    <origin xyz="-8.8016 15.23925 1.969619" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_left_seam_v03_link">
+    <visual name="backdrop_left_seam_v03_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.012 0.0015 6.096" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_left_seam_v03_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_left_seam_v03_link" />
+    <origin xyz="-7.5824 15.23925 1.969619" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_left_seam_v04_link">
+    <visual name="backdrop_left_seam_v04_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.012 0.0015 6.096" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_left_seam_v04_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_left_seam_v04_link" />
+    <origin xyz="-6.3632 15.23925 1.969619" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_left_seam_v05_link">
+    <visual name="backdrop_left_seam_v05_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.012 0.0015 6.096" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_left_seam_v05_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_left_seam_v05_link" />
+    <origin xyz="-5.144 15.23925 1.969619" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_left_seam_v06_link">
+    <visual name="backdrop_left_seam_v06_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.012 0.0015 6.096" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_left_seam_v06_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_left_seam_v06_link" />
+    <origin xyz="-3.9248 15.23925 1.969619" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_left_seam_v07_link">
+    <visual name="backdrop_left_seam_v07_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.012 0.0015 6.096" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_left_seam_v07_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_left_seam_v07_link" />
+    <origin xyz="-2.7056 15.23925 1.969619" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_left_seam_v08_link">
+    <visual name="backdrop_left_seam_v08_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.012 0.0015 6.096" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_left_seam_v08_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_left_seam_v08_link" />
+    <origin xyz="-1.4864 15.23925 1.969619" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_left_seam_v09_link">
+    <visual name="backdrop_left_seam_v09_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.012 0.0015 6.096" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_left_seam_v09_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_left_seam_v09_link" />
+    <origin xyz="-0.2672 15.23925 1.969619" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_left_seam_v10_link">
+    <visual name="backdrop_left_seam_v10_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.012 0.0015 6.096" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_left_seam_v10_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_left_seam_v10_link" />
+    <origin xyz="0.952 15.23925 1.969619" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_left_seam_v11_link">
+    <visual name="backdrop_left_seam_v11_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.012 0.0015 6.096" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_left_seam_v11_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_left_seam_v11_link" />
+    <origin xyz="2.1712 15.23925 1.969619" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_left_seam_v12_link">
+    <visual name="backdrop_left_seam_v12_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.012 0.0015 6.096" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_left_seam_v12_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_left_seam_v12_link" />
+    <origin xyz="3.3904 15.23925 1.969619" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_left_seam_h0_link">
+    <visual name="backdrop_left_seam_h0_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="15.24 0.0015 0.012" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_left_seam_h0_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_left_seam_h0_link" />
+    <origin xyz="-3.62 15.23925 1.360019" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_left_seam_h1_link">
+    <visual name="backdrop_left_seam_h1_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="15.24 0.0015 0.012" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_left_seam_h1_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_left_seam_h1_link" />
+    <origin xyz="-3.62 15.23925 3.798419" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_left_corner_seam_link">
+    <visual name="backdrop_left_corner_seam_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.012 0.012 6.096" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_left_corner_seam_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_left_corner_seam_link" />
+    <origin xyz="-11.234 15.234 1.969619" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_right_seam_v01_link">
+    <visual name="backdrop_right_seam_v01_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.012 0.0015 6.096" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_right_seam_v01_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_right_seam_v01_link" />
+    <origin xyz="-10.0208 -15.23925 1.969619" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_right_seam_v02_link">
+    <visual name="backdrop_right_seam_v02_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.012 0.0015 6.096" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_right_seam_v02_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_right_seam_v02_link" />
+    <origin xyz="-8.8016 -15.23925 1.969619" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_right_seam_v03_link">
+    <visual name="backdrop_right_seam_v03_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.012 0.0015 6.096" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_right_seam_v03_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_right_seam_v03_link" />
+    <origin xyz="-7.5824 -15.23925 1.969619" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_right_seam_v04_link">
+    <visual name="backdrop_right_seam_v04_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.012 0.0015 6.096" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_right_seam_v04_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_right_seam_v04_link" />
+    <origin xyz="-6.3632 -15.23925 1.969619" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_right_seam_v05_link">
+    <visual name="backdrop_right_seam_v05_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.012 0.0015 6.096" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_right_seam_v05_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_right_seam_v05_link" />
+    <origin xyz="-5.144 -15.23925 1.969619" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_right_seam_v06_link">
+    <visual name="backdrop_right_seam_v06_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.012 0.0015 6.096" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_right_seam_v06_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_right_seam_v06_link" />
+    <origin xyz="-3.9248 -15.23925 1.969619" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_right_seam_v07_link">
+    <visual name="backdrop_right_seam_v07_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.012 0.0015 6.096" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_right_seam_v07_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_right_seam_v07_link" />
+    <origin xyz="-2.7056 -15.23925 1.969619" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_right_seam_v08_link">
+    <visual name="backdrop_right_seam_v08_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.012 0.0015 6.096" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_right_seam_v08_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_right_seam_v08_link" />
+    <origin xyz="-1.4864 -15.23925 1.969619" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_right_seam_v09_link">
+    <visual name="backdrop_right_seam_v09_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.012 0.0015 6.096" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_right_seam_v09_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_right_seam_v09_link" />
+    <origin xyz="-0.2672 -15.23925 1.969619" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_right_seam_v10_link">
+    <visual name="backdrop_right_seam_v10_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.012 0.0015 6.096" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_right_seam_v10_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_right_seam_v10_link" />
+    <origin xyz="0.952 -15.23925 1.969619" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_right_seam_v11_link">
+    <visual name="backdrop_right_seam_v11_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.012 0.0015 6.096" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_right_seam_v11_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_right_seam_v11_link" />
+    <origin xyz="2.1712 -15.23925 1.969619" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_right_seam_v12_link">
+    <visual name="backdrop_right_seam_v12_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.012 0.0015 6.096" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_right_seam_v12_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_right_seam_v12_link" />
+    <origin xyz="3.3904 -15.23925 1.969619" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_right_seam_h0_link">
+    <visual name="backdrop_right_seam_h0_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="15.24 0.0015 0.012" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_right_seam_h0_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_right_seam_h0_link" />
+    <origin xyz="-3.62 -15.23925 1.360019" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_right_seam_h1_link">
+    <visual name="backdrop_right_seam_h1_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="15.24 0.0015 0.012" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_right_seam_h1_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_right_seam_h1_link" />
+    <origin xyz="-3.62 -15.23925 3.798419" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_right_corner_seam_link">
+    <visual name="backdrop_right_corner_seam_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.012 0.012 6.096" />
+      </geometry>
+      <material name="backdrop_seam" />
+    </visual>
+  </link>
+  <joint name="backdrop_right_corner_seam_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_right_corner_seam_link" />
+    <origin xyz="-11.234 -15.234 1.969619" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_tv_cabinet_link">
+    <visual name="backdrop_tv_cabinet_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.55 1.05 0.72" />
+      </geometry>
+      <material name="backdrop_wood" />
+    </visual>
+  </link>
+  <joint name="backdrop_tv_cabinet_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_tv_cabinet_link" />
+    <origin xyz="-10.905 0 -0.538381" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_tv_top_trim_link">
+    <visual name="backdrop_tv_top_trim_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.57 1.07 0.012" />
+      </geometry>
+      <material name="backdrop_wood_dark" />
+    </visual>
+  </link>
+  <joint name="backdrop_tv_top_trim_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_tv_top_trim_link" />
+    <origin xyz="-10.9 0 -0.172381" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_tv_base_trim_link">
+    <visual name="backdrop_tv_base_trim_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.57 1.07 0.016" />
+      </geometry>
+      <material name="backdrop_wood_dark" />
+    </visual>
+  </link>
+  <joint name="backdrop_tv_base_trim_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_tv_base_trim_link" />
+    <origin xyz="-10.9 0 -0.890381" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_tv_bezel_link">
+    <visual name="backdrop_tv_bezel_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.012 0.64 0.5" />
+      </geometry>
+      <material name="backdrop_bezel" />
+    </visual>
+  </link>
+  <joint name="backdrop_tv_bezel_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_tv_bezel_link" />
+    <origin xyz="-10.624 0.13 -0.495181" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_tv_screen_link">
+    <visual name="backdrop_tv_screen_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.016 0.57 0.43" />
+      </geometry>
+      <material name="backdrop_screen" />
+    </visual>
+  </link>
+  <joint name="backdrop_tv_screen_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_tv_screen_link" />
+    <origin xyz="-10.612 0.13 -0.495181" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_tv_screen_bulge_link">
+    <visual name="backdrop_tv_screen_bulge_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.012 0.5 0.36" />
+      </geometry>
+      <material name="backdrop_screen" />
+    </visual>
+  </link>
+  <joint name="backdrop_tv_screen_bulge_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_tv_screen_bulge_link" />
+    <origin xyz="-10.6 0.13 -0.495181" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_tv_screen_glint_link">
+    <visual name="backdrop_tv_screen_glint_visual">
+      <origin xyz="0 0 0" rpy="0.35 0 0" />
+      <geometry>
+        <box size="0.003 0.12 0.035" />
+      </geometry>
+      <material name="backdrop_screen_glint" />
+    </visual>
+  </link>
+  <joint name="backdrop_tv_screen_glint_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_tv_screen_glint_link" />
+    <origin xyz="-10.593 0.25 -0.395181" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_tv_control_panel_link">
+    <visual name="backdrop_tv_control_panel_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.008 0.26 0.34" />
+      </geometry>
+      <material name="backdrop_bezel" />
+    </visual>
+  </link>
+  <joint name="backdrop_tv_control_panel_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_tv_control_panel_link" />
+    <origin xyz="-10.626 -0.36 -0.435181" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_tv_dial_0_link">
+    <visual name="backdrop_tv_dial_0_visual">
+      <origin xyz="0 0 0" rpy="0 1.570796 0" />
+      <geometry>
+        <cylinder radius="0.045" length="0.03" />
+      </geometry>
+      <material name="backdrop_chrome" />
+    </visual>
+  </link>
+  <joint name="backdrop_tv_dial_0_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_tv_dial_0_link" />
+    <origin xyz="-10.61 -0.36 -0.335181" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_tv_dial_0_pointer_link">
+    <visual name="backdrop_tv_dial_0_pointer_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.004 0.006 0.036" />
+      </geometry>
+      <material name="backdrop_bezel" />
+    </visual>
+  </link>
+  <joint name="backdrop_tv_dial_0_pointer_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_tv_dial_0_pointer_link" />
+    <origin xyz="-10.594 -0.36 -0.310431" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_tv_dial_1_link">
+    <visual name="backdrop_tv_dial_1_visual">
+      <origin xyz="0 0 0" rpy="0 1.570796 0" />
+      <geometry>
+        <cylinder radius="0.038" length="0.03" />
+      </geometry>
+      <material name="backdrop_chrome" />
+    </visual>
+  </link>
+  <joint name="backdrop_tv_dial_1_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_tv_dial_1_link" />
+    <origin xyz="-10.61 -0.36 -0.465181" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_tv_dial_1_pointer_link">
+    <visual name="backdrop_tv_dial_1_pointer_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.004 0.006 0.0304" />
+      </geometry>
+      <material name="backdrop_bezel" />
+    </visual>
+  </link>
+  <joint name="backdrop_tv_dial_1_pointer_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_tv_dial_1_pointer_link" />
+    <origin xyz="-10.594 -0.36 -0.444281" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_tv_knob_0_link">
+    <visual name="backdrop_tv_knob_0_visual">
+      <origin xyz="0 0 0" rpy="0 1.570796 0" />
+      <geometry>
+        <cylinder radius="0.014" length="0.025" />
+      </geometry>
+      <material name="backdrop_chrome" />
+    </visual>
+  </link>
+  <joint name="backdrop_tv_knob_0_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_tv_knob_0_link" />
+    <origin xyz="-10.612 -0.43 -0.565181" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_tv_knob_1_link">
+    <visual name="backdrop_tv_knob_1_visual">
+      <origin xyz="0 0 0" rpy="0 1.570796 0" />
+      <geometry>
+        <cylinder radius="0.014" length="0.025" />
+      </geometry>
+      <material name="backdrop_chrome" />
+    </visual>
+  </link>
+  <joint name="backdrop_tv_knob_1_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_tv_knob_1_link" />
+    <origin xyz="-10.612 -0.36 -0.565181" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_tv_knob_2_link">
+    <visual name="backdrop_tv_knob_2_visual">
+      <origin xyz="0 0 0" rpy="0 1.570796 0" />
+      <geometry>
+        <cylinder radius="0.014" length="0.025" />
+      </geometry>
+      <material name="backdrop_chrome" />
+    </visual>
+  </link>
+  <joint name="backdrop_tv_knob_2_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_tv_knob_2_link" />
+    <origin xyz="-10.612 -0.29 -0.565181" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_tv_grille_link">
+    <visual name="backdrop_tv_grille_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.008 0.26 0.16" />
+      </geometry>
+      <material name="backdrop_grille" />
+    </visual>
+  </link>
+  <joint name="backdrop_tv_grille_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_tv_grille_link" />
+    <origin xyz="-10.626 -0.36 -0.758381" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_tv_grille_slat_0_link">
+    <visual name="backdrop_tv_grille_slat_0_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.006 0.25 0.006" />
+      </geometry>
+      <material name="backdrop_wood_dark" />
+    </visual>
+  </link>
+  <joint name="backdrop_tv_grille_slat_0_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_tv_grille_slat_0_link" />
+    <origin xyz="-10.62 -0.36 -0.823381" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_tv_grille_slat_1_link">
+    <visual name="backdrop_tv_grille_slat_1_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.006 0.25 0.006" />
+      </geometry>
+      <material name="backdrop_wood_dark" />
+    </visual>
+  </link>
+  <joint name="backdrop_tv_grille_slat_1_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_tv_grille_slat_1_link" />
+    <origin xyz="-10.62 -0.36 -0.797381" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_tv_grille_slat_2_link">
+    <visual name="backdrop_tv_grille_slat_2_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.006 0.25 0.006" />
+      </geometry>
+      <material name="backdrop_wood_dark" />
+    </visual>
+  </link>
+  <joint name="backdrop_tv_grille_slat_2_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_tv_grille_slat_2_link" />
+    <origin xyz="-10.62 -0.36 -0.771381" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_tv_grille_slat_3_link">
+    <visual name="backdrop_tv_grille_slat_3_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.006 0.25 0.006" />
+      </geometry>
+      <material name="backdrop_wood_dark" />
+    </visual>
+  </link>
+  <joint name="backdrop_tv_grille_slat_3_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_tv_grille_slat_3_link" />
+    <origin xyz="-10.62 -0.36 -0.745381" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_tv_grille_slat_4_link">
+    <visual name="backdrop_tv_grille_slat_4_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.006 0.25 0.006" />
+      </geometry>
+      <material name="backdrop_wood_dark" />
+    </visual>
+  </link>
+  <joint name="backdrop_tv_grille_slat_4_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_tv_grille_slat_4_link" />
+    <origin xyz="-10.62 -0.36 -0.719381" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_tv_grille_slat_5_link">
+    <visual name="backdrop_tv_grille_slat_5_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.006 0.25 0.006" />
+      </geometry>
+      <material name="backdrop_wood_dark" />
+    </visual>
+  </link>
+  <joint name="backdrop_tv_grille_slat_5_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_tv_grille_slat_5_link" />
+    <origin xyz="-10.62 -0.36 -0.693381" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_tv_leg_0_link">
+    <visual name="backdrop_tv_leg_0_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <cylinder radius="0.018" length="0.18" />
+      </geometry>
+      <material name="backdrop_wood_dark" />
+    </visual>
+  </link>
+  <joint name="backdrop_tv_leg_0_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_tv_leg_0_link" />
+    <origin xyz="-10.69 0.455 -0.988381" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_tv_leg_1_link">
+    <visual name="backdrop_tv_leg_1_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <cylinder radius="0.018" length="0.18" />
+      </geometry>
+      <material name="backdrop_wood_dark" />
+    </visual>
+  </link>
+  <joint name="backdrop_tv_leg_1_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_tv_leg_1_link" />
+    <origin xyz="-10.69 -0.455 -0.988381" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_tv_leg_2_link">
+    <visual name="backdrop_tv_leg_2_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <cylinder radius="0.018" length="0.18" />
+      </geometry>
+      <material name="backdrop_wood_dark" />
+    </visual>
+  </link>
+  <joint name="backdrop_tv_leg_2_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_tv_leg_2_link" />
+    <origin xyz="-11.12 0.455 -0.988381" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_tv_leg_3_link">
+    <visual name="backdrop_tv_leg_3_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <cylinder radius="0.018" length="0.18" />
+      </geometry>
+      <material name="backdrop_wood_dark" />
+    </visual>
+  </link>
+  <joint name="backdrop_tv_leg_3_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_tv_leg_3_link" />
+    <origin xyz="-11.12 -0.455 -0.988381" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_tv_antenna_base_link">
+    <visual name="backdrop_tv_antenna_base_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.1 0.14 0.05" />
+      </geometry>
+      <material name="backdrop_bezel" />
+    </visual>
+  </link>
+  <joint name="backdrop_tv_antenna_base_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_tv_antenna_base_link" />
+    <origin xyz="-10.955 0 -0.141381" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_tv_antenna_0_link">
+    <visual name="backdrop_tv_antenna_0_visual">
+      <origin xyz="0 0 0" rpy="-0.550552 -0.187945 0" />
+      <geometry>
+        <box size="0.006 0.006 0.628013" />
+      </geometry>
+      <material name="backdrop_chrome" />
+    </visual>
+  </link>
+  <joint name="backdrop_tv_antenna_0_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_tv_antenna_0_link" />
+    <origin xyz="-11.005 0.164275 0.146514" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_tv_antenna_0_tip_link">
+    <visual name="backdrop_tv_antenna_0_tip_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.009" />
+      </geometry>
+      <material name="backdrop_chrome" />
+    </visual>
+  </link>
+  <joint name="backdrop_tv_antenna_0_tip_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_tv_antenna_0_tip_link" />
+    <origin xyz="-11.055 0.32855 0.409409" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_tv_antenna_1_link">
+    <visual name="backdrop_tv_antenna_1_visual">
+      <origin xyz="0 0 0" rpy="0.550552 -0.187945 0" />
+      <geometry>
+        <box size="0.006 0.006 0.628013" />
+      </geometry>
+      <material name="backdrop_chrome" />
+    </visual>
+  </link>
+  <joint name="backdrop_tv_antenna_1_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_tv_antenna_1_link" />
+    <origin xyz="-11.005 -0.164275 0.146514" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_tv_antenna_1_tip_link">
+    <visual name="backdrop_tv_antenna_1_tip_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.009" />
+      </geometry>
+      <material name="backdrop_chrome" />
+    </visual>
+  </link>
+  <joint name="backdrop_tv_antenna_1_tip_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_tv_antenna_1_tip_link" />
+    <origin xyz="-11.055 -0.32855 0.409409" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_chair_left_leg_0_link">
+    <visual name="backdrop_chair_left_leg_0_visual">
+      <origin xyz="0 0 0" rpy="0 0 -2.249459" />
+      <geometry>
+        <cylinder radius="0.022" length="0.06" />
+      </geometry>
+      <material name="backdrop_wood_dark" />
+    </visual>
+  </link>
+  <joint name="backdrop_chair_left_leg_0_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_chair_left_leg_0_link" />
+    <origin xyz="-9.311701 1.045287 -1.048381" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_chair_left_leg_1_link">
+    <visual name="backdrop_chair_left_leg_1_visual">
+      <origin xyz="0 0 0" rpy="0 0 -2.249459" />
+      <geometry>
+        <cylinder radius="0.022" length="0.06" />
+      </geometry>
+      <material name="backdrop_wood_dark" />
+    </visual>
+  </link>
+  <joint name="backdrop_chair_left_leg_1_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_chair_left_leg_1_link" />
+    <origin xyz="-9.887726 1.509824 -1.048381" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_chair_left_leg_2_link">
+    <visual name="backdrop_chair_left_leg_2_visual">
+      <origin xyz="0 0 0" rpy="0 0 -2.249459" />
+      <geometry>
+        <cylinder radius="0.022" length="0.06" />
+      </geometry>
+      <material name="backdrop_wood_dark" />
+    </visual>
+  </link>
+  <joint name="backdrop_chair_left_leg_2_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_chair_left_leg_2_link" />
+    <origin xyz="-8.872274 1.590176 -1.048381" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_chair_left_leg_3_link">
+    <visual name="backdrop_chair_left_leg_3_visual">
+      <origin xyz="0 0 0" rpy="0 0 -2.249459" />
+      <geometry>
+        <cylinder radius="0.022" length="0.06" />
+      </geometry>
+      <material name="backdrop_wood_dark" />
+    </visual>
+  </link>
+  <joint name="backdrop_chair_left_leg_3_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_chair_left_leg_3_link" />
+    <origin xyz="-9.448299 2.054713 -1.048381" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_chair_left_base_link">
+    <visual name="backdrop_chair_left_base_visual">
+      <origin xyz="0 0 0" rpy="0 0 -2.249459" />
+      <geometry>
+        <box size="0.82 0.86 0.34" />
+      </geometry>
+      <material name="backdrop_leather" />
+    </visual>
+  </link>
+  <joint name="backdrop_chair_left_base_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_chair_left_base_link" />
+    <origin xyz="-9.38 1.55 -0.848381" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_chair_left_seat_link">
+    <visual name="backdrop_chair_left_seat_visual">
+      <origin xyz="0 0 0" rpy="0 0 -2.249459" />
+      <geometry>
+        <box size="0.66 0.56 0.12" />
+      </geometry>
+      <material name="backdrop_leather" />
+    </visual>
+  </link>
+  <joint name="backdrop_chair_left_seat_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_chair_left_seat_link" />
+    <origin xyz="-9.417665 1.503295 -0.618381" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_chair_left_seat_front_roll_link">
+    <visual name="backdrop_chair_left_seat_front_roll_visual">
+      <origin xyz="0 0 0" rpy="1.570796 0 -2.249459" />
+      <geometry>
+        <cylinder radius="0.07" length="0.56" />
+      </geometry>
+      <material name="backdrop_leather" />
+    </visual>
+  </link>
+  <joint name="backdrop_chair_left_seat_front_roll_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_chair_left_seat_front_roll_link" />
+    <origin xyz="-9.618546 1.254203 -0.638381" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_chair_left_seat_front_wear_link">
+    <visual name="backdrop_chair_left_seat_front_wear_visual">
+      <origin xyz="0 0 0" rpy="0 0.3 -2.249459" />
+      <geometry>
+        <box size="0.02 0.4 0.05" />
+      </geometry>
+      <material name="backdrop_leather_worn" />
+    </visual>
+  </link>
+  <joint name="backdrop_chair_left_seat_front_wear_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_chair_left_seat_front_wear_link" />
+    <origin xyz="-9.656211 1.207498 -0.608381" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_chair_left_back_link">
+    <visual name="backdrop_chair_left_back_visual">
+      <origin xyz="0 0 0" rpy="0 -0.2 -2.249459" />
+      <geometry>
+        <box size="0.2 0.84 0.52" />
+      </geometry>
+      <material name="backdrop_leather" />
+    </visual>
+  </link>
+  <joint name="backdrop_chair_left_back_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_chair_left_back_link" />
+    <origin xyz="-9.172842 1.806876 -0.418381" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_chair_left_back_top_roll_link">
+    <visual name="backdrop_chair_left_back_top_roll_visual">
+      <origin xyz="0 0 0" rpy="1.570796 0 -2.249459" />
+      <geometry>
+        <cylinder radius="0.1" length="0.84" />
+      </geometry>
+      <material name="backdrop_leather" />
+    </visual>
+  </link>
+  <joint name="backdrop_chair_left_back_top_roll_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_chair_left_back_top_roll_link" />
+    <origin xyz="-9.128899 1.861365 -0.178381" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_chair_left_back_top_wear_link">
+    <visual name="backdrop_chair_left_back_top_wear_visual">
+      <origin xyz="0 0 0" rpy="0 0.25 -2.249459" />
+      <geometry>
+        <box size="0.1 0.34 0.012" />
+      </geometry>
+      <material name="backdrop_leather_worn" />
+    </visual>
+  </link>
+  <joint name="backdrop_chair_left_back_top_wear_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_chair_left_back_top_wear_link" />
+    <origin xyz="-9.115088 1.798841 -0.088381" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_chair_left_button_0_0_link">
+    <visual name="backdrop_chair_left_button_0_0_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.014" />
+      </geometry>
+      <material name="backdrop_button" />
+    </visual>
+  </link>
+  <joint name="backdrop_chair_left_button_0_0_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_chair_left_button_0_0_link" />
+    <origin xyz="-9.452066 1.890744 -0.478381" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_chair_left_button_0_1_link">
+    <visual name="backdrop_chair_left_button_0_1_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.014" />
+      </geometry>
+      <material name="backdrop_button" />
+    </visual>
+  </link>
+  <joint name="backdrop_chair_left_button_0_1_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_chair_left_button_0_1_link" />
+    <origin xyz="-9.311952 1.777749 -0.478381" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_chair_left_button_0_2_link">
+    <visual name="backdrop_chair_left_button_0_2_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.014" />
+      </geometry>
+      <material name="backdrop_button" />
+    </visual>
+  </link>
+  <joint name="backdrop_chair_left_button_0_2_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_chair_left_button_0_2_link" />
+    <origin xyz="-9.171837 1.664753 -0.478381" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_chair_left_button_0_3_link">
+    <visual name="backdrop_chair_left_button_0_3_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.014" />
+      </geometry>
+      <material name="backdrop_button" />
+    </visual>
+  </link>
+  <joint name="backdrop_chair_left_button_0_3_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_chair_left_button_0_3_link" />
+    <origin xyz="-9.031723 1.551758 -0.478381" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_chair_left_button_1_0_link">
+    <visual name="backdrop_chair_left_button_1_0_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.014" />
+      </geometry>
+      <material name="backdrop_button" />
+    </visual>
+  </link>
+  <joint name="backdrop_chair_left_button_1_0_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_chair_left_button_1_0_link" />
+    <origin xyz="-9.399586 1.812451 -0.338381" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_chair_left_button_1_1_link">
+    <visual name="backdrop_chair_left_button_1_1_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.014" />
+      </geometry>
+      <material name="backdrop_button" />
+    </visual>
+  </link>
+  <joint name="backdrop_chair_left_button_1_1_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_chair_left_button_1_1_link" />
+    <origin xyz="-9.259472 1.699455 -0.338381" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_chair_left_button_1_2_link">
+    <visual name="backdrop_chair_left_button_1_2_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.014" />
+      </geometry>
+      <material name="backdrop_button" />
+    </visual>
+  </link>
+  <joint name="backdrop_chair_left_button_1_2_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_chair_left_button_1_2_link" />
+    <origin xyz="-9.119357 1.58646 -0.338381" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_chair_left_arm_l_link">
+    <visual name="backdrop_chair_left_arm_l_visual">
+      <origin xyz="0 0 0" rpy="0 0 -2.249459" />
+      <geometry>
+        <box size="0.8 0.16 0.26" />
+      </geometry>
+      <material name="backdrop_leather" />
+    </visual>
+  </link>
+  <joint name="backdrop_chair_left_arm_l_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_chair_left_arm_l_link" />
+    <origin xyz="-9.107555 1.330287 -0.548381" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_chair_left_arm_roll_l_link">
+    <visual name="backdrop_chair_left_arm_roll_l_visual">
+      <origin xyz="0 0 0" rpy="0 1.570796 -2.249459" />
+      <geometry>
+        <cylinder radius="0.09" length="0.8" />
+      </geometry>
+      <material name="backdrop_leather" />
+    </visual>
+  </link>
+  <joint name="backdrop_chair_left_arm_roll_l_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_chair_left_arm_roll_l_link" />
+    <origin xyz="-9.104542 1.302163 -0.418381" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_chair_left_arm_scroll_l_link">
+    <visual name="backdrop_chair_left_arm_scroll_l_visual">
+      <origin xyz="0 0 0" rpy="0 1.570796 -2.249459" />
+      <geometry>
+        <cylinder radius="0.1" length="0.03" />
+      </geometry>
+      <material name="backdrop_leather" />
+    </visual>
+  </link>
+  <joint name="backdrop_chair_left_arm_scroll_l_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_chair_left_arm_scroll_l_link" />
+    <origin xyz="-9.355643 0.990798 -0.468381" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_chair_left_arm_wear_l_link">
+    <visual name="backdrop_chair_left_arm_wear_l_visual">
+      <origin xyz="0 0 0" rpy="0 0 -2.189459" />
+      <geometry>
+        <box size="0.46 0.07 0.006" />
+      </geometry>
+      <material name="backdrop_leather_worn" />
+    </visual>
+  </link>
+  <joint name="backdrop_chair_left_arm_wear_l_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_chair_left_arm_wear_l_link" />
+    <origin xyz="-9.179873 1.208754 -0.330381" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_chair_left_arm_wear2_l_link">
+    <visual name="backdrop_chair_left_arm_wear2_l_visual">
+      <origin xyz="0 0 0" rpy="0 0 -2.369459" />
+      <geometry>
+        <box size="0.16 0.05 0.006" />
+      </geometry>
+      <material name="backdrop_leather_worn" />
+    </visual>
+  </link>
+  <joint name="backdrop_chair_left_arm_wear2_l_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_chair_left_arm_wear2_l_link" />
+    <origin xyz="-8.986776 1.464123 -0.333381" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_chair_left_arm_scroll_wear_l_link">
+    <visual name="backdrop_chair_left_arm_scroll_wear_l_visual">
+      <origin xyz="0 0 0" rpy="0 1.570796 -2.249459" />
+      <geometry>
+        <cylinder radius="0.05" length="0.006" />
+      </geometry>
+      <material name="backdrop_leather_worn" />
+    </visual>
+  </link>
+  <joint name="backdrop_chair_left_arm_scroll_wear_l_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_chair_left_arm_scroll_wear_l_link" />
+    <origin xyz="-9.366943 0.976787 -0.438381" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_chair_left_arm_r_link">
+    <visual name="backdrop_chair_left_arm_r_visual">
+      <origin xyz="0 0 0" rpy="0 0 -2.249459" />
+      <geometry>
+        <box size="0.8 0.16 0.26" />
+      </geometry>
+      <material name="backdrop_leather" />
+    </visual>
+  </link>
+  <joint name="backdrop_chair_left_arm_r_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_chair_left_arm_r_link" />
+    <origin xyz="-9.652445 1.769713 -0.548381" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_chair_left_arm_roll_r_link">
+    <visual name="backdrop_chair_left_arm_roll_r_visual">
+      <origin xyz="0 0 0" rpy="0 1.570796 -2.249459" />
+      <geometry>
+        <cylinder radius="0.09" length="0.8" />
+      </geometry>
+      <material name="backdrop_leather" />
+    </visual>
+  </link>
+  <joint name="backdrop_chair_left_arm_roll_r_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_chair_left_arm_roll_r_link" />
+    <origin xyz="-9.680568 1.7667 -0.418381" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_chair_left_arm_scroll_r_link">
+    <visual name="backdrop_chair_left_arm_scroll_r_visual">
+      <origin xyz="0 0 0" rpy="0 1.570796 -2.249459" />
+      <geometry>
+        <cylinder radius="0.1" length="0.03" />
+      </geometry>
+      <material name="backdrop_leather" />
+    </visual>
+  </link>
+  <joint name="backdrop_chair_left_arm_scroll_r_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_chair_left_arm_scroll_r_link" />
+    <origin xyz="-9.931669 1.455335 -0.468381" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_chair_left_arm_wear_r_link">
+    <visual name="backdrop_chair_left_arm_wear_r_visual">
+      <origin xyz="0 0 0" rpy="0 0 -2.309459" />
+      <geometry>
+        <box size="0.46 0.07 0.006" />
+      </geometry>
+      <material name="backdrop_leather_worn" />
+    </visual>
+  </link>
+  <joint name="backdrop_chair_left_arm_wear_r_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_chair_left_arm_wear_r_link" />
+    <origin xyz="-9.755898 1.673291 -0.330381" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_chair_left_arm_wear2_r_link">
+    <visual name="backdrop_chair_left_arm_wear2_r_visual">
+      <origin xyz="0 0 0" rpy="0 0 -2.129459" />
+      <geometry>
+        <box size="0.16 0.05 0.006" />
+      </geometry>
+      <material name="backdrop_leather_worn" />
+    </visual>
+  </link>
+  <joint name="backdrop_chair_left_arm_wear2_r_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_chair_left_arm_wear2_r_link" />
+    <origin xyz="-9.547233 1.916105 -0.333381" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_chair_left_arm_scroll_wear_r_link">
+    <visual name="backdrop_chair_left_arm_scroll_wear_r_visual">
+      <origin xyz="0 0 0" rpy="0 1.570796 -2.249459" />
+      <geometry>
+        <cylinder radius="0.05" length="0.006" />
+      </geometry>
+      <material name="backdrop_leather_worn" />
+    </visual>
+  </link>
+  <joint name="backdrop_chair_left_arm_scroll_wear_r_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_chair_left_arm_scroll_wear_r_link" />
+    <origin xyz="-9.942968 1.441323 -0.438381" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_chair_right_leg_0_link">
+    <visual name="backdrop_chair_right_leg_0_visual">
+      <origin xyz="0 0 0" rpy="0 0 2.249459" />
+      <geometry>
+        <cylinder radius="0.022" length="0.06" />
+      </geometry>
+      <material name="backdrop_wood_dark" />
+    </visual>
+  </link>
+  <joint name="backdrop_chair_right_leg_0_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_chair_right_leg_0_link" />
+    <origin xyz="-9.887726 -1.509824 -1.048381" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_chair_right_leg_1_link">
+    <visual name="backdrop_chair_right_leg_1_visual">
+      <origin xyz="0 0 0" rpy="0 0 2.249459" />
+      <geometry>
+        <cylinder radius="0.022" length="0.06" />
+      </geometry>
+      <material name="backdrop_wood_dark" />
+    </visual>
+  </link>
+  <joint name="backdrop_chair_right_leg_1_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_chair_right_leg_1_link" />
+    <origin xyz="-9.311701 -1.045287 -1.048381" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_chair_right_leg_2_link">
+    <visual name="backdrop_chair_right_leg_2_visual">
+      <origin xyz="0 0 0" rpy="0 0 2.249459" />
+      <geometry>
+        <cylinder radius="0.022" length="0.06" />
+      </geometry>
+      <material name="backdrop_wood_dark" />
+    </visual>
+  </link>
+  <joint name="backdrop_chair_right_leg_2_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_chair_right_leg_2_link" />
+    <origin xyz="-9.448299 -2.054713 -1.048381" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_chair_right_leg_3_link">
+    <visual name="backdrop_chair_right_leg_3_visual">
+      <origin xyz="0 0 0" rpy="0 0 2.249459" />
+      <geometry>
+        <cylinder radius="0.022" length="0.06" />
+      </geometry>
+      <material name="backdrop_wood_dark" />
+    </visual>
+  </link>
+  <joint name="backdrop_chair_right_leg_3_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_chair_right_leg_3_link" />
+    <origin xyz="-8.872274 -1.590176 -1.048381" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_chair_right_base_link">
+    <visual name="backdrop_chair_right_base_visual">
+      <origin xyz="0 0 0" rpy="0 0 2.249459" />
+      <geometry>
+        <box size="0.82 0.86 0.34" />
+      </geometry>
+      <material name="backdrop_leather" />
+    </visual>
+  </link>
+  <joint name="backdrop_chair_right_base_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_chair_right_base_link" />
+    <origin xyz="-9.38 -1.55 -0.848381" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_chair_right_seat_link">
+    <visual name="backdrop_chair_right_seat_visual">
+      <origin xyz="0 0 0" rpy="0 0 2.249459" />
+      <geometry>
+        <box size="0.66 0.56 0.12" />
+      </geometry>
+      <material name="backdrop_leather" />
+    </visual>
+  </link>
+  <joint name="backdrop_chair_right_seat_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_chair_right_seat_link" />
+    <origin xyz="-9.417665 -1.503295 -0.618381" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_chair_right_seat_front_roll_link">
+    <visual name="backdrop_chair_right_seat_front_roll_visual">
+      <origin xyz="0 0 0" rpy="1.570796 0 2.249459" />
+      <geometry>
+        <cylinder radius="0.07" length="0.56" />
+      </geometry>
+      <material name="backdrop_leather" />
+    </visual>
+  </link>
+  <joint name="backdrop_chair_right_seat_front_roll_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_chair_right_seat_front_roll_link" />
+    <origin xyz="-9.618546 -1.254203 -0.638381" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_chair_right_seat_front_wear_link">
+    <visual name="backdrop_chair_right_seat_front_wear_visual">
+      <origin xyz="0 0 0" rpy="0 0.3 2.249459" />
+      <geometry>
+        <box size="0.02 0.4 0.05" />
+      </geometry>
+      <material name="backdrop_leather_worn" />
+    </visual>
+  </link>
+  <joint name="backdrop_chair_right_seat_front_wear_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_chair_right_seat_front_wear_link" />
+    <origin xyz="-9.656211 -1.207498 -0.608381" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_chair_right_back_link">
+    <visual name="backdrop_chair_right_back_visual">
+      <origin xyz="0 0 0" rpy="0 -0.2 2.249459" />
+      <geometry>
+        <box size="0.2 0.84 0.52" />
+      </geometry>
+      <material name="backdrop_leather" />
+    </visual>
+  </link>
+  <joint name="backdrop_chair_right_back_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_chair_right_back_link" />
+    <origin xyz="-9.172842 -1.806876 -0.418381" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_chair_right_back_top_roll_link">
+    <visual name="backdrop_chair_right_back_top_roll_visual">
+      <origin xyz="0 0 0" rpy="1.570796 0 2.249459" />
+      <geometry>
+        <cylinder radius="0.1" length="0.84" />
+      </geometry>
+      <material name="backdrop_leather" />
+    </visual>
+  </link>
+  <joint name="backdrop_chair_right_back_top_roll_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_chair_right_back_top_roll_link" />
+    <origin xyz="-9.128899 -1.861365 -0.178381" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_chair_right_back_top_wear_link">
+    <visual name="backdrop_chair_right_back_top_wear_visual">
+      <origin xyz="0 0 0" rpy="0 0.25 2.249459" />
+      <geometry>
+        <box size="0.1 0.34 0.012" />
+      </geometry>
+      <material name="backdrop_leather_worn" />
+    </visual>
+  </link>
+  <joint name="backdrop_chair_right_back_top_wear_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_chair_right_back_top_wear_link" />
+    <origin xyz="-9.19293 -1.861616 -0.088381" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_chair_right_button_0_0_link">
+    <visual name="backdrop_chair_right_button_0_0_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.014" />
+      </geometry>
+      <material name="backdrop_button" />
+    </visual>
+  </link>
+  <joint name="backdrop_chair_right_button_0_0_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_chair_right_button_0_0_link" />
+    <origin xyz="-9.031723 -1.551758 -0.478381" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_chair_right_button_0_1_link">
+    <visual name="backdrop_chair_right_button_0_1_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.014" />
+      </geometry>
+      <material name="backdrop_button" />
+    </visual>
+  </link>
+  <joint name="backdrop_chair_right_button_0_1_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_chair_right_button_0_1_link" />
+    <origin xyz="-9.171837 -1.664753 -0.478381" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_chair_right_button_0_2_link">
+    <visual name="backdrop_chair_right_button_0_2_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.014" />
+      </geometry>
+      <material name="backdrop_button" />
+    </visual>
+  </link>
+  <joint name="backdrop_chair_right_button_0_2_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_chair_right_button_0_2_link" />
+    <origin xyz="-9.311952 -1.777749 -0.478381" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_chair_right_button_0_3_link">
+    <visual name="backdrop_chair_right_button_0_3_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.014" />
+      </geometry>
+      <material name="backdrop_button" />
+    </visual>
+  </link>
+  <joint name="backdrop_chair_right_button_0_3_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_chair_right_button_0_3_link" />
+    <origin xyz="-9.452066 -1.890744 -0.478381" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_chair_right_button_1_0_link">
+    <visual name="backdrop_chair_right_button_1_0_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.014" />
+      </geometry>
+      <material name="backdrop_button" />
+    </visual>
+  </link>
+  <joint name="backdrop_chair_right_button_1_0_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_chair_right_button_1_0_link" />
+    <origin xyz="-9.119357 -1.58646 -0.338381" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_chair_right_button_1_1_link">
+    <visual name="backdrop_chair_right_button_1_1_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.014" />
+      </geometry>
+      <material name="backdrop_button" />
+    </visual>
+  </link>
+  <joint name="backdrop_chair_right_button_1_1_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_chair_right_button_1_1_link" />
+    <origin xyz="-9.259472 -1.699455 -0.338381" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_chair_right_button_1_2_link">
+    <visual name="backdrop_chair_right_button_1_2_visual">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.014" />
+      </geometry>
+      <material name="backdrop_button" />
+    </visual>
+  </link>
+  <joint name="backdrop_chair_right_button_1_2_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_chair_right_button_1_2_link" />
+    <origin xyz="-9.399586 -1.812451 -0.338381" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_chair_right_arm_l_link">
+    <visual name="backdrop_chair_right_arm_l_visual">
+      <origin xyz="0 0 0" rpy="0 0 2.249459" />
+      <geometry>
+        <box size="0.8 0.16 0.26" />
+      </geometry>
+      <material name="backdrop_leather" />
+    </visual>
+  </link>
+  <joint name="backdrop_chair_right_arm_l_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_chair_right_arm_l_link" />
+    <origin xyz="-9.652445 -1.769713 -0.548381" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_chair_right_arm_roll_l_link">
+    <visual name="backdrop_chair_right_arm_roll_l_visual">
+      <origin xyz="0 0 0" rpy="0 1.570796 2.249459" />
+      <geometry>
+        <cylinder radius="0.09" length="0.8" />
+      </geometry>
+      <material name="backdrop_leather" />
+    </visual>
+  </link>
+  <joint name="backdrop_chair_right_arm_roll_l_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_chair_right_arm_roll_l_link" />
+    <origin xyz="-9.680568 -1.7667 -0.418381" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_chair_right_arm_scroll_l_link">
+    <visual name="backdrop_chair_right_arm_scroll_l_visual">
+      <origin xyz="0 0 0" rpy="0 1.570796 2.249459" />
+      <geometry>
+        <cylinder radius="0.1" length="0.03" />
+      </geometry>
+      <material name="backdrop_leather" />
+    </visual>
+  </link>
+  <joint name="backdrop_chair_right_arm_scroll_l_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_chair_right_arm_scroll_l_link" />
+    <origin xyz="-9.931669 -1.455335 -0.468381" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_chair_right_arm_wear_l_link">
+    <visual name="backdrop_chair_right_arm_wear_l_visual">
+      <origin xyz="0 0 0" rpy="0 0 2.309459" />
+      <geometry>
+        <box size="0.46 0.07 0.006" />
+      </geometry>
+      <material name="backdrop_leather_worn" />
+    </visual>
+  </link>
+  <joint name="backdrop_chair_right_arm_wear_l_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_chair_right_arm_wear_l_link" />
+    <origin xyz="-9.755898 -1.673291 -0.330381" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_chair_right_arm_wear2_l_link">
+    <visual name="backdrop_chair_right_arm_wear2_l_visual">
+      <origin xyz="0 0 0" rpy="0 0 2.129459" />
+      <geometry>
+        <box size="0.16 0.05 0.006" />
+      </geometry>
+      <material name="backdrop_leather_worn" />
+    </visual>
+  </link>
+  <joint name="backdrop_chair_right_arm_wear2_l_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_chair_right_arm_wear2_l_link" />
+    <origin xyz="-9.547233 -1.916105 -0.333381" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_chair_right_arm_scroll_wear_l_link">
+    <visual name="backdrop_chair_right_arm_scroll_wear_l_visual">
+      <origin xyz="0 0 0" rpy="0 1.570796 2.249459" />
+      <geometry>
+        <cylinder radius="0.05" length="0.006" />
+      </geometry>
+      <material name="backdrop_leather_worn" />
+    </visual>
+  </link>
+  <joint name="backdrop_chair_right_arm_scroll_wear_l_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_chair_right_arm_scroll_wear_l_link" />
+    <origin xyz="-9.942968 -1.441323 -0.438381" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_chair_right_arm_r_link">
+    <visual name="backdrop_chair_right_arm_r_visual">
+      <origin xyz="0 0 0" rpy="0 0 2.249459" />
+      <geometry>
+        <box size="0.8 0.16 0.26" />
+      </geometry>
+      <material name="backdrop_leather" />
+    </visual>
+  </link>
+  <joint name="backdrop_chair_right_arm_r_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_chair_right_arm_r_link" />
+    <origin xyz="-9.107555 -1.330287 -0.548381" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_chair_right_arm_roll_r_link">
+    <visual name="backdrop_chair_right_arm_roll_r_visual">
+      <origin xyz="0 0 0" rpy="0 1.570796 2.249459" />
+      <geometry>
+        <cylinder radius="0.09" length="0.8" />
+      </geometry>
+      <material name="backdrop_leather" />
+    </visual>
+  </link>
+  <joint name="backdrop_chair_right_arm_roll_r_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_chair_right_arm_roll_r_link" />
+    <origin xyz="-9.104542 -1.302163 -0.418381" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_chair_right_arm_scroll_r_link">
+    <visual name="backdrop_chair_right_arm_scroll_r_visual">
+      <origin xyz="0 0 0" rpy="0 1.570796 2.249459" />
+      <geometry>
+        <cylinder radius="0.1" length="0.03" />
+      </geometry>
+      <material name="backdrop_leather" />
+    </visual>
+  </link>
+  <joint name="backdrop_chair_right_arm_scroll_r_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_chair_right_arm_scroll_r_link" />
+    <origin xyz="-9.355643 -0.990798 -0.468381" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_chair_right_arm_wear_r_link">
+    <visual name="backdrop_chair_right_arm_wear_r_visual">
+      <origin xyz="0 0 0" rpy="0 0 2.189459" />
+      <geometry>
+        <box size="0.46 0.07 0.006" />
+      </geometry>
+      <material name="backdrop_leather_worn" />
+    </visual>
+  </link>
+  <joint name="backdrop_chair_right_arm_wear_r_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_chair_right_arm_wear_r_link" />
+    <origin xyz="-9.179873 -1.208754 -0.330381" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_chair_right_arm_wear2_r_link">
+    <visual name="backdrop_chair_right_arm_wear2_r_visual">
+      <origin xyz="0 0 0" rpy="0 0 2.369459" />
+      <geometry>
+        <box size="0.16 0.05 0.006" />
+      </geometry>
+      <material name="backdrop_leather_worn" />
+    </visual>
+  </link>
+  <joint name="backdrop_chair_right_arm_wear2_r_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_chair_right_arm_wear2_r_link" />
+    <origin xyz="-8.986776 -1.464123 -0.333381" rpy="0 0 0" />
+  </joint>
+  <link name="backdrop_chair_right_arm_scroll_wear_r_link">
+    <visual name="backdrop_chair_right_arm_scroll_wear_r_visual">
+      <origin xyz="0 0 0" rpy="0 1.570796 2.249459" />
+      <geometry>
+        <cylinder radius="0.05" length="0.006" />
+      </geometry>
+      <material name="backdrop_leather_worn" />
+    </visual>
+  </link>
+  <joint name="backdrop_chair_right_arm_scroll_wear_r_fixed" type="fixed">
+    <parent link="backdrop_root_link" />
+    <child link="backdrop_chair_right_arm_scroll_wear_r_link" />
+    <origin xyz="-9.366943 -0.976787 -0.438381" rpy="0 0 0" />
+  </joint>
+  <!-- ==== end backdrop ==== -->
+</robot>

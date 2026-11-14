@@ -1,0 +1,30 @@
+{
+  "description": "Rise onto the caster and return to the floor.",
+  "urdfBackgroundFile": "LibraryScenes/Scene-TipToe-Demo.json",
+  "durationSeconds": 6,
+  "splineServos": [
+    "B_TipToe"
+  ],
+  "commands": [
+    {
+      "servo": "B_TipToe",
+      "offsetSeconds": 0,
+      "value": 0
+    },
+    {
+      "servo": "B_TipToe",
+      "offsetSeconds": 2,
+      "value": 100
+    },
+    {
+      "servo": "B_TipToe",
+      "offsetSeconds": 4,
+      "value": 100
+    },
+    {
+      "servo": "B_TipToe",
+      "offsetSeconds": 6,
+      "value": 0
+    }
+  ]
+}

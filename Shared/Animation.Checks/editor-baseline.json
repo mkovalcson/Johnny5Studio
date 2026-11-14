@@ -1,0 +1,342 @@
+{
+  "Document": {
+    "urdfBackgroundFile": "",
+    "commandGroupNumbers": {},
+    "description": "Fixture",
+    "audioFiles": "",
+    "audioFile": "",
+    "audioFilePath": "Projects/voice.wav",
+    "durationSeconds": 0,
+    "audioStartOffsetSeconds": 0,
+    "splineServos": [
+      "NeckTurn"
+    ],
+    "splineSampleHz": 50,
+    "animateMode": "Individual",
+    "scaleValues": true,
+    "commands": [
+      {
+        "offsetSeconds": 2,
+        "servo": "NeckTurn",
+        "value": 30,
+        "speed": "N/C",
+        "reason": "",
+        "breakSpline": true,
+        "groupId": "neck"
+      },
+      {
+        "offsetSeconds": 0,
+        "servo": "NeckTurn",
+        "value": 1,
+        "speed": "N/C",
+        "reason": "fraction",
+        "control": "NeckTurn"
+      },
+      {
+        "offsetSeconds": 0,
+        "servo": "URDFRotate",
+        "units": "degrees",
+        "value": 90,
+        "speed": "N/C",
+        "reason": ""
+      },
+      {
+        "offsetSeconds": 1,
+        "servo": "Play",
+        "value": "Projects/clip.wav",
+        "speed": "N/C",
+        "reason": "",
+        "audioTakeId": "take",
+        "audioTrim": {
+          "SkipSeconds": 0,
+          "EndSeconds": null,
+          "SkipCommitted": false,
+          "EndCommitted": false,
+          "ScrubBefore": false,
+          "ScrubAfter": false,
+          "CommandsLinked": false,
+          "HiddenCommands": []
+        }
+      },
+      {
+        "offsetSeconds": 1,
+        "servo": "RGBCommand",
+        "value": "Disable",
+        "speed": "N/C",
+        "reason": ""
+      },
+      {
+        "offsetSeconds": 0,
+        "servo": "LeftEyePop",
+        "value": 1800,
+        "speed": "N/C",
+        "reason": ""
+      }
+    ]
+  },
+  "SavedSequence": {
+    "urdfBackgroundFile": "",
+    "commandGroupNumbers": {},
+    "description": "Fixture",
+    "audioFiles": "",
+    "audioFile": "",
+    "audioFilePath": "Projects/voice.wav",
+    "durationSeconds": 0,
+    "audioStartOffsetSeconds": 0,
+    "splineServos": [
+      "NeckTurn"
+    ],
+    "splineSampleHz": 50,
+    "animateMode": "Individual",
+    "scaleValues": true,
+    "commands": [
+      {
+        "offsetSeconds": 0,
+        "servo": "NeckTurn",
+        "value": 1,
+        "speed": "N/C",
+        "reason": "fraction",
+        "control": "NeckTurn"
+      },
+      {
+        "offsetSeconds": 0,
+        "servo": "URDFRotate",
+        "units": "degrees",
+        "value": 90,
+        "speed": "N/C",
+        "reason": ""
+      },
+      {
+        "offsetSeconds": 0,
+        "servo": "LeftEyePop",
+        "value": 1800,
+        "speed": "N/C",
+        "reason": ""
+      },
+      {
+        "offsetSeconds": 1,
+        "servo": "Play",
+        "value": "Projects/clip.wav",
+        "speed": "N/C",
+        "reason": "",
+        "audioTakeId": "take",
+        "audioTrim": {
+          "SkipSeconds": 0,
+          "EndSeconds": null,
+          "SkipCommitted": false,
+          "EndCommitted": false,
+          "ScrubBefore": false,
+          "ScrubAfter": false,
+          "CommandsLinked": false,
+          "HiddenCommands": []
+        }
+      },
+      {
+        "offsetSeconds": 1,
+        "servo": "RGBCommand",
+        "value": "Disable",
+        "speed": "N/C",
+        "reason": ""
+      },
+      {
+        "offsetSeconds": 2,
+        "servo": "NeckTurn",
+        "value": 30,
+        "speed": "N/C",
+        "reason": "",
+        "breakSpline": true,
+        "groupId": "neck"
+      }
+    ]
+  },
+  "SavedMovie": {
+    "description": "Movie",
+    "createdDate": "2000-01-01",
+    "sequences": [
+      "Projects/a.json",
+      "Projects/b.json"
+    ],
+    "sequenceLoops": [
+      true
+    ],
+    "sequenceTriggers": [
+      "",
+      "button"
+    ]
+  },
+  "LegacyLibrary": {
+    "description": "",
+    "category": "none",
+    "commands": [
+      {
+        "offsetSeconds": 0,
+        "servo": "FlapsOpen",
+        "value": 20,
+        "speed": "N/C",
+        "reason": ""
+      }
+    ]
+  },
+  "UpdatedLibrary": {
+    "description": "New description",
+    "commands": [],
+    "future": {
+      "keep": true
+    },
+    "category": "Examples"
+  },
+  "SplineMath": [
+    {
+      "Tangents": [
+        20,
+        -3.3333333333333335,
+        -15
+      ],
+      "Values": [
+        0,
+        0,
+        6.09375,
+        12.916666666666666,
+        20,
+        18.483072916666668,
+        -1.40625,
+        -10,
+        -10
+      ]
+    },
+    {
+      "Tangents": [
+        0,
+        -15,
+        -15
+      ],
+      "Values": [
+        0,
+        0,
+        0,
+        0,
+        20,
+        16.25,
+        -2.5,
+        -10,
+        -10
+      ]
+    },
+    {
+      "Tangents": [
+        20,
+        20,
+        0
+      ],
+      "Values": [
+        0,
+        0,
+        5,
+        10,
+        20,
+        20,
+        20,
+        -10,
+        -10
+      ]
+    }
+  ],
+  "Names": [
+    "Neck Turn",
+    "Neck Nod Up",
+    "Neck Tilt Right",
+    "Flaps Open",
+    "Flap Tilt Up",
+    "Iris Close",
+    "Eyes Vertical Up",
+    "Eyes Horizontal Right",
+    "Vents Open",
+    "Nose Body",
+    "Nose Basket",
+    "MFR Up Down",
+    "MFR Rotate",
+    "Microphone Raise Lower",
+    "Whip Antenna Raise Lower",
+    "Whip Antenna Rotate",
+    "Left Eye Pop",
+    "Right Eye Pop",
+    "Both Eye Pop",
+    "RGB Command",
+    "Play",
+    "URDF Spin",
+    "URDF Rotate",
+    "URDF Slide",
+    "URDF Vertical",
+    "URDF Zoom",
+    "Waist Lean",
+    "Chest Tilt",
+    "Neck Lift",
+    "Shoulder Rotate Left",
+    "Shoulder Raise Left",
+    "Arm Twist Left",
+    "Elbow Left",
+    "Wrist Pitch Left",
+    "Wrist Roll Left",
+    "Finger Spread Upper Left",
+    "Finger Spread Lower Left",
+    "Finger Curl Upper Left",
+    "Finger Tip Curl Upper Left",
+    "Finger Curl Lower Left",
+    "Finger Tip Curl Lower Left",
+    "Thumb Curl Left",
+    "Shoulder Rotate Right",
+    "Shoulder Raise Right",
+    "Arm Twist Right",
+    "Elbow Right",
+    "Wrist Pitch Right",
+    "Wrist Roll Right",
+    "Finger Spread Upper Right",
+    "Finger Spread Lower Right",
+    "Finger Curl Upper Right",
+    "Finger Tip Curl Upper Right",
+    "Finger Curl Lower Right",
+    "Finger Tip Curl Lower Right",
+    "Thumb Curl Right",
+    "Load Scene",
+    "URDF Stage X",
+    "URDF Stage Y",
+    "URDF Stage Heading",
+    "Track Forward",
+    "Disassemble",
+    "URDF TV Front",
+    "TV Show",
+    "URDF TV Return",
+    "URDF Beam",
+    "URDF Camera Yaw",
+    "URDF Camera Pitch",
+    "URDF Background Pan X",
+    "URDF Background Pan Y",
+    "URDF Background Pan Z",
+    "URDF Background Zoom",
+    "URDF Background Yaw",
+    "URDF Follow Margin",
+    "URDF Floor Height",
+    "Waist Swivel",
+    "Thumb Tip Curl Left",
+    "Thumb Tip Curl Right",
+    "Finger End Curl Upper Left",
+    "Finger End Curl Upper Right",
+    "Finger End Curl Lower Left",
+    "Finger End Curl Lower Right",
+    "Open Left Hand",
+    "Open Right Hand",
+    "Shoulder Hug Left",
+    "Shoulder Hug Right",
+    "Shoulder Pitch Left",
+    "Shoulder Pitch Right",
+    "Shoulder Pivot Left",
+    "Shoulder Pivot Right",
+    "Panels Open",
+    "LCD Show",
+    "Hide Laser",
+    "Laser Lower",
+    "Toolbox Swap",
+    "Fire Laser",
+    "Video Clip"
+  ]
+}

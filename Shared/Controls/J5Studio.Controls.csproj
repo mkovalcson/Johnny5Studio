@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+    <AssemblyName>J5Studio.Controls</AssemblyName>
+    <RootNamespace>ServoAnimator</RootNamespace>
+    <Description>Shared J5 Studio control identities, ranges, groups and built-in calibration defaults.</Description>
+  </PropertyGroup>
+</Project>

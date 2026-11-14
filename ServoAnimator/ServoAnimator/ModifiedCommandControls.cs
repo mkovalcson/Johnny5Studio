@@ -1,0 +1,31 @@
+namespace ServoAnimator
+{
+    internal sealed record ModifiedCommandControl(ServoNames Servo, RobotControls? Control)
+    {
+        public bool IsCommandRow => false;
+        public bool CanDeleteFromSelection => true;
+        public bool SplineEnabled => false;
+        public bool CanSpline => false;
+        public bool BreakSpline => false;
+        public bool CanBreak => false;
+        public bool CanSetBreaks { get; set; }
+        public bool CanClearBreaks { get; set; }
+        public string NameText => ToString();
+        public string ValueText => "—";
+        public string SpeedText => "—";
+        public string TimeText => "all";
+        public System.Windows.Media.Brush AccentBrush => MainWindow.BrushFor(Servo);
+        public System.Windows.Media.ImageSource IconSource => ServoIconProvider.For(Servo);
+        public string Details => $"{NameText}\nSelect to highlight every matching command triangle.";
+        public override string ToString() => Control.HasValue ? $"{Servo} [{ControlLabels.Text(Control.ToString())}]" : ServoCommand.DisplayName(Servo);
+        public bool Includes(ServoCommand command) => command.Servo == Servo &&
+            (!Control.HasValue || !command.Control.HasValue || command.Control == Control);
+    }
+
+    internal static class ModifiedCommandControls
+    {
+        internal static ModifiedCommandControl[] From(IEnumerable<ServoCommand> commands) => commands
+            .Select(c => new ModifiedCommandControl(c.Servo, c.Control)).Distinct()
+            .OrderBy(c => c.Servo.ToString()).ThenBy(c => c.Control?.ToString() ?? "").ToArray();
+    }
+}

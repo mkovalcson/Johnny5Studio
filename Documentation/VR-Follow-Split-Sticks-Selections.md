@@ -1,0 +1,21 @@
+# Follow Me split sticks and Selections — 2026-11-09
+
+Follow Me now uses both sticks simultaneously. Left stick Y moves the robot forward/reverse and X turns the robot smoothly. Right stick Y moves the viewer forward/reverse and X turns the viewer smoothly, with no sideways strafe in Follow. Outside Follow, existing navigation remains unchanged. Robot travel still goes through the editor stage controls, preserving tread and caster animation. Physical walking/turning does not drive the robot root.
+
+Left A still toggles Mirrored/Unmirrored with the existing confirmation feedback. Left B opens/closes Selections instead of changing a movement target. The left glove displays B Selections, A Mirrored/Unmirrored, the local AM/PM clock and LEFT STICK: ROBOT. The right glove identifies RIGHT STICK: ME and keeps A Menu / B Stop or Back.
+
+Selections offers Laser / Toolbox / None and Normal / Gold. Selected items are marked, and appearance preparation is reported. Choosing an item applies it for this session through the existing editor API. Follow and joystick travel hold while this menu is open; closing it resumes without re-centering. Pointer rays appear for menu selection and are hidden again during ordinary Follow. Right B retains its stop behavior. Save the configuration in the editor if you want a persistent default.
+
+With Laser selected, click the left thumbstick once to toggle the laser between up and down. The target is sent in the normal servo-limited motion batch; holding the click does not repeat it. Toolbox and None ignore laser clicks. Existing left/right source-restricted grab actions supply thumbstick clicks, so the SteamVR action manifest does not require new bindings.
+
+The existing index-point gesture now also straightens that side's elbow, arm twist and wrist pitch and holds wrist roll so the extended upper finger lies above the other finger. Shoulder rotation continues following the arm. The current full-body URDF has nonzero mechanically straight offsets: elbow approximately -43.49 degrees and wrist pitch -43.71 degrees, with arm twist/roll zero. Using zero for every joint would leave the CAD rest bend. Normal Follow elbow targets also include the mechanical straight offset. Full tracked extension now reaches the straight elbow position; the existing reach tolerance treats 97% of calibrated reach as straight, so users need not overreach. Normal wrist mapping is unchanged. Releasing the pointing gesture restores normal tracking. Existing mirror selection and servo speed constraints apply.
+
+Calibration advice: use comfortably straight elbows for the down, overhead and straight-forward measurements, without leaning or shrugging. Keep the same controller grip. The elbow-length step uses upper arms forward, elbows about 90 degrees and forearms upright; the later wrist-neutral step instead keeps upper arms down beside the ribs with forearms forward. A persistent robot bend can be a mapping/rest-offset issue and not a bad calibration.
+
+Validation: 37 focused checks cover split routing, source-authoritative stick clicks, right-only stop/menu routing, pointing and release, laser visibility/toggle targets and holding/resuming Follow for selections. The current URDF's finger origins were checked for vertical ordering on both hands at a forward pointing pose. Release builds for both VR applications passed. No full suite or runtime/headset integration test was run. Test the complete interaction on the gaming PC.
+
+Install: close both VR applications and extract J5Studio-VR-Follow-Split-Sticks-Selections-update.zip over the portable VR folder, replacing files with the same subfolder layout. Cumulative since Johnny5VR-0.9.0-cumulative-update-2026-11-08.zip; includes calibration alignment help and startup readiness. Config, Settings, models and saved calibration are not overwritten. The regular Desktop application is not deployed.
+
+## Subsequent correction
+
+See VR-Menu-Text-And-Follow-Controls.md. Pointing no longer overrides elbow or arm twist, right A restores the regular task menu after Selections, and the left trigger fires a visible lowered laser. Menu and editor-frame text now uses fitted pixel fonts. The normal elbow straight-offset fix remains.

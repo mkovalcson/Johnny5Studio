@@ -1,0 +1,24 @@
+<Solution>
+  <Folder Name="/Applications/Desktop/">
+    <Project Path="ServoAnimator/ServoAnimator/ServoAnimator.csproj" />
+  </Folder>
+  <Folder Name="/Applications/VR Player/">
+    <Project Path="Johnny5VR/Johnny5VR.csproj" />
+  </Folder>
+  <Folder Name="/Applications/VR Editor/">
+    <Project Path="Johnny5VREditor/ServoAnimator.csproj" />
+  </Folder>
+  <Folder Name="/Shared Libraries/">
+    <Project Path="Shared/Controls/J5Studio.Controls.csproj" />
+    <Project Path="Shared/Configuration/J5Studio.Configuration.csproj" />
+    <Project Path="Shared/Animation/J5Studio.Animation.csproj" />
+    <Project Path="Shared/Pose/J5Studio.Pose.csproj" />
+  </Folder>
+  <Folder Name="/Checks/">
+    <Project Path="ServoAnimator/ServoAnimator.Checks/ServoAnimator.Checks.csproj" />
+    <Project Path="Shared/Controls.Checks/J5Studio.Controls.Checks.csproj" />
+    <Project Path="Shared/Configuration.Checks/J5Studio.Configuration.Checks.csproj" />
+    <Project Path="Shared/Animation.Checks/J5Studio.Animation.Checks.csproj" />
+    <Project Path="Shared/Pose.Checks/J5Studio.Pose.Checks.csproj" />
+  </Folder>
+</Solution>

@@ -1,0 +1,25 @@
+PASS: Each requested group has an independent timeline strip.
+PASS: Selecting a group excludes other commands at the same timestamps.
+PASS: Undo metadata snapshots restore names and timeline visibility independently.
+PASS: Document clones isolate group settings.
+PASS: Group names and timeline visibility survive saving and reopening.
+PASS: Display hiding preserves playback commands and independently visible group rows.
+PASS: Hiding a timeline preserves its commands.
+PASS: Undo restores a hidden group timeline.
+PASS: Group movement leaves overlapping groups untouched.
+PASS: Group movement is a single undoable operation.
+PASS: Renaming updates the active document.
+PASS: Undo restores the previous group name.
+PASS: Redo restores the new group name.
+PASS: Duplicating creates an independently named group at the cursor with preserved spacing.
+PASS: Group timeline strips render their command marks, span and cursor.
+PASS: Control View floats with its existing editing controls.
+PASS: A connected controller diagram stays docked when only the Control View is floated.
+PASS: Floating Control and URDF views releases the entire upper editor row.
+PASS: Closing the floating Control View docks it and restores usable height.
+PASS: Xbox and Steam mapping views float independently.
+PASS: Closing controller windows returns them to docked availability.
+PASS: Existing Stream Deck controls float without cloning device state.
+PASS: Stream Deck controls return to their original location.
+PASS: Named group manager opens with editable names and actions.
+PASS: 24 focused workspace checks completed; no headset or hardware tests run.

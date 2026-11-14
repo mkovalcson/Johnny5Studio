@@ -1,0 +1,2743 @@
+{
+  "Commands": [
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022NeckTurn\u0022,\u0022value\u0022:37,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022NeckTurn\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022NeckNodUp\u0022,\u0022value\u0022:37,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022NeckNodUp\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022NeckTiltRight\u0022,\u0022value\u0022:37,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022NeckTiltRight\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022FlapsOpen\u0022,\u0022value\u0022:37,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022FlapsOpen\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022FlapTiltUp\u0022,\u0022value\u0022:37,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022FlapTiltUp\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022IrisClose\u0022,\u0022value\u0022:37,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022IrisClose\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022EyesVerticalUp\u0022,\u0022value\u0022:37,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022EyesVerticalUp\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022EyesHorizontalRight\u0022,\u0022value\u0022:37,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022EyesHorizontalRight\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022VentsOpen\u0022,\u0022value\u0022:37,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022VentsOpen\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022NoseBody\u0022,\u0022value\u0022:37,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022NoseBody\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022NoseBasket\u0022,\u0022value\u0022:37,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022NoseBasket\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022MFR_UpDown\u0022,\u0022value\u0022:37,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022MFR_UpDown\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022MFR_Rotate\u0022,\u0022value\u0022:37,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022MFR_Rotate\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022Microphone_RaiseLower\u0022,\u0022value\u0022:37,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022Microphone_RaiseLower\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022Whip_Antenna_RaiseLower\u0022,\u0022value\u0022:37,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022Whip_Antenna_RaiseLower\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022Whip_Antenna_Rotate\u0022,\u0022value\u0022:37,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022Whip_Antenna_Rotate\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022LeftEyePop\u0022,\u0022value\u0022:37,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022LeftEyePop\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022RightEyePop\u0022,\u0022value\u0022:37,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022RightEyePop\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022BothEyePop\u0022,\u0022value\u0022:37,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022BothEyePop\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022RGBCommand\u0022,\u0022value\u0022:\u0022example\u0022,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022RGBCommand\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022Play\u0022,\u0022value\u0022:\u0022example\u0022,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022Play\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022URDFSpin\u0022,\u0022value\u0022:37,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022URDFSpin\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022URDFRotate\u0022,\u0022units\u0022:\u0022degrees\u0022,\u0022value\u0022:37,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022URDFRotate\u0022,\u0022units\u0022:\u0022degrees\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022URDFSlide\u0022,\u0022value\u0022:37,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022URDFSlide\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022URDFVertical\u0022,\u0022value\u0022:37,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022URDFVertical\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022URDFZoom\u0022,\u0022value\u0022:37,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022URDFZoom\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_WaistLean\u0022,\u0022value\u0022:37,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_WaistLean\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_ChestTilt\u0022,\u0022value\u0022:37,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_ChestTilt\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_NeckLift\u0022,\u0022value\u0022:37,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_NeckLift\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_ShoulderRotateLeft\u0022,\u0022value\u0022:37,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_ShoulderRotateLeft\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_ShoulderRaiseLeft\u0022,\u0022value\u0022:37,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_ShoulderRaiseLeft\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_ArmTwistLeft\u0022,\u0022value\u0022:37,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_ArmTwistLeft\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_ElbowLeft\u0022,\u0022value\u0022:37,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_ElbowLeft\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_WristPitchLeft\u0022,\u0022value\u0022:37,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_WristPitchLeft\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_WristRollLeft\u0022,\u0022value\u0022:37,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_WristRollLeft\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_FingerSpreadUpperLeft\u0022,\u0022value\u0022:37,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_FingerSpreadUpperLeft\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_FingerSpreadLowerLeft\u0022,\u0022value\u0022:37,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_FingerSpreadLowerLeft\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_FingerCurlUpperLeft\u0022,\u0022value\u0022:37,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_FingerCurlUpperLeft\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_FingerTipCurlUpperLeft\u0022,\u0022value\u0022:37,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_FingerTipCurlUpperLeft\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_FingerCurlLowerLeft\u0022,\u0022value\u0022:37,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_FingerCurlLowerLeft\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_FingerTipCurlLowerLeft\u0022,\u0022value\u0022:37,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_FingerTipCurlLowerLeft\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_ThumbCurlLeft\u0022,\u0022value\u0022:37,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_ThumbCurlLeft\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_ShoulderRotateRight\u0022,\u0022value\u0022:37,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_ShoulderRotateRight\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_ShoulderRaiseRight\u0022,\u0022value\u0022:37,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_ShoulderRaiseRight\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_ArmTwistRight\u0022,\u0022value\u0022:37,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_ArmTwistRight\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_ElbowRight\u0022,\u0022value\u0022:37,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_ElbowRight\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_WristPitchRight\u0022,\u0022value\u0022:37,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_WristPitchRight\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_WristRollRight\u0022,\u0022value\u0022:37,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_WristRollRight\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_FingerSpreadUpperRight\u0022,\u0022value\u0022:37,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_FingerSpreadUpperRight\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_FingerSpreadLowerRight\u0022,\u0022value\u0022:37,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_FingerSpreadLowerRight\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_FingerCurlUpperRight\u0022,\u0022value\u0022:37,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_FingerCurlUpperRight\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_FingerTipCurlUpperRight\u0022,\u0022value\u0022:37,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_FingerTipCurlUpperRight\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_FingerCurlLowerRight\u0022,\u0022value\u0022:37,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_FingerCurlLowerRight\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_FingerTipCurlLowerRight\u0022,\u0022value\u0022:37,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_FingerTipCurlLowerRight\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_ThumbCurlRight\u0022,\u0022value\u0022:37,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_ThumbCurlRight\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022LoadBackdrop\u0022,\u0022value\u0022:\u0022example\u0022,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022LoadBackdrop\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022URDFStageX\u0022,\u0022value\u0022:37,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022URDFStageX\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022URDFStageY\u0022,\u0022value\u0022:37,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022URDFStageY\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022URDFStageHeading\u0022,\u0022value\u0022:37,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022URDFStageHeading\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022TrackForward\u0022,\u0022value\u0022:37,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022TrackForward\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022FallApart\u0022,\u0022value\u0022:\u0022example\u0022,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022FallApart\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022TvFront\u0022,\u0022value\u0022:\u0022example\u0022,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022TvFront\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022TvShow\u0022,\u0022value\u0022:\u0022example\u0022,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022TvShow\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022TvReturn\u0022,\u0022value\u0022:\u0022example\u0022,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022TvReturn\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022UrdfBeam\u0022,\u0022value\u0022:\u0022example\u0022,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022UrdfBeam\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022URDFCameraYaw\u0022,\u0022value\u0022:37,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022URDFCameraYaw\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022URDFCameraPitch\u0022,\u0022value\u0022:37,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022URDFCameraPitch\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022URDFBackgroundPanX\u0022,\u0022value\u0022:37,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022URDFBackgroundPanX\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022URDFBackgroundPanY\u0022,\u0022value\u0022:37,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022URDFBackgroundPanY\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022URDFBackgroundPanZ\u0022,\u0022value\u0022:37,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022URDFBackgroundPanZ\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022URDFBackgroundZoom\u0022,\u0022value\u0022:37,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022URDFBackgroundZoom\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022URDFBackgroundYaw\u0022,\u0022value\u0022:37,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022URDFBackgroundYaw\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022URDFFollowMargin\u0022,\u0022value\u0022:37,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022URDFFollowMargin\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022URDFFloorHeight\u0022,\u0022value\u0022:37,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022URDFFloorHeight\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_WaistSwivel\u0022,\u0022value\u0022:37,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_WaistSwivel\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_ThumbTipCurlLeft\u0022,\u0022value\u0022:37,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_ThumbTipCurlLeft\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_ThumbTipCurlRight\u0022,\u0022value\u0022:37,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_ThumbTipCurlRight\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_FingerEndCurlUpperLeft\u0022,\u0022value\u0022:37,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_FingerEndCurlUpperLeft\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_FingerEndCurlUpperRight\u0022,\u0022value\u0022:37,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_FingerEndCurlUpperRight\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_FingerEndCurlLowerLeft\u0022,\u0022value\u0022:37,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_FingerEndCurlLowerLeft\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_FingerEndCurlLowerRight\u0022,\u0022value\u0022:37,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_FingerEndCurlLowerRight\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_OpenLeftHand\u0022,\u0022value\u0022:37,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_OpenLeftHand\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_OpenRightHand\u0022,\u0022value\u0022:37,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_OpenRightHand\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_ShoulderHugLeft\u0022,\u0022value\u0022:37,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_ShoulderHugLeft\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_ShoulderHugRight\u0022,\u0022value\u0022:37,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_ShoulderHugRight\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_ShoulderPitchLeft\u0022,\u0022value\u0022:37,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_ShoulderPitchLeft\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_ShoulderPitchRight\u0022,\u0022value\u0022:37,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_ShoulderPitchRight\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_ShoulderPivotLeft\u0022,\u0022value\u0022:37,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_ShoulderPivotLeft\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_ShoulderPivotRight\u0022,\u0022value\u0022:37,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_ShoulderPivotRight\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_PanelsOpen\u0022,\u0022value\u0022:37,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_PanelsOpen\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022LcdShow\u0022,\u0022value\u0022:\u0022example\u0022,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022LcdShow\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022HideLaser\u0022,\u0022value\u0022:\u0022example\u0022,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022HideLaser\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_LaserLower\u0022,\u0022value\u0022:37,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022B_LaserLower\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022ToolboxSwap\u0022,\u0022value\u0022:\u0022example\u0022,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022ToolboxSwap\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022FireLaser\u0022,\u0022value\u0022:\u0022example\u0022,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022FireLaser\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022VideoClip\u0022,\u0022value\u0022:\u0022example\u0022,\u0022speed\u0022:\u0022Crawl\u0022,\u0022reason\u0022:\u0022\u0022}",
+    "{\u0022offsetSeconds\u0022:0.125,\u0022servo\u0022:\u0022VideoClip\u0022,\u0022value\u0022:\u0022Disable\u0022,\u0022speed\u0022:\u0022N/C\u0022,\u0022reason\u0022:\u0022\u0022}"
+  ],
+  "ServoNames": [
+    {
+      "Name": "NeckTurn",
+      "Id": 0
+    },
+    {
+      "Name": "NeckNodUp",
+      "Id": 1
+    },
+    {
+      "Name": "NeckTiltRight",
+      "Id": 2
+    },
+    {
+      "Name": "FlapsOpen",
+      "Id": 3
+    },
+    {
+      "Name": "FlapTiltUp",
+      "Id": 4
+    },
+    {
+      "Name": "IrisClose",
+      "Id": 5
+    },
+    {
+      "Name": "EyesVerticalUp",
+      "Id": 6
+    },
+    {
+      "Name": "EyesHorizontalRight",
+      "Id": 7
+    },
+    {
+      "Name": "VentsOpen",
+      "Id": 8
+    },
+    {
+      "Name": "NoseBody",
+      "Id": 9
+    },
+    {
+      "Name": "NoseBasket",
+      "Id": 10
+    },
+    {
+      "Name": "MFR_UpDown",
+      "Id": 11
+    },
+    {
+      "Name": "MFR_Rotate",
+      "Id": 12
+    },
+    {
+      "Name": "Microphone_RaiseLower",
+      "Id": 13
+    },
+    {
+      "Name": "Whip_Antenna_RaiseLower",
+      "Id": 14
+    },
+    {
+      "Name": "Whip_Antenna_Rotate",
+      "Id": 15
+    },
+    {
+      "Name": "LeftEyePop",
+      "Id": 16
+    },
+    {
+      "Name": "RightEyePop",
+      "Id": 17
+    },
+    {
+      "Name": "BothEyePop",
+      "Id": 18
+    },
+    {
+      "Name": "RGBCommand",
+      "Id": 19
+    },
+    {
+      "Name": "Play",
+      "Id": 20
+    },
+    {
+      "Name": "URDFSpin",
+      "Id": 21
+    },
+    {
+      "Name": "URDFRotate",
+      "Id": 22
+    },
+    {
+      "Name": "URDFSlide",
+      "Id": 23
+    },
+    {
+      "Name": "URDFVertical",
+      "Id": 24
+    },
+    {
+      "Name": "URDFZoom",
+      "Id": 25
+    },
+    {
+      "Name": "B_WaistLean",
+      "Id": 26
+    },
+    {
+      "Name": "B_ChestTilt",
+      "Id": 27
+    },
+    {
+      "Name": "B_NeckLift",
+      "Id": 28
+    },
+    {
+      "Name": "B_ShoulderRotateLeft",
+      "Id": 29
+    },
+    {
+      "Name": "B_ShoulderRaiseLeft",
+      "Id": 30
+    },
+    {
+      "Name": "B_ArmTwistLeft",
+      "Id": 31
+    },
+    {
+      "Name": "B_ElbowLeft",
+      "Id": 32
+    },
+    {
+      "Name": "B_WristPitchLeft",
+      "Id": 33
+    },
+    {
+      "Name": "B_WristRollLeft",
+      "Id": 34
+    },
+    {
+      "Name": "B_FingerSpreadUpperLeft",
+      "Id": 35
+    },
+    {
+      "Name": "B_FingerSpreadLowerLeft",
+      "Id": 36
+    },
+    {
+      "Name": "B_FingerCurlUpperLeft",
+      "Id": 37
+    },
+    {
+      "Name": "B_FingerTipCurlUpperLeft",
+      "Id": 38
+    },
+    {
+      "Name": "B_FingerCurlLowerLeft",
+      "Id": 39
+    },
+    {
+      "Name": "B_FingerTipCurlLowerLeft",
+      "Id": 40
+    },
+    {
+      "Name": "B_ThumbCurlLeft",
+      "Id": 41
+    },
+    {
+      "Name": "B_ShoulderRotateRight",
+      "Id": 42
+    },
+    {
+      "Name": "B_ShoulderRaiseRight",
+      "Id": 43
+    },
+    {
+      "Name": "B_ArmTwistRight",
+      "Id": 44
+    },
+    {
+      "Name": "B_ElbowRight",
+      "Id": 45
+    },
+    {
+      "Name": "B_WristPitchRight",
+      "Id": 46
+    },
+    {
+      "Name": "B_WristRollRight",
+      "Id": 47
+    },
+    {
+      "Name": "B_FingerSpreadUpperRight",
+      "Id": 48
+    },
+    {
+      "Name": "B_FingerSpreadLowerRight",
+      "Id": 49
+    },
+    {
+      "Name": "B_FingerCurlUpperRight",
+      "Id": 50
+    },
+    {
+      "Name": "B_FingerTipCurlUpperRight",
+      "Id": 51
+    },
+    {
+      "Name": "B_FingerCurlLowerRight",
+      "Id": 52
+    },
+    {
+      "Name": "B_FingerTipCurlLowerRight",
+      "Id": 53
+    },
+    {
+      "Name": "B_ThumbCurlRight",
+      "Id": 54
+    },
+    {
+      "Name": "LoadBackdrop",
+      "Id": 55
+    },
+    {
+      "Name": "URDFStageX",
+      "Id": 56
+    },
+    {
+      "Name": "URDFStageY",
+      "Id": 57
+    },
+    {
+      "Name": "URDFStageHeading",
+      "Id": 58
+    },
+    {
+      "Name": "TrackForward",
+      "Id": 59
+    },
+    {
+      "Name": "FallApart",
+      "Id": 60
+    },
+    {
+      "Name": "TvFront",
+      "Id": 61
+    },
+    {
+      "Name": "TvShow",
+      "Id": 62
+    },
+    {
+      "Name": "TvReturn",
+      "Id": 63
+    },
+    {
+      "Name": "UrdfBeam",
+      "Id": 64
+    },
+    {
+      "Name": "URDFCameraYaw",
+      "Id": 65
+    },
+    {
+      "Name": "URDFCameraPitch",
+      "Id": 66
+    },
+    {
+      "Name": "URDFBackgroundPanX",
+      "Id": 67
+    },
+    {
+      "Name": "URDFBackgroundPanY",
+      "Id": 68
+    },
+    {
+      "Name": "URDFBackgroundPanZ",
+      "Id": 69
+    },
+    {
+      "Name": "URDFBackgroundZoom",
+      "Id": 70
+    },
+    {
+      "Name": "URDFBackgroundYaw",
+      "Id": 71
+    },
+    {
+      "Name": "URDFFollowMargin",
+      "Id": 72
+    },
+    {
+      "Name": "URDFFloorHeight",
+      "Id": 73
+    },
+    {
+      "Name": "B_WaistSwivel",
+      "Id": 74
+    },
+    {
+      "Name": "B_ThumbTipCurlLeft",
+      "Id": 75
+    },
+    {
+      "Name": "B_ThumbTipCurlRight",
+      "Id": 76
+    },
+    {
+      "Name": "B_FingerEndCurlUpperLeft",
+      "Id": 77
+    },
+    {
+      "Name": "B_FingerEndCurlUpperRight",
+      "Id": 78
+    },
+    {
+      "Name": "B_FingerEndCurlLowerLeft",
+      "Id": 79
+    },
+    {
+      "Name": "B_FingerEndCurlLowerRight",
+      "Id": 80
+    },
+    {
+      "Name": "B_OpenLeftHand",
+      "Id": 81
+    },
+    {
+      "Name": "B_OpenRightHand",
+      "Id": 82
+    },
+    {
+      "Name": "B_ShoulderHugLeft",
+      "Id": 83
+    },
+    {
+      "Name": "B_ShoulderHugRight",
+      "Id": 84
+    },
+    {
+      "Name": "B_ShoulderPitchLeft",
+      "Id": 85
+    },
+    {
+      "Name": "B_ShoulderPitchRight",
+      "Id": 86
+    },
+    {
+      "Name": "B_ShoulderPivotLeft",
+      "Id": 87
+    },
+    {
+      "Name": "B_ShoulderPivotRight",
+      "Id": 88
+    },
+    {
+      "Name": "B_PanelsOpen",
+      "Id": 89
+    },
+    {
+      "Name": "LcdShow",
+      "Id": 90
+    },
+    {
+      "Name": "HideLaser",
+      "Id": 91
+    },
+    {
+      "Name": "B_LaserLower",
+      "Id": 92
+    },
+    {
+      "Name": "ToolboxSwap",
+      "Id": 93
+    },
+    {
+      "Name": "FireLaser",
+      "Id": 94
+    },
+    {
+      "Name": "VideoClip",
+      "Id": 95
+    }
+  ],
+  "ServoSpeed": [
+    {
+      "Name": "Default",
+      "Id": 0
+    },
+    {
+      "Name": "Slow",
+      "Id": 1
+    },
+    {
+      "Name": "Fast",
+      "Id": 2
+    },
+    {
+      "Name": "Crawl",
+      "Id": 3
+    },
+    {
+      "Name": "NoChange",
+      "Id": 4
+    }
+  ],
+  "RobotControls": [
+    {
+      "Name": "LeftEyeVent",
+      "Id": 0
+    },
+    {
+      "Name": "LeftIris",
+      "Id": 1
+    },
+    {
+      "Name": "LeftLensHorizontal",
+      "Id": 2
+    },
+    {
+      "Name": "LeftLensVertical",
+      "Id": 3
+    },
+    {
+      "Name": "NeckTiltLeft",
+      "Id": 4
+    },
+    {
+      "Name": "BrowLeftBottomOpen",
+      "Id": 5
+    },
+    {
+      "Name": "BrowLeftTopOpen",
+      "Id": 6
+    },
+    {
+      "Name": "BrowLeftTopTilt",
+      "Id": 7
+    },
+    {
+      "Name": "NoseBody",
+      "Id": 8
+    },
+    {
+      "Name": "NoseBasket",
+      "Id": 9
+    },
+    {
+      "Name": "BrowRightTopTilt",
+      "Id": 10
+    },
+    {
+      "Name": "BrowRightTopOpen",
+      "Id": 11
+    },
+    {
+      "Name": "BrowRightBottomOpen",
+      "Id": 12
+    },
+    {
+      "Name": "NeckTiltRight",
+      "Id": 13
+    },
+    {
+      "Name": "RightLensVertical",
+      "Id": 14
+    },
+    {
+      "Name": "RightLensHorizontal",
+      "Id": 15
+    },
+    {
+      "Name": "RightIris",
+      "Id": 16
+    },
+    {
+      "Name": "RightEyeVent",
+      "Id": 17
+    },
+    {
+      "Name": "Whip_Antenna_RaiseLower",
+      "Id": 18
+    },
+    {
+      "Name": "Whip_Antenna_Rotate",
+      "Id": 19
+    },
+    {
+      "Name": "MFR_UpDown",
+      "Id": 20
+    },
+    {
+      "Name": "MFR_Rotate",
+      "Id": 21
+    },
+    {
+      "Name": "NeckTurn",
+      "Id": 22
+    },
+    {
+      "Name": "Microphone_RaiseLower",
+      "Id": 23
+    },
+    {
+      "Name": "LeftEyeRGBLightFront",
+      "Id": 101
+    },
+    {
+      "Name": "LeftEyeRGBLightBack",
+      "Id": 102
+    },
+    {
+      "Name": "RightEyeRGBLightFront",
+      "Id": 103
+    },
+    {
+      "Name": "RightEyeRGBLightBack",
+      "Id": 104
+    },
+    {
+      "Name": "LeftEyePop",
+      "Id": 200
+    },
+    {
+      "Name": "RightEyePop",
+      "Id": 201
+    },
+    {
+      "Name": "BothEyePop",
+      "Id": 203
+    },
+    {
+      "Name": "None",
+      "Id": 1000
+    }
+  ],
+  "Ranges": [
+    {
+      "Name": "NeckTurn",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "NeckNodUp",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "NeckTiltRight",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "FlapsOpen",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "FlapTiltUp",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "IrisClose",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "EyesVerticalUp",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "EyesHorizontalRight",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "VentsOpen",
+      "Min": 0,
+      "Max": 100
+    },
+    {
+      "Name": "NoseBody",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "NoseBasket",
+      "Min": 0,
+      "Max": 100
+    },
+    {
+      "Name": "MFR_UpDown",
+      "Min": 0,
+      "Max": 100
+    },
+    {
+      "Name": "MFR_Rotate",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "Microphone_RaiseLower",
+      "Min": 0,
+      "Max": 100
+    },
+    {
+      "Name": "Whip_Antenna_RaiseLower",
+      "Min": 0,
+      "Max": 100
+    },
+    {
+      "Name": "Whip_Antenna_Rotate",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "LeftEyePop",
+      "Min": 0,
+      "Max": 2000
+    },
+    {
+      "Name": "RightEyePop",
+      "Min": 0,
+      "Max": 2000
+    },
+    {
+      "Name": "BothEyePop",
+      "Min": 0,
+      "Max": 2000
+    },
+    {
+      "Name": "RGBCommand",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "Play",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "URDFSpin",
+      "Min": -2147483648,
+      "Max": 2147483647
+    },
+    {
+      "Name": "URDFRotate",
+      "Min": -360,
+      "Max": 360
+    },
+    {
+      "Name": "URDFSlide",
+      "Min": -200,
+      "Max": 200
+    },
+    {
+      "Name": "URDFVertical",
+      "Min": -200,
+      "Max": 200
+    },
+    {
+      "Name": "URDFZoom",
+      "Min": 10,
+      "Max": 209
+    },
+    {
+      "Name": "B_WaistLean",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "B_ChestTilt",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "B_NeckLift",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "B_ShoulderRotateLeft",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "B_ShoulderRaiseLeft",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "B_ArmTwistLeft",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "B_ElbowLeft",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "B_WristPitchLeft",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "B_WristRollLeft",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "B_FingerSpreadUpperLeft",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "B_FingerSpreadLowerLeft",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "B_FingerCurlUpperLeft",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "B_FingerTipCurlUpperLeft",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "B_FingerCurlLowerLeft",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "B_FingerTipCurlLowerLeft",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "B_ThumbCurlLeft",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "B_ShoulderRotateRight",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "B_ShoulderRaiseRight",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "B_ArmTwistRight",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "B_ElbowRight",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "B_WristPitchRight",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "B_WristRollRight",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "B_FingerSpreadUpperRight",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "B_FingerSpreadLowerRight",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "B_FingerCurlUpperRight",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "B_FingerTipCurlUpperRight",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "B_FingerCurlLowerRight",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "B_FingerTipCurlLowerRight",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "B_ThumbCurlRight",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "LoadBackdrop",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "URDFStageX",
+      "Min": -100000,
+      "Max": 100000
+    },
+    {
+      "Name": "URDFStageY",
+      "Min": -100000,
+      "Max": 100000
+    },
+    {
+      "Name": "URDFStageHeading",
+      "Min": -36000,
+      "Max": 36000
+    },
+    {
+      "Name": "TrackForward",
+      "Min": -500,
+      "Max": 500
+    },
+    {
+      "Name": "FallApart",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "TvFront",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "TvShow",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "TvReturn",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "UrdfBeam",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "URDFCameraYaw",
+      "Min": -36000,
+      "Max": 36000
+    },
+    {
+      "Name": "URDFCameraPitch",
+      "Min": -75,
+      "Max": 75
+    },
+    {
+      "Name": "URDFBackgroundPanX",
+      "Min": -100000,
+      "Max": 100000
+    },
+    {
+      "Name": "URDFBackgroundPanY",
+      "Min": -100000,
+      "Max": 100000
+    },
+    {
+      "Name": "URDFBackgroundPanZ",
+      "Min": -100000,
+      "Max": 100000
+    },
+    {
+      "Name": "URDFBackgroundZoom",
+      "Min": 10,
+      "Max": 1000
+    },
+    {
+      "Name": "URDFBackgroundYaw",
+      "Min": -36000,
+      "Max": 36000
+    },
+    {
+      "Name": "URDFFollowMargin",
+      "Min": 5,
+      "Max": 45
+    },
+    {
+      "Name": "URDFFloorHeight",
+      "Min": -100000,
+      "Max": 100000
+    },
+    {
+      "Name": "B_WaistSwivel",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "B_ThumbTipCurlLeft",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "B_ThumbTipCurlRight",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "B_FingerEndCurlUpperLeft",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "B_FingerEndCurlUpperRight",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "B_FingerEndCurlLowerLeft",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "B_FingerEndCurlLowerRight",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "B_OpenLeftHand",
+      "Min": 0,
+      "Max": 100
+    },
+    {
+      "Name": "B_OpenRightHand",
+      "Min": 0,
+      "Max": 100
+    },
+    {
+      "Name": "B_ShoulderHugLeft",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "B_ShoulderHugRight",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "B_ShoulderPitchLeft",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "B_ShoulderPitchRight",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "B_ShoulderPivotLeft",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "B_ShoulderPivotRight",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "B_PanelsOpen",
+      "Min": 0,
+      "Max": 100
+    },
+    {
+      "Name": "LcdShow",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "HideLaser",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "B_LaserLower",
+      "Min": 0,
+      "Max": 100
+    },
+    {
+      "Name": "ToolboxSwap",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "FireLaser",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "VideoClip",
+      "Min": -100,
+      "Max": 100
+    }
+  ],
+  "NominalRanges": [
+    {
+      "Name": "NeckTurn",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "NeckNodUp",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "NeckTiltRight",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "FlapsOpen",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "FlapTiltUp",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "IrisClose",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "EyesVerticalUp",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "EyesHorizontalRight",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "VentsOpen",
+      "Min": 0,
+      "Max": 100
+    },
+    {
+      "Name": "NoseBody",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "NoseBasket",
+      "Min": 0,
+      "Max": 100
+    },
+    {
+      "Name": "MFR_UpDown",
+      "Min": 0,
+      "Max": 100
+    },
+    {
+      "Name": "MFR_Rotate",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "Microphone_RaiseLower",
+      "Min": 0,
+      "Max": 100
+    },
+    {
+      "Name": "Whip_Antenna_RaiseLower",
+      "Min": 0,
+      "Max": 100
+    },
+    {
+      "Name": "Whip_Antenna_Rotate",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "LeftEyePop",
+      "Min": 0,
+      "Max": 2000
+    },
+    {
+      "Name": "RightEyePop",
+      "Min": 0,
+      "Max": 2000
+    },
+    {
+      "Name": "BothEyePop",
+      "Min": 0,
+      "Max": 2000
+    },
+    {
+      "Name": "RGBCommand",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "Play",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "URDFSpin",
+      "Min": -360,
+      "Max": 360
+    },
+    {
+      "Name": "URDFRotate",
+      "Min": -360,
+      "Max": 360
+    },
+    {
+      "Name": "URDFSlide",
+      "Min": -200,
+      "Max": 200
+    },
+    {
+      "Name": "URDFVertical",
+      "Min": -200,
+      "Max": 200
+    },
+    {
+      "Name": "URDFZoom",
+      "Min": 10,
+      "Max": 209
+    },
+    {
+      "Name": "B_WaistLean",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "B_ChestTilt",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "B_NeckLift",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "B_ShoulderRotateLeft",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "B_ShoulderRaiseLeft",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "B_ArmTwistLeft",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "B_ElbowLeft",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "B_WristPitchLeft",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "B_WristRollLeft",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "B_FingerSpreadUpperLeft",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "B_FingerSpreadLowerLeft",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "B_FingerCurlUpperLeft",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "B_FingerTipCurlUpperLeft",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "B_FingerCurlLowerLeft",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "B_FingerTipCurlLowerLeft",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "B_ThumbCurlLeft",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "B_ShoulderRotateRight",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "B_ShoulderRaiseRight",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "B_ArmTwistRight",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "B_ElbowRight",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "B_WristPitchRight",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "B_WristRollRight",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "B_FingerSpreadUpperRight",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "B_FingerSpreadLowerRight",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "B_FingerCurlUpperRight",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "B_FingerTipCurlUpperRight",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "B_FingerCurlLowerRight",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "B_FingerTipCurlLowerRight",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "B_ThumbCurlRight",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "LoadBackdrop",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "URDFStageX",
+      "Min": -100000,
+      "Max": 100000
+    },
+    {
+      "Name": "URDFStageY",
+      "Min": -100000,
+      "Max": 100000
+    },
+    {
+      "Name": "URDFStageHeading",
+      "Min": -36000,
+      "Max": 36000
+    },
+    {
+      "Name": "TrackForward",
+      "Min": -500,
+      "Max": 500
+    },
+    {
+      "Name": "FallApart",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "TvFront",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "TvShow",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "TvReturn",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "UrdfBeam",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "URDFCameraYaw",
+      "Min": -36000,
+      "Max": 36000
+    },
+    {
+      "Name": "URDFCameraPitch",
+      "Min": -75,
+      "Max": 75
+    },
+    {
+      "Name": "URDFBackgroundPanX",
+      "Min": -100000,
+      "Max": 100000
+    },
+    {
+      "Name": "URDFBackgroundPanY",
+      "Min": -100000,
+      "Max": 100000
+    },
+    {
+      "Name": "URDFBackgroundPanZ",
+      "Min": -100000,
+      "Max": 100000
+    },
+    {
+      "Name": "URDFBackgroundZoom",
+      "Min": 10,
+      "Max": 1000
+    },
+    {
+      "Name": "URDFBackgroundYaw",
+      "Min": -36000,
+      "Max": 36000
+    },
+    {
+      "Name": "URDFFollowMargin",
+      "Min": 5,
+      "Max": 45
+    },
+    {
+      "Name": "URDFFloorHeight",
+      "Min": -100000,
+      "Max": 100000
+    },
+    {
+      "Name": "B_WaistSwivel",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "B_ThumbTipCurlLeft",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "B_ThumbTipCurlRight",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "B_FingerEndCurlUpperLeft",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "B_FingerEndCurlUpperRight",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "B_FingerEndCurlLowerLeft",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "B_FingerEndCurlLowerRight",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "B_OpenLeftHand",
+      "Min": 0,
+      "Max": 100
+    },
+    {
+      "Name": "B_OpenRightHand",
+      "Min": 0,
+      "Max": 100
+    },
+    {
+      "Name": "B_ShoulderHugLeft",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "B_ShoulderHugRight",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "B_ShoulderPitchLeft",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "B_ShoulderPitchRight",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "B_ShoulderPivotLeft",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "B_ShoulderPivotRight",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "B_PanelsOpen",
+      "Min": 0,
+      "Max": 100
+    },
+    {
+      "Name": "LcdShow",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "HideLaser",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "B_LaserLower",
+      "Min": 0,
+      "Max": 100
+    },
+    {
+      "Name": "ToolboxSwap",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "FireLaser",
+      "Min": -100,
+      "Max": 100
+    },
+    {
+      "Name": "VideoClip",
+      "Min": -100,
+      "Max": 100
+    }
+  ],
+  "Gangs": {
+    "NeckTurn": [
+      "NeckTurn"
+    ],
+    "NeckNodUp": [
+      "NeckTiltLeft",
+      "NeckTiltRight"
+    ],
+    "NeckTiltRight": [
+      "NeckTiltLeft",
+      "NeckTiltRight"
+    ],
+    "FlapsOpen": [
+      "BrowLeftTopOpen",
+      "BrowRightTopOpen",
+      "BrowLeftBottomOpen",
+      "BrowRightBottomOpen"
+    ],
+    "FlapTiltUp": [
+      "BrowLeftTopTilt",
+      "BrowRightTopTilt"
+    ],
+    "IrisClose": [
+      "LeftIris",
+      "RightIris"
+    ],
+    "EyesVerticalUp": [
+      "LeftLensVertical",
+      "RightLensVertical"
+    ],
+    "EyesHorizontalRight": [
+      "LeftLensHorizontal",
+      "RightLensHorizontal"
+    ],
+    "VentsOpen": [
+      "LeftEyeVent",
+      "RightEyeVent"
+    ],
+    "NoseBody": [
+      "NoseBody"
+    ],
+    "NoseBasket": [
+      "NoseBasket"
+    ],
+    "MFR_UpDown": [
+      "MFR_UpDown"
+    ],
+    "MFR_Rotate": [
+      "MFR_Rotate"
+    ],
+    "Microphone_RaiseLower": [
+      "Microphone_RaiseLower"
+    ],
+    "Whip_Antenna_RaiseLower": [
+      "Whip_Antenna_RaiseLower"
+    ],
+    "Whip_Antenna_Rotate": [
+      "Whip_Antenna_Rotate"
+    ],
+    "LeftEyePop": [
+      "LeftEyePop"
+    ],
+    "RightEyePop": [
+      "RightEyePop"
+    ],
+    "BothEyePop": [
+      "LeftEyePop",
+      "RightEyePop"
+    ],
+    "RGBCommand": [],
+    "Play": []
+  },
+  "Defaults": {
+    "servos": [
+      {
+        "control": "NoseBasket",
+        "maestroPort": 9,
+        "reversed": false,
+        "defaultPwm": 850,
+        "minPwm": 850,
+        "maxPwm": 1150,
+        "speeds": [
+          100,
+          50,
+          0,
+          50
+        ],
+        "accels": [
+          30,
+          15,
+          0,
+          15
+        ]
+      },
+      {
+        "control": "NoseBody",
+        "maestroPort": 8,
+        "reversed": true,
+        "defaultPwm": 1200,
+        "minPwm": 1000,
+        "maxPwm": 1500,
+        "speeds": [
+          100,
+          50,
+          0,
+          50
+        ],
+        "accels": [
+          30,
+          15,
+          0,
+          15
+        ]
+      },
+      {
+        "control": "NeckTiltLeft",
+        "maestroPort": 4,
+        "reversed": false,
+        "defaultPwm": 1533,
+        "minPwm": 1445,
+        "maxPwm": 1594,
+        "speeds": [
+          20,
+          15,
+          0,
+          10
+        ],
+        "accels": [
+          10,
+          6,
+          0,
+          5
+        ]
+      },
+      {
+        "control": "NeckTiltRight",
+        "maestroPort": 13,
+        "reversed": true,
+        "defaultPwm": 1480,
+        "minPwm": 1400,
+        "maxPwm": 1564,
+        "speeds": [
+          20,
+          15,
+          0,
+          10
+        ],
+        "accels": [
+          10,
+          6,
+          0,
+          5
+        ]
+      },
+      {
+        "control": "NeckTurn",
+        "maestroPort": 22,
+        "reversed": false,
+        "defaultPwm": 1325,
+        "minPwm": 850,
+        "maxPwm": 1740,
+        "speeds": [
+          90,
+          30,
+          0,
+          45
+        ],
+        "accels": [
+          10,
+          10,
+          0,
+          15
+        ]
+      },
+      {
+        "control": "LeftLensHorizontal",
+        "maestroPort": 2,
+        "reversed": false,
+        "defaultPwm": 1450,
+        "minPwm": 650,
+        "maxPwm": 2250,
+        "speeds": [
+          0,
+          60,
+          0,
+          20
+        ],
+        "accels": [
+          0,
+          25,
+          0,
+          5
+        ]
+      },
+      {
+        "control": "RightLensHorizontal",
+        "maestroPort": 15,
+        "reversed": false,
+        "defaultPwm": 1450,
+        "minPwm": 650,
+        "maxPwm": 2250,
+        "speeds": [
+          0,
+          60,
+          0,
+          20
+        ],
+        "accels": [
+          0,
+          25,
+          0,
+          5
+        ]
+      },
+      {
+        "control": "LeftLensVertical",
+        "maestroPort": 3,
+        "reversed": true,
+        "defaultPwm": 1400,
+        "minPwm": 600,
+        "maxPwm": 2200,
+        "speeds": [
+          0,
+          60,
+          0,
+          20
+        ],
+        "accels": [
+          0,
+          25,
+          0,
+          5
+        ]
+      },
+      {
+        "control": "RightLensVertical",
+        "maestroPort": 14,
+        "reversed": false,
+        "defaultPwm": 1520,
+        "minPwm": 720,
+        "maxPwm": 2320,
+        "speeds": [
+          0,
+          60,
+          0,
+          20
+        ],
+        "accels": [
+          0,
+          25,
+          0,
+          5
+        ]
+      },
+      {
+        "control": "LeftIris",
+        "maestroPort": 1,
+        "reversed": false,
+        "defaultPwm": 1575,
+        "minPwm": 1350,
+        "maxPwm": 1950,
+        "speeds": [
+          90,
+          90,
+          0,
+          10
+        ],
+        "accels": [
+          15,
+          15,
+          0,
+          5
+        ]
+      },
+      {
+        "control": "RightIris",
+        "maestroPort": 16,
+        "reversed": false,
+        "defaultPwm": 975,
+        "minPwm": 750,
+        "maxPwm": 1350,
+        "speeds": [
+          90,
+          90,
+          0,
+          10
+        ],
+        "accels": [
+          15,
+          15,
+          0,
+          5
+        ]
+      },
+      {
+        "control": "BrowLeftTopOpen",
+        "maestroPort": 6,
+        "reversed": true,
+        "defaultPwm": 1523,
+        "minPwm": 920,
+        "maxPwm": 1770,
+        "speeds": [
+          60,
+          10,
+          0,
+          2
+        ],
+        "accels": [
+          15,
+          5,
+          0,
+          3
+        ]
+      },
+      {
+        "control": "BrowRightTopOpen",
+        "maestroPort": 11,
+        "reversed": false,
+        "defaultPwm": 866,
+        "minPwm": 637,
+        "maxPwm": 1417,
+        "speeds": [
+          60,
+          10,
+          0,
+          2
+        ],
+        "accels": [
+          15,
+          5,
+          0,
+          3
+        ]
+      },
+      {
+        "control": "BrowLeftTopTilt",
+        "maestroPort": 7,
+        "reversed": true,
+        "defaultPwm": 1800,
+        "minPwm": 910,
+        "maxPwm": 1900,
+        "speeds": [
+          40,
+          10,
+          0,
+          2
+        ],
+        "accels": [
+          10,
+          5,
+          0,
+          3
+        ]
+      },
+      {
+        "control": "BrowRightTopTilt",
+        "maestroPort": 10,
+        "reversed": false,
+        "defaultPwm": 1100,
+        "minPwm": 1000,
+        "maxPwm": 1990,
+        "speeds": [
+          40,
+          10,
+          0,
+          2
+        ],
+        "accels": [
+          10,
+          5,
+          0,
+          3
+        ]
+      },
+      {
+        "control": "BrowLeftBottomOpen",
+        "maestroPort": 5,
+        "reversed": false,
+        "defaultPwm": 1750,
+        "minPwm": 940,
+        "maxPwm": 2050,
+        "speeds": [
+          60,
+          10,
+          0,
+          2
+        ],
+        "accels": [
+          15,
+          5,
+          0,
+          3
+        ]
+      },
+      {
+        "control": "BrowRightBottomOpen",
+        "maestroPort": 12,
+        "reversed": true,
+        "defaultPwm": 1100,
+        "minPwm": 700,
+        "maxPwm": 1910,
+        "speeds": [
+          60,
+          10,
+          0,
+          2
+        ],
+        "accels": [
+          15,
+          5,
+          0,
+          3
+        ]
+      },
+      {
+        "control": "LeftEyeVent",
+        "maestroPort": 0,
+        "reversed": false,
+        "defaultPwm": 1765,
+        "minPwm": 1765,
+        "maxPwm": 2086,
+        "speeds": [
+          40,
+          10,
+          0,
+          10
+        ],
+        "accels": [
+          20,
+          5,
+          0,
+          5
+        ]
+      },
+      {
+        "control": "RightEyeVent",
+        "maestroPort": 17,
+        "reversed": true,
+        "defaultPwm": 1125,
+        "minPwm": 835,
+        "maxPwm": 1125,
+        "speeds": [
+          40,
+          10,
+          0,
+          10
+        ],
+        "accels": [
+          20,
+          5,
+          0,
+          5
+        ]
+      },
+      {
+        "control": "MFR_Rotate",
+        "maestroPort": 21,
+        "reversed": true,
+        "defaultPwm": 1320,
+        "minPwm": 800,
+        "maxPwm": 1865,
+        "speeds": [
+          0,
+          1,
+          0,
+          10
+        ],
+        "accels": [
+          0,
+          1,
+          0,
+          20
+        ]
+      },
+      {
+        "control": "MFR_UpDown",
+        "maestroPort": 20,
+        "reversed": true,
+        "defaultPwm": 550,
+        "minPwm": 550,
+        "maxPwm": 1070,
+        "speeds": [
+          100,
+          50,
+          0,
+          50
+        ],
+        "accels": [
+          30,
+          25,
+          0,
+          25
+        ]
+      },
+      {
+        "control": "Whip_Antenna_RaiseLower",
+        "maestroPort": 18,
+        "reversed": true,
+        "defaultPwm": 2200,
+        "minPwm": 1620,
+        "maxPwm": 2200,
+        "speeds": [
+          100,
+          20,
+          0,
+          50
+        ],
+        "accels": [
+          30,
+          5,
+          0,
+          25
+        ]
+      },
+      {
+        "control": "Whip_Antenna_Rotate",
+        "maestroPort": 19,
+        "reversed": false,
+        "defaultPwm": 1400,
+        "minPwm": 500,
+        "maxPwm": 2300,
+        "speeds": [
+          0,
+          0,
+          0,
+          10
+        ],
+        "accels": [
+          0,
+          0,
+          0,
+          20
+        ]
+      },
+      {
+        "control": "Microphone_RaiseLower",
+        "maestroPort": 23,
+        "reversed": false,
+        "defaultPwm": 1625,
+        "minPwm": 1625,
+        "maxPwm": 2298,
+        "speeds": [
+          0,
+          0,
+          0,
+          50
+        ],
+        "accels": [
+          0,
+          0,
+          0,
+          25
+        ]
+      }
+    ],
+    "gangDirections": [
+      {
+        "servo": "FlapsOpen",
+        "control": "BrowLeftTopOpen",
+        "reversed": true
+      },
+      {
+        "servo": "FlapsOpen",
+        "control": "BrowRightTopOpen",
+        "reversed": true
+      },
+      {
+        "servo": "FlapsOpen",
+        "control": "BrowLeftBottomOpen",
+        "reversed": false
+      },
+      {
+        "servo": "FlapsOpen",
+        "control": "BrowRightBottomOpen",
+        "reversed": false
+      },
+      {
+        "servo": "FlapTiltUp",
+        "control": "BrowLeftTopTilt",
+        "reversed": false
+      },
+      {
+        "servo": "FlapTiltUp",
+        "control": "BrowRightTopTilt",
+        "reversed": false
+      },
+      {
+        "servo": "IrisClose",
+        "control": "LeftIris",
+        "reversed": false
+      },
+      {
+        "servo": "IrisClose",
+        "control": "RightIris",
+        "reversed": false
+      },
+      {
+        "servo": "EyesHorizontalRight",
+        "control": "LeftLensHorizontal",
+        "reversed": true
+      },
+      {
+        "servo": "EyesHorizontalRight",
+        "control": "RightLensHorizontal",
+        "reversed": true
+      },
+      {
+        "servo": "EyesVerticalUp",
+        "control": "LeftLensVertical",
+        "reversed": true
+      },
+      {
+        "servo": "EyesVerticalUp",
+        "control": "RightLensVertical",
+        "reversed": true
+      },
+      {
+        "servo": "VentsOpen",
+        "control": "LeftEyeVent",
+        "reversed": true
+      },
+      {
+        "servo": "VentsOpen",
+        "control": "RightEyeVent",
+        "reversed": false
+      },
+      {
+        "servo": "NeckTiltRight",
+        "control": "NeckTiltLeft",
+        "reversed": true
+      },
+      {
+        "servo": "NeckTiltRight",
+        "control": "NeckTiltRight",
+        "reversed": true
+      },
+      {
+        "servo": "NeckNodUp",
+        "control": "NeckTiltLeft",
+        "reversed": false
+      },
+      {
+        "servo": "NeckNodUp",
+        "control": "NeckTiltRight",
+        "reversed": true
+      }
+    ],
+    "leftTicSerialNumber": "00475552"
+  },
+  "Body": {
+    "Controls": [
+      {
+        "Servo": "B_WaistLean",
+        "Joint": "WaistLean",
+        "Min": -0.35,
+        "Max": 0.35,
+        "Canonical": "B_WaistLean",
+        "HandMembers": []
+      },
+      {
+        "Servo": "B_ChestTilt",
+        "Joint": "ChestTilt",
+        "Min": -0.35,
+        "Max": 0.35,
+        "Canonical": "B_ChestTilt",
+        "HandMembers": []
+      },
+      {
+        "Servo": "B_WaistSwivel",
+        "Joint": "WaistSwivel",
+        "Min": -1.57,
+        "Max": 1.57,
+        "Canonical": "B_WaistSwivel",
+        "HandMembers": []
+      },
+      {
+        "Servo": "B_PanelsOpen",
+        "Joint": "PanelsOpen",
+        "Min": 0,
+        "Max": 1.75,
+        "Canonical": "B_PanelsOpen",
+        "HandMembers": []
+      },
+      {
+        "Servo": "B_LaserLower",
+        "Joint": "LaserLower",
+        "Min": 0,
+        "Max": 1.2217304763960306,
+        "Canonical": "B_LaserLower",
+        "HandMembers": []
+      },
+      {
+        "Servo": "B_NeckLift",
+        "Joint": "NeckLift",
+        "Min": -0.35,
+        "Max": 0.7863323129985824,
+        "Canonical": "B_NeckLift",
+        "HandMembers": []
+      },
+      {
+        "Servo": "B_ShoulderRotateLeft",
+        "Joint": "ShoulderRotateLeft",
+        "Min": -1,
+        "Max": 3.5779249665883754,
+        "Canonical": "B_ShoulderRotateLeft",
+        "HandMembers": []
+      },
+      {
+        "Servo": "B_ShoulderHugLeft",
+        "Joint": "ShoulderHugLeft",
+        "Min": -0.5,
+        "Max": 0.5,
+        "Canonical": "B_ShoulderHugLeft",
+        "HandMembers": []
+      },
+      {
+        "Servo": "B_ArmTwistLeft",
+        "Joint": "ArmTwistLeft",
+        "Min": -1.57,
+        "Max": 1.57,
+        "Canonical": "B_ArmTwistLeft",
+        "HandMembers": []
+      },
+      {
+        "Servo": "B_ElbowLeft",
+        "Joint": "ElbowLeft",
+        "Min": -1,
+        "Max": 1.2,
+        "Canonical": "B_ElbowLeft",
+        "HandMembers": []
+      },
+      {
+        "Servo": "B_WristPitchLeft",
+        "Joint": "WristPitchLeft",
+        "Min": -1,
+        "Max": 1,
+        "Canonical": "B_WristPitchLeft",
+        "HandMembers": []
+      },
+      {
+        "Servo": "B_WristRollLeft",
+        "Joint": "WristRollLeft",
+        "Min": -3.14,
+        "Max": 3.14,
+        "Canonical": "B_WristRollLeft",
+        "HandMembers": []
+      },
+      {
+        "Servo": "B_FingerSpreadUpperLeft",
+        "Joint": "FingerSpreadUpperLeft",
+        "Min": -0.2,
+        "Max": 0.6,
+        "Canonical": "B_FingerSpreadUpperLeft",
+        "HandMembers": []
+      },
+      {
+        "Servo": "B_FingerSpreadLowerLeft",
+        "Joint": "FingerSpreadLowerLeft",
+        "Min": -0.2,
+        "Max": 0.6,
+        "Canonical": "B_FingerSpreadLowerLeft",
+        "HandMembers": []
+      },
+      {
+        "Servo": "B_FingerCurlUpperLeft",
+        "Joint": "FingerCurlUpperLeft",
+        "Min": -0.3,
+        "Max": 0.8,
+        "Canonical": "B_FingerCurlUpperLeft",
+        "HandMembers": []
+      },
+      {
+        "Servo": "B_FingerTipCurlUpperLeft",
+        "Joint": "FingerTipCurlUpperLeft",
+        "Min": -0.3,
+        "Max": 1,
+        "Canonical": "B_FingerTipCurlUpperLeft",
+        "HandMembers": []
+      },
+      {
+        "Servo": "B_FingerEndCurlUpperLeft",
+        "Joint": "FingerEndCurlUpperLeft",
+        "Min": -0.3,
+        "Max": 0.8,
+        "Canonical": "B_FingerEndCurlUpperLeft",
+        "HandMembers": []
+      },
+      {
+        "Servo": "B_FingerCurlLowerLeft",
+        "Joint": "FingerCurlLowerLeft",
+        "Min": -0.3,
+        "Max": 0.8,
+        "Canonical": "B_FingerCurlLowerLeft",
+        "HandMembers": []
+      },
+      {
+        "Servo": "B_FingerTipCurlLowerLeft",
+        "Joint": "FingerTipCurlLowerLeft",
+        "Min": -0.3,
+        "Max": 1,
+        "Canonical": "B_FingerTipCurlLowerLeft",
+        "HandMembers": []
+      },
+      {
+        "Servo": "B_FingerEndCurlLowerLeft",
+        "Joint": "FingerEndCurlLowerLeft",
+        "Min": -0.3,
+        "Max": 0.8,
+        "Canonical": "B_FingerEndCurlLowerLeft",
+        "HandMembers": []
+      },
+      {
+        "Servo": "B_ThumbCurlLeft",
+        "Joint": "ThumbCurlLeft",
+        "Min": -0.3,
+        "Max": 0.8,
+        "Canonical": "B_ThumbCurlLeft",
+        "HandMembers": []
+      },
+      {
+        "Servo": "B_ThumbTipCurlLeft",
+        "Joint": "ThumbTipCurlLeft",
+        "Min": -0.3,
+        "Max": 1.3,
+        "Canonical": "B_ThumbTipCurlLeft",
+        "HandMembers": []
+      },
+      {
+        "Servo": "B_OpenLeftHand",
+        "Joint": "OpenHandLeft",
+        "Min": 0,
+        "Max": 1,
+        "Canonical": "B_OpenLeftHand",
+        "HandMembers": [
+          "FingerSpreadUpperLeft",
+          "FingerSpreadLowerLeft",
+          "FingerCurlUpperLeft",
+          "FingerTipCurlUpperLeft",
+          "FingerEndCurlUpperLeft",
+          "FingerCurlLowerLeft",
+          "FingerTipCurlLowerLeft",
+          "FingerEndCurlLowerLeft",
+          "ThumbCurlLeft",
+          "ThumbTipCurlLeft"
+        ]
+      },
+      {
+        "Servo": "B_ShoulderRotateRight",
+        "Joint": "ShoulderRotateRight",
+        "Min": -1,
+        "Max": 3.5779249665883754,
+        "Canonical": "B_ShoulderRotateRight",
+        "HandMembers": []
+      },
+      {
+        "Servo": "B_ShoulderHugRight",
+        "Joint": "ShoulderHugRight",
+        "Min": -0.5,
+        "Max": 0.5,
+        "Canonical": "B_ShoulderHugRight",
+        "HandMembers": []
+      },
+      {
+        "Servo": "B_ArmTwistRight",
+        "Joint": "ArmTwistRight",
+        "Min": -1.57,
+        "Max": 1.57,
+        "Canonical": "B_ArmTwistRight",
+        "HandMembers": []
+      },
+      {
+        "Servo": "B_ElbowRight",
+        "Joint": "ElbowRight",
+        "Min": -1,
+        "Max": 1.2,
+        "Canonical": "B_ElbowRight",
+        "HandMembers": []
+      },
+      {
+        "Servo": "B_WristPitchRight",
+        "Joint": "WristPitchRight",
+        "Min": -1,
+        "Max": 1,
+        "Canonical": "B_WristPitchRight",
+        "HandMembers": []
+      },
+      {
+        "Servo": "B_WristRollRight",
+        "Joint": "WristRollRight",
+        "Min": -3.14,
+        "Max": 3.14,
+        "Canonical": "B_WristRollRight",
+        "HandMembers": []
+      },
+      {
+        "Servo": "B_FingerSpreadUpperRight",
+        "Joint": "FingerSpreadUpperRight",
+        "Min": -0.2,
+        "Max": 0.6,
+        "Canonical": "B_FingerSpreadUpperRight",
+        "HandMembers": []
+      },
+      {
+        "Servo": "B_FingerSpreadLowerRight",
+        "Joint": "FingerSpreadLowerRight",
+        "Min": -0.2,
+        "Max": 0.6,
+        "Canonical": "B_FingerSpreadLowerRight",
+        "HandMembers": []
+      },
+      {
+        "Servo": "B_FingerCurlUpperRight",
+        "Joint": "FingerCurlUpperRight",
+        "Min": -0.3,
+        "Max": 0.8,
+        "Canonical": "B_FingerCurlUpperRight",
+        "HandMembers": []
+      },
+      {
+        "Servo": "B_FingerTipCurlUpperRight",
+        "Joint": "FingerTipCurlUpperRight",
+        "Min": -0.3,
+        "Max": 1,
+        "Canonical": "B_FingerTipCurlUpperRight",
+        "HandMembers": []
+      },
+      {
+        "Servo": "B_FingerEndCurlUpperRight",
+        "Joint": "FingerEndCurlUpperRight",
+        "Min": -0.3,
+        "Max": 0.8,
+        "Canonical": "B_FingerEndCurlUpperRight",
+        "HandMembers": []
+      },
+      {
+        "Servo": "B_FingerCurlLowerRight",
+        "Joint": "FingerCurlLowerRight",
+        "Min": -0.3,
+        "Max": 0.8,
+        "Canonical": "B_FingerCurlLowerRight",
+        "HandMembers": []
+      },
+      {
+        "Servo": "B_FingerTipCurlLowerRight",
+        "Joint": "FingerTipCurlLowerRight",
+        "Min": -0.3,
+        "Max": 1,
+        "Canonical": "B_FingerTipCurlLowerRight",
+        "HandMembers": []
+      },
+      {
+        "Servo": "B_FingerEndCurlLowerRight",
+        "Joint": "FingerEndCurlLowerRight",
+        "Min": -0.3,
+        "Max": 0.8,
+        "Canonical": "B_FingerEndCurlLowerRight",
+        "HandMembers": []
+      },
+      {
+        "Servo": "B_ThumbCurlRight",
+        "Joint": "ThumbCurlRight",
+        "Min": -0.3,
+        "Max": 0.8,
+        "Canonical": "B_ThumbCurlRight",
+        "HandMembers": []
+      },
+      {
+        "Servo": "B_ThumbTipCurlRight",
+        "Joint": "ThumbTipCurlRight",
+        "Min": -0.3,
+        "Max": 1.3,
+        "Canonical": "B_ThumbTipCurlRight",
+        "HandMembers": []
+      },
+      {
+        "Servo": "B_OpenRightHand",
+        "Joint": "OpenHandRight",
+        "Min": 0,
+        "Max": 1,
+        "Canonical": "B_OpenRightHand",
+        "HandMembers": [
+          "FingerSpreadUpperRight",
+          "FingerSpreadLowerRight",
+          "FingerCurlUpperRight",
+          "FingerTipCurlUpperRight",
+          "FingerEndCurlUpperRight",
+          "FingerCurlLowerRight",
+          "FingerTipCurlLowerRight",
+          "FingerEndCurlLowerRight",
+          "ThumbCurlRight",
+          "ThumbTipCurlRight"
+        ]
+      }
+    ],
+    "LegacyControls": [
+      {
+        "Servo": "B_ShoulderRaiseLeft",
+        "Joint": "ShoulderRaiseLeft",
+        "Min": -0.1,
+        "Max": 1.2,
+        "Canonical": "B_ShoulderHugLeft",
+        "HandMembers": []
+      },
+      {
+        "Servo": "B_ShoulderRaiseRight",
+        "Joint": "ShoulderRaiseRight",
+        "Min": -0.1,
+        "Max": 1.2,
+        "Canonical": "B_ShoulderHugRight",
+        "HandMembers": []
+      },
+      {
+        "Servo": "B_ShoulderPivotLeft",
+        "Joint": "ShoulderPivotLeft",
+        "Min": -0.5,
+        "Max": 0.5,
+        "Canonical": "B_ShoulderHugLeft",
+        "HandMembers": []
+      },
+      {
+        "Servo": "B_ShoulderPivotRight",
+        "Joint": "ShoulderPivotRight",
+        "Min": -0.5,
+        "Max": 0.5,
+        "Canonical": "B_ShoulderHugRight",
+        "HandMembers": []
+      },
+      {
+        "Servo": "B_ShoulderPitchLeft",
+        "Joint": "ShoulderPitchLeft",
+        "Min": -1,
+        "Max": 3.5779249665883754,
+        "Canonical": "B_ShoulderRotateLeft",
+        "HandMembers": []
+      },
+      {
+        "Servo": "B_ShoulderPitchRight",
+        "Joint": "ShoulderPitchRight",
+        "Min": -1,
+        "Max": 3.5779249665883754,
+        "Canonical": "B_ShoulderRotateRight",
+        "HandMembers": []
+      }
+    ]
+  }
+}

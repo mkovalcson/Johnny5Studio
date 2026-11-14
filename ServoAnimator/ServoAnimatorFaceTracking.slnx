@@ -1,0 +1,12 @@
+<Solution>
+  <Project Path="ServoAnimator/ServoAnimator.csproj" />
+  <Project Path="ServoAnimator.Checks/ServoAnimator.Checks.csproj" />
+  <Project Path="../Shared/Controls/J5Studio.Controls.csproj" />
+  <Project Path="../Shared/Controls.Checks/J5Studio.Controls.Checks.csproj" />
+  <Project Path="../Shared/Configuration/J5Studio.Configuration.csproj" />
+  <Project Path="../Shared/Configuration.Checks/J5Studio.Configuration.Checks.csproj" />
+  <Project Path="../Shared/Animation/J5Studio.Animation.csproj" />
+    <Project Path="../Shared/Pose/J5Studio.Pose.csproj" />
+  <Project Path="../Shared/Animation.Checks/J5Studio.Animation.Checks.csproj" />
+    <Project Path="../Shared/Pose.Checks/J5Studio.Pose.Checks.csproj" />
+</Solution>

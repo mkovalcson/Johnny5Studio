@@ -1,0 +1,175 @@
+{
+  "version": 1,
+  "description": "Johnny 5 body tread animation frames",
+  "phases": 12,
+  "linkPitch_m": 0.031319,
+  "phaseStep_m": 0.00261,
+  "linksInLoop": 54,
+  "frameSpace": "Each frame mesh uses the same local frame as the static visual it replaces (the URDF link's joint origin). Swap the visual's geometry; leave the link transform alone.",
+  "direction": "Showing frames in increasing order moves every link along the belt path: forward along the bottom run and back along the top. Relative to the ground that drives the robot BACKWARD. Show frames in decreasing order to drive FORWARD. Rotators turn by degreesPerPhase about axisWorld per increasing frame (negative = clockwise seen from +Y).",
+  "speed": "Belt surface speed = phaseStep_m x frames per second. Frame 0 equals the static mesh.",
+  "sides": {
+    "left": {
+      "layers": [
+        {
+          "urdfLink": "body_tread_plates_left_link",
+          "urdfVisual": "body_tread_plates_left_visual",
+          "material": "cad_b3b3b3",
+          "frames": [
+            "Meshes/Body/Treads/tread_plates_left_p00.stl",
+            "Meshes/Body/Treads/tread_plates_left_p01.stl",
+            "Meshes/Body/Treads/tread_plates_left_p02.stl",
+            "Meshes/Body/Treads/tread_plates_left_p03.stl",
+            "Meshes/Body/Treads/tread_plates_left_p04.stl",
+            "Meshes/Body/Treads/tread_plates_left_p05.stl",
+            "Meshes/Body/Treads/tread_plates_left_p06.stl",
+            "Meshes/Body/Treads/tread_plates_left_p07.stl",
+            "Meshes/Body/Treads/tread_plates_left_p08.stl",
+            "Meshes/Body/Treads/tread_plates_left_p09.stl",
+            "Meshes/Body/Treads/tread_plates_left_p10.stl",
+            "Meshes/Body/Treads/tread_plates_left_p11.stl"
+          ]
+        },
+        {
+          "urdfLink": "body_tread_pads_left_link",
+          "urdfVisual": "body_tread_pads_left_visual",
+          "material": "black",
+          "frames": [
+            "Meshes/Body/Treads/tread_pads_left_p00.stl",
+            "Meshes/Body/Treads/tread_pads_left_p01.stl",
+            "Meshes/Body/Treads/tread_pads_left_p02.stl",
+            "Meshes/Body/Treads/tread_pads_left_p03.stl",
+            "Meshes/Body/Treads/tread_pads_left_p04.stl",
+            "Meshes/Body/Treads/tread_pads_left_p05.stl",
+            "Meshes/Body/Treads/tread_pads_left_p06.stl",
+            "Meshes/Body/Treads/tread_pads_left_p07.stl",
+            "Meshes/Body/Treads/tread_pads_left_p08.stl",
+            "Meshes/Body/Treads/tread_pads_left_p09.stl",
+            "Meshes/Body/Treads/tread_pads_left_p10.stl",
+            "Meshes/Body/Treads/tread_pads_left_p11.stl"
+          ]
+        }
+      ],
+      "rotators": [
+        {
+          "name": "front_roller_hub_left",
+          "urdfLinks": [
+            "body_track_front_hub_bolt_left_0_link",
+            "body_track_front_hub_bolt_left_1_link",
+            "body_track_front_hub_bolt_left_2_link",
+            "body_track_front_hub_bolt_left_3_link",
+            "body_track_front_hub_bolt_left_4_link",
+            "body_track_front_hub_cap_left_link",
+            "body_track_front_hub_detail_face_left_link",
+            "body_track_front_hub_detail_lug_0_left_link",
+            "body_track_front_hub_detail_lug_1_left_link",
+            "body_track_front_hub_detail_lug_2_left_link",
+            "body_track_front_hub_detail_lug_3_left_link",
+            "body_track_front_hub_detail_lug_4_left_link",
+            "body_track_front_hub_detail_lug_5_left_link",
+            "body_track_front_hub_detail_lug_6_left_link",
+            "body_track_front_hub_detail_lug_7_left_link",
+            "body_track_front_hub_detail_lug_8_left_link",
+            "body_track_front_hub_detail_lug_9_left_link",
+            "body_track_front_hub_detail_recess_left_link",
+            "body_track_front_hub_detail_rim_left_link",
+            "body_track_front_hub_left_link"
+          ],
+          "axisWorld": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "centreWorld": [
+            0.403893,
+            0.2945,
+            -0.979381
+          ],
+          "radius_m": 0.086,
+          "degreesPerPhase": -1.738788
+        }
+      ]
+    },
+    "right": {
+      "layers": [
+        {
+          "urdfLink": "body_tread_plates_right_link",
+          "urdfVisual": "body_tread_plates_right_visual",
+          "material": "cad_b3b3b3",
+          "frames": [
+            "Meshes/Body/Treads/tread_plates_right_p00.stl",
+            "Meshes/Body/Treads/tread_plates_right_p01.stl",
+            "Meshes/Body/Treads/tread_plates_right_p02.stl",
+            "Meshes/Body/Treads/tread_plates_right_p03.stl",
+            "Meshes/Body/Treads/tread_plates_right_p04.stl",
+            "Meshes/Body/Treads/tread_plates_right_p05.stl",
+            "Meshes/Body/Treads/tread_plates_right_p06.stl",
+            "Meshes/Body/Treads/tread_plates_right_p07.stl",
+            "Meshes/Body/Treads/tread_plates_right_p08.stl",
+            "Meshes/Body/Treads/tread_plates_right_p09.stl",
+            "Meshes/Body/Treads/tread_plates_right_p10.stl",
+            "Meshes/Body/Treads/tread_plates_right_p11.stl"
+          ]
+        },
+        {
+          "urdfLink": "body_tread_pads_right_link",
+          "urdfVisual": "body_tread_pads_right_visual",
+          "material": "black",
+          "frames": [
+            "Meshes/Body/Treads/tread_pads_right_p00.stl",
+            "Meshes/Body/Treads/tread_pads_right_p01.stl",
+            "Meshes/Body/Treads/tread_pads_right_p02.stl",
+            "Meshes/Body/Treads/tread_pads_right_p03.stl",
+            "Meshes/Body/Treads/tread_pads_right_p04.stl",
+            "Meshes/Body/Treads/tread_pads_right_p05.stl",
+            "Meshes/Body/Treads/tread_pads_right_p06.stl",
+            "Meshes/Body/Treads/tread_pads_right_p07.stl",
+            "Meshes/Body/Treads/tread_pads_right_p08.stl",
+            "Meshes/Body/Treads/tread_pads_right_p09.stl",
+            "Meshes/Body/Treads/tread_pads_right_p10.stl",
+            "Meshes/Body/Treads/tread_pads_right_p11.stl"
+          ]
+        }
+      ],
+      "rotators": [
+        {
+          "name": "front_roller_hub_right",
+          "urdfLinks": [
+            "body_track_front_hub_bolt_right_0_link",
+            "body_track_front_hub_bolt_right_1_link",
+            "body_track_front_hub_bolt_right_2_link",
+            "body_track_front_hub_bolt_right_3_link",
+            "body_track_front_hub_bolt_right_4_link",
+            "body_track_front_hub_cap_right_link",
+            "body_track_front_hub_detail_face_right_link",
+            "body_track_front_hub_detail_lug_0_right_link",
+            "body_track_front_hub_detail_lug_1_right_link",
+            "body_track_front_hub_detail_lug_2_right_link",
+            "body_track_front_hub_detail_lug_3_right_link",
+            "body_track_front_hub_detail_lug_4_right_link",
+            "body_track_front_hub_detail_lug_5_right_link",
+            "body_track_front_hub_detail_lug_6_right_link",
+            "body_track_front_hub_detail_lug_7_right_link",
+            "body_track_front_hub_detail_lug_8_right_link",
+            "body_track_front_hub_detail_lug_9_right_link",
+            "body_track_front_hub_detail_recess_right_link",
+            "body_track_front_hub_detail_rim_right_link",
+            "body_track_front_hub_right_link"
+          ],
+          "axisWorld": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "centreWorld": [
+            0.403893,
+            -0.2945,
+            -0.979381
+          ],
+          "radius_m": 0.086,
+          "degreesPerPhase": -1.738788
+        }
+      ]
+    }
+  }
+}

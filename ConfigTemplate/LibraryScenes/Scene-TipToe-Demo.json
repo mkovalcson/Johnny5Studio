@@ -1,0 +1,17 @@
+{
+  "Name": "TipToe Demo",
+  "Category": "Examples",
+  "Description": "Bundled full-body model on a simple backdrop.",
+  "RobotModelFile": "Models/Robots/Johnny5FullBody/johnny5_head.urdf",
+  "Settings": {
+    "Background": {
+      "BackgroundMode": "Urdf3D",
+      "Stage": {
+        "ModelFile": "Models/Scenery/MatrixConstruct/MatrixConstruct_backdrop.urdf"
+      }
+    },
+    "Framing": {
+      "Distance": 3
+    }
+  }
+}

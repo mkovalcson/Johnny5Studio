@@ -1,0 +1,24 @@
+{
+  "ActiveSceneFile": "",
+  "ModelFile": "Models\\Robots\\Johnny5FullBody\\johnny5_head.urdf",
+  "Framing": {
+    "Models\\Robots\\Johnny5Head\\johnny5_head.urdf": {
+      "HorizontalPercent": 0,
+      "VerticalPercent": 0,
+      "SpinDegrees": 0,
+      "RotateDegrees": 0,
+      "Yaw": 0,
+      "Pitch": 0,
+      "Distance": 1.3278615198128596
+    },
+    "Models\\Robots\\Johnny5FullBody\\johnny5_head.urdf": {
+      "HorizontalPercent": -2.70459172748067,
+      "VerticalPercent": -64.52148082755373,
+      "SpinDegrees": 0,
+      "RotateDegrees": 0,
+      "Yaw": 38.04799999999739,
+      "Pitch": 0.11410763559760907,
+      "Distance": 3.349267927399822
+    }
+  }
+}
