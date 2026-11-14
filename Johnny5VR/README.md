@@ -65,7 +65,7 @@ dotnet "packaging/publish-$version/Johnny5VR.dll" --editor-smoke --config <isola
 
 python tools/build_portable.py --publish "packaging/publish-$version" --editor-publish "packaging/editor-$version"
 
-python tools/verify_portable.py "../Releases/VR/$version/Johnny5VR-$version-win-x64-portable.zip"
+python tools/verify_portable.py "../Releases/VR/$version/J5-Studio-VR-Full-$version-win-x64.zip"
 
 ```
 

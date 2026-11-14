@@ -10,7 +10,7 @@ import xml.etree.ElementTree as ET
 import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
-import sys, subprocess
+import sys
 sys.path.insert(0, str(ROOT.parent / "tools"))
 from maintain_artifacts import mark
 parser = argparse.ArgumentParser()
@@ -38,7 +38,7 @@ if player_version != version or editor_version != version:
     raise SystemExit(f'Expected Studio {version}; found VR Player {player_version} and VR Editor {editor_version}. Republish both apps.')
 stamp = datetime.datetime.now().strftime('%Y%m%dT%H%M%S')
 release_dir = ROOT.parent / 'Releases' / 'VR' / version
-archive = release_dir / f'Johnny5VR-{version}-win-x64-portable.zip'
+archive = release_dir / f'J5-Studio-VR-Full-{version}-win-x64.zip'
 deployment = release_dir / 'Johnny5VR'
 if archive.exists() or deployment.exists():
     raise SystemExit('This version already has a finished release; use a new version instead of overwriting it.')
@@ -57,7 +57,7 @@ for item in publish.iterdir():
         shutil.copy2(item, bundle / item.name)
 shutil.copytree(editor_publish, bundle / 'Editor', ignore=shutil.ignore_patterns('*.pdb', '.j5-generated.json'))
 
-config = ROOT.parent / 'Config' if (ROOT.parent / 'Config').is_dir() else ROOT.parent / 'ConfigTemplate'
+config = ROOT.parent / 'ConfigTemplate'
 models = []
 for name in ('Johnny5FullBody', 'Johnny5Head'):
     models.extend((config / 'Models' / 'Robots' / name).glob('*.urdf'))
@@ -90,7 +90,7 @@ for urdf in models:
 # Playback documents and media are copied without modifying the editor library.
 # Keep their Config-relative hierarchy, so movies retain sequence/audio links.
 library_files = []
-for directory in ('Projects', 'Library', 'LibraryScenes', 'LibraryBackgrounds', 'Backdrops', 'UrdfBackgrounds', 'VideoMedia'):
+for directory in ('Projects', 'Library', 'LibraryProps', 'LibraryScenes', 'LibraryBackgrounds', 'Backdrops', 'UrdfBackgrounds', 'VideoMedia'):
     source = config / directory
     if not source.is_dir():
         continue
@@ -126,7 +126,14 @@ for name in ('URDFconfig.json', 'ServoConfig.json', 'ServoConfig.default.json', 
 (bundle / 'Run diagnostics.cmd').write_text(
     '@echo off\nstart "Johnny 5 VR checks" /wait "%~dp0Johnny5VR.exe" --check\n'
     'if errorlevel 1 (echo Checks failed. See Diagnostics\viewer.log.) else (type "%~dp0Diagnostics\checks-result.txt")\npause\n', encoding='ascii')
-shutil.copy2(ROOT / 'PORTABLE-START-HERE.txt', bundle / 'START HERE.txt')
+requirements = (ROOT.parent / 'Shared/UserHelp/VrSystemRequirements.md').read_text(encoding='utf-8-sig')
+(bundle / 'START HERE.txt').write_text(
+    f'J5 Studio VR Full {version} (Windows x64)\n\n'
+    'Extract into a new writable folder to preserve any existing Config.\n'
+    'Launch J5 Studio VR Player.cmd or J5 Studio VR Editor.cmd.\n'
+    'For headset use, start SteamVR, then select Start SteamVR in the Player.\n'
+    'The package includes the .NET runtime, both robot models, backdrops and the TipToe demo.\n\n'
+    + requirements, encoding='utf-8-sig')
 shutil.copy2(ROOT / 'README.md', bundle / 'Viewer details.md')
 (bundle / 'ThirdParty').mkdir(exist_ok=True)
 shutil.copy2(ROOT / 'ThirdParty' / 'SharpDX-LICENSE.txt', bundle / 'ThirdParty' / 'SharpDX-LICENSE.txt')
@@ -173,6 +180,5 @@ archive.with_suffix('.zip.sha256').write_text(digest + '  ' + archive.name + '\n
 bundle.rename(deployment)
 assert stage.resolve().parent == (ROOT / 'packaging/staging').resolve()
 shutil.rmtree(stage)
-subprocess.run([sys.executable, str(ROOT.parent / 'tools/maintain_artifacts.py'), '--apply'], check=True)
 print(json.dumps({'archive': str(archive), 'bundle': str(deployment), 'bytes': archive.stat().st_size,
                   'renderingAssets': len(copied), 'playbackAssets': len(library_files), 'files': len(manifest) + 1, 'sha256': digest}, indent=2))

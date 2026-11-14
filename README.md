@@ -5,6 +5,8 @@ This repository contains J5 Studio Desktop, VR Player and VR Editor. Start with
 [project documentation](Documentation/README.md). User Help is available in either editor.
 The deployable Config template includes the full-body Johnny 5 model and a TipToe demo.
 
+[Download J5 Studio releases](https://github.com/mkovalcson/Johnny5Studio/releases)
+
 ## Platform and requirements
 
 J5 Studio Desktop, VR Player, and VR Editor are Windows applications built with .NET 10.
