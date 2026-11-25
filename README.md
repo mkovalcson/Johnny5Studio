@@ -16,3 +16,6 @@ packages bundle the .NET runtime. VR use requires SteamVR.
 
 - [Desktop system requirements](Shared/UserHelp/DesktopSystemRequirements.md)
 - [VR system requirements](Shared/UserHelp/VrSystemRequirements.md)
+
+This shows all of the animation features as of 11/19/2026
+https://www.youtube.com/watch?v=nKsilfV-LjE
