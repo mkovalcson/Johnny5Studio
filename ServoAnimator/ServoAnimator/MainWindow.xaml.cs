@@ -354,7 +354,7 @@ namespace ServoAnimator
                 foreach (var v in _videoSpans) d = Math.Max(d, v.End);
                 foreach (var c in _doc.Commands)
                     d = Math.Max(d, c.OffsetSeconds);
-                return d;
+                return Math.Max(d, CameraShotEnd);
             }
         }
 
@@ -371,7 +371,7 @@ namespace ServoAnimator
                     _movieItems[_moviePlaybackIndex].IsLooping &&
                     (_doc?.Commands?.Count ?? 0) > 0)
                 {
-                    double lastCommand = _doc.Commands.Max(c => c.OffsetSeconds);
+                    double lastCommand = Math.Max(CameraShotEnd, _doc.Commands.Max(c => c.OffsetSeconds));
                     // Avoid a zero-duration hot loop for sequences whose only
                     // command is at time zero.
                     if (lastCommand > 0.01)
@@ -461,6 +461,8 @@ namespace ServoAnimator
             MovieTimeline.InsertRequested += MovieTimeline_InsertRequested;
             MovieTimeline.RemoveRequested += MovieTimeline_RemoveRequested;
             MovieTimeline.LoopToggleRequested += MovieTimeline_LoopToggleRequested;
+            MovieTimeline.IdleRequested += MovieIdleRequested;
+            Closed += (_, _) => EndMovieIdle();
             MovieTimeline.AssignTriggerRequested += MovieTimeline_AssignTriggerRequested;
             MovieTimeline.DescriptionEditRequested += index =>
             {
@@ -649,6 +651,7 @@ namespace ServoAnimator
                         DurationSeconds = i.DurationSeconds,
                         Description = i.Description,
                         IsLooping = i.IsLooping,
+                        IdleMood = i.IdleMood,
                         Trigger = i.Trigger,
                     }).ToList(),
                     MovieSelectedIndex = _movieSelectedIndex,
@@ -1112,6 +1115,7 @@ namespace ServoAnimator
         /// </summary>
         private void StartPlaybackAt(double t, bool preservePending = false)
         {
+            EndMovieIdle();
             if (_meetingActive) StopMeeting();
             if (_speedCalibrationBusy) return;
             StopControllerLibrary();
@@ -1161,6 +1165,7 @@ namespace ServoAnimator
         {
             _lastPlaybackRenderingTime = TimeSpan.MinValue;
             _previewFrameCadence.Reset();
+            _beamFrameCadence.Reset();
             _lastInformationalRefreshMs = 0;
             if (_playbackRenderingSubscribed) return;
             UrdfRenderLoop.Current.AddAnimation(Playback_Rendering);
@@ -1171,6 +1176,7 @@ namespace ServoAnimator
         {
             if (!_playbackRenderingSubscribed) return;
             UrdfRenderLoop.Current.RemoveAnimation(Playback_Rendering);
+            ForEachHeadView(view => view.PauseTvTimeline());
             _playbackRenderingSubscribed = false;
         }
 
@@ -1181,6 +1187,7 @@ namespace ServoAnimator
             if (_lastPlaybackRenderingTime == frameTime) return;
             _lastPlaybackRenderingTime = frameTime;
             _refreshPreviewThisFrame = _previewFrameCadence.IsDue(frameTime);
+            _refreshBeamThisFrame = _beamFrameCadence.IsDue(frameTime);
             Timer_Tick(this, EventArgs.Empty);
         }
 
@@ -1202,6 +1209,7 @@ namespace ServoAnimator
 
         private void StopPlayback(bool cancelPending = true)
         {
+            EndMovieIdle();
             StopControllerLibrary(cancelPending);
             if (cancelPending) _hardwarePlaybackQueue.ClearPending();
             StopPlaybackRendering();
@@ -1345,6 +1353,8 @@ namespace ServoAnimator
                 if (!QueueTimelineHardwarePose(t)) return;
                 UpdateServoState(t);
             }
+            else if (_refreshBeamThisFrame && !_editingUrdfFraming && !_meetingActive && PlaybackOutputAllowed(false))
+                ApplyBeamTimeline(syncSound: false);
         }
 
         /// <summary>
@@ -1850,6 +1860,7 @@ namespace ServoAnimator
             // playback) animates the head.
             ApplyUrdfTimelinePosition();
             PushHeadPose();
+            ApplyCameraShotTimeline();
             ApplyFireLaserTimeline();
         }
 
@@ -2173,7 +2184,8 @@ namespace ServoAnimator
 
             // Nod and tilt are complementary: both rows apply and resolve into the two
             // neck pistons (NeckMix), including spline interpolation and manual staging.
-            double nod = RV(ServoNames.NeckNodUp), tilt = RV(ServoNames.NeckTiltRight);
+            double nod = WebcamOverdubNeckValue(ServoNames.NeckNodUp, RV(ServoNames.NeckNodUp));
+            double tilt = WebcamOverdubNeckValue(ServoNames.NeckTiltRight, RV(ServoNames.NeckTiltRight));
             ServoNames? neckOwner = null;
 
             // NoseBasket is a positive 0..100 servo. Its default/neutral
@@ -2226,6 +2238,11 @@ namespace ServoAnimator
             void ApplyPose(RobotHeadView headView)
             {
                 ConfigureTimelineMotion(headView);
+                if (RecordingController && _webcamNeckTargets.Count > 0)
+                {
+                    headView.ConfigureCalibratedSpeed(ServoNames.NeckNodUp, null, _webcamNeckSpeed);
+                    headView.SetCalibratedControlEnabled(ServoNames.NeckNodUp, null, true);
+                }
                 headView.SetPose(
                 eyeHLeft: Part(ServoNames.EyesHorizontalRight, RobotControls.RightLensHorizontal),
                 eyeHRight: Part(ServoNames.EyesHorizontalRight, RobotControls.LeftLensHorizontal),
@@ -2255,7 +2272,8 @@ namespace ServoAnimator
                 whipRotate: RV(ServoNames.Whip_Antenna_Rotate),
                 mfrRotate: RV(ServoNames.MFR_Rotate),
                 includeControl: RecordingController ? (s, c) => !RecordingOwns(s, c) : null);
-                ApplyTimelineNeckChildren(headView);
+                if (!RecordingController || _webcamNeckTargets.Count == 0)
+                    ApplyTimelineNeckChildren(headView);
             }
 
             if (EmbeddedHeadView != null) ApplyPose(EmbeddedHeadView);
@@ -2494,7 +2512,7 @@ namespace ServoAnimator
             int i = CommandsAtPointList.SelectedIndex;
             if (i < 0 || i >= cmds.Count) return;
             PushUndo($"Delete {cmds[i].Servo} command at {_cursorTime:F3} s");
-            if (!string.IsNullOrEmpty(cmds[i].GroupId)) _doc.Commands.RemoveAll(c => c.GroupId == cmds[i].GroupId);
+            if (!string.IsNullOrEmpty(cmds[i].GroupId) && cmds[i].GroupId != _editingCommandGroup) _doc.Commands.RemoveAll(c => c.GroupId == cmds[i].GroupId);
             else _doc.Commands.Remove(cmds[i]);
             RefreshAfterEdit();
             ShowStatus("Selected command deleted");
@@ -2735,7 +2753,7 @@ namespace ServoAnimator
         /// Keeping this window modeless leaves the URDF camera/buttons fully
         /// operational while commands are being edited. Draft rows are merged
         /// and checked for conflicts before they enter the playable timeline.</summary>
-        private void EditCommandsAtCursor(ServoCommand focusCommand = null)
+        private void EditCommandsAtCursor(ServoCommand focusCommand = null, string groupScope = null)
         {
             if (_commandEditorWindow != null)
             {
@@ -2747,6 +2765,7 @@ namespace ServoAnimator
 
             AnimationDocument source = _doc;
             double editTime = _cursorTime;
+            groupScope ??= GroupEditScopeAt(editTime, focusCommand);
             var editor = new CommandEditorWindow(_doc, _cursorTime,
                                                  MoveServoNow,      // numeric variant
                                                  MoveServoNow,      // text variant (RGBCommand)
@@ -2754,6 +2773,7 @@ namespace ServoAnimator
                                                  ConfigureServoSpeedNow,
                                                  ConfigureChildServoSpeedNow,
                                                  LibraryCommandsFolder(),
+                                                 ConfigRoot,
                                                  SplineServosEnabled(),
                                                  (commands, splineChanges) =>
                                                  {
@@ -2778,10 +2798,11 @@ namespace ServoAnimator
                                                      ApplySplineSettings(splines);
                                                      return true;
                                                  },
-                                                 focusCommand)
+                                                 focusCommand, groupScope)
             {
                 Owner = this,
             };
+            if (groupScope != null) editor.Title += $" · {GroupDisplayName(groupScope)}";
             _commandEditorWindow = editor;
             editor.Closed += (_, _) =>
             {
@@ -3432,6 +3453,8 @@ namespace ServoAnimator
                 .GroupBy(c => (c.Servo, c.Control.Value)))
                 _childCommandIndex[group.Key] = group.ToArray();
 
+            RebuildCameraShots();
+
         }
 
         internal static System.Windows.Media.Brush BrushFor(ServoNames s) =>
@@ -4018,7 +4041,7 @@ namespace ServoAnimator
             sb.AppendLine(_movieDescription ?? "");
             sb.AppendLine(_movieCreatedDate ?? "");
             foreach (var item in _movieItems)
-                sb.AppendLine((item.FilePath ?? "") + "\t" + (item.IsLooping ? "loop" : "once") + "\t" + (item.Trigger ?? ""));
+                sb.AppendLine((item.FilePath ?? "") + "\t" + (item.IsLooping ? "loop" : "once") + "\t" + (item.Trigger ?? "") + "\t" + item.IdleMood);
             return sb.ToString();
         }
 
@@ -4746,6 +4769,7 @@ namespace ServoAnimator
         private void About_Click(object sender, RoutedEventArgs e) =>
             MessageBox.Show(this,
                 $"{AppDisplayName}\nVersion {AppVersion}   Date {AppGenerationDate}\nDesigned by Mark Kovalcson\n\n" +
+                StudioBuildDetails.Description + Environment.NewLine + Environment.NewLine +
                 "Create Johnny 5 robot animations with synchronized audio and a 3D preview.\n" +
                 "Edit motion timelines, arrange sequences into movies, and control the\n" +
                 "physical robot through playback, controllers, or webcam face tracking.",
@@ -5442,6 +5466,7 @@ namespace ServoAnimator
                         DurationSeconds = File.Exists(path) ? SequenceDurationFromPath(path) : 1.0,
                         Description = SequenceDescriptionFromPath(path),
                         IsLooping = i < movie.SequenceLoops.Count && movie.SequenceLoops[i],
+                        IdleMood = ExpressiveIdle.For(movie, i),
                         Trigger = i < movie.SequenceTriggers.Count ? movie.SequenceTriggers[i] ?? "" : "",
                     });
                 }
@@ -5547,6 +5572,7 @@ namespace ServoAnimator
                     CreatedDate = _movieCreatedDate,
                     Sequences = _movieItems.Select(i => MovieStoredSequencePath(i.FilePath)).ToList(),
                     SequenceLoops = _movieItems.Select(i => i.IsLooping).ToList(),
+                    SequenceIdles = _movieItems.Select(i => i.IdleMood).ToList(),
                     SequenceTriggers = _movieItems.Select(i => i.Trigger).ToList(),
                 };
 
@@ -5646,6 +5672,7 @@ namespace ServoAnimator
         {
             if (index < 0 || index >= _movieItems.Count) return;
             _movieItems[index].IsLooping = !_movieItems[index].IsLooping;
+            if (_movieItems[index].IsLooping) _movieItems[index].IdleMood = IdleMood.None;
             RefreshMovieTimelineView();
             string name = Path.GetFileNameWithoutExtension(_movieItems[index].FilePath);
             ShowStatus($"{name}: looping {(_movieItems[index].IsLooping ? "enabled" : "disabled")}");
@@ -5785,6 +5812,8 @@ namespace ServoAnimator
                 return;
             }
 
+            if (_movieIdleActive) { MovieNext_Click(sender, e); return; }
+
             if (_moviePlaybackActive && IsRunning)
             {
                 PausePlayback();
@@ -5874,6 +5903,12 @@ namespace ServoAnimator
             if (!_moviePlaybackActive || _moviePlaybackIndex < 0 ||
                 _moviePlaybackIndex >= _movieItems.Count)
                 return false;
+
+            if (_movieItems[_moviePlaybackIndex].IdleMood != IdleMood.None)
+            {
+                BeginMovieIdle(_movieItems[_moviePlaybackIndex].IdleMood);
+                return true;
+            }
 
             int target = -1;
             if (_movieItems[_moviePlaybackIndex].IsLooping)
@@ -6029,6 +6064,7 @@ namespace ServoAnimator
                 if (e.Key == Key.Escape)
                 {
                     if (RecordingController) StopControllerRecording("Recording stopped.");
+                    else if (_webcamOverdubView != null) _webcamOverdubView.Close();
                     else _recordingWindow.ShowConfiguration();
                 }
                 e.Handled = true; return;

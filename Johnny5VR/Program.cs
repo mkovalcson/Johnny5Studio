@@ -29,6 +29,20 @@ internal static class Program
             if(args.Contains("--glove-preview")){ApplicationConfiguration.Initialize();GloveChecks.Preview();return 0;}
             var settings=ViewerSettings.Load();
             int configIndex=Array.IndexOf(args,"--config");if(configIndex>=0&&configIndex+1<args.Length)settings.ConfigFolder=Path.GetFullPath(args[configIndex+1]);
+            int validateEditor=Array.IndexOf(args,"--validate-editor-build");
+            if(validateEditor>=0)
+            {
+                if(validateEditor+1>=args.Length)throw new ArgumentException("Specify the Editor DLL to validate.");
+                var playerBuild=Johnny5.VrBridge.StudioBuildIdentity.Read(typeof(ViewerWindow).Assembly.Location);
+                var editorBuild=Johnny5.VrBridge.StudioBuildIdentity.Read(args[validateEditor+1]);
+                if(Johnny5.VrBridge.StudioBuildIdentity.Mismatch(playerBuild,editorBuild) is {} mismatch)
+                    throw new InvalidOperationException(mismatch);
+                Console.WriteLine("Matched VR builds: "+playerBuild.Description);
+                return 0;
+            }
+            if(args.Contains("--release-readiness-check")){ReleaseReadinessChecks.Run();return 0;}
+            if(args.Contains("--idle-check")){ExpressiveIdleChecks.Run();return 0;}
+            if(args.Contains("--camera-shot-check")){CameraShotChecks.Run(settings.ConfigFolder);return 0;}
             if(args.Contains("--check")){Diagnostics.Check(settings);return 0;}
             int replayIndex=Array.IndexOf(args,"--replay-tracking");
             if(replayIndex>=0)
@@ -50,7 +64,7 @@ internal static class Program
         catch(Exception ex)
         {
             Diagnostics.Log(ex);
-            if(!args.Contains("--urdf-prop-check")&&!args.Contains("--vr-rehearsal-check")&&!args.Contains("--follow-neutral-check")&&!args.Contains("--arcade-combat-check")&&!args.Contains("--arcade-preview")&&!args.Contains("--arcade-check")&&!args.Contains("--follow-speed-check")&&!args.Contains("--clean-output-check")&&!args.Contains("--follow-controls-check")&&!args.Contains("--pose-preview")&&!args.Contains("--layout-check")&&!args.Contains("--check")&&!args.Contains("--smoke")&&!args.Contains("--editor-smoke")&&!args.Contains("--effects-smoke"))MessageBox.Show(ex.Message,"J5 Studio VR Player");
+            if(!args.Contains("--validate-editor-build")&&!args.Contains("--release-readiness-check")&&!args.Contains("--idle-check")&&!args.Contains("--camera-shot-check")&&!args.Contains("--urdf-prop-check")&&!args.Contains("--vr-rehearsal-check")&&!args.Contains("--follow-neutral-check")&&!args.Contains("--arcade-combat-check")&&!args.Contains("--arcade-preview")&&!args.Contains("--arcade-check")&&!args.Contains("--follow-speed-check")&&!args.Contains("--clean-output-check")&&!args.Contains("--follow-controls-check")&&!args.Contains("--pose-preview")&&!args.Contains("--layout-check")&&!args.Contains("--check")&&!args.Contains("--smoke")&&!args.Contains("--editor-smoke")&&!args.Contains("--effects-smoke"))MessageBox.Show(ex.Message,"J5 Studio VR Player");
             Console.Error.WriteLine(ex);return 1;
         }
     }

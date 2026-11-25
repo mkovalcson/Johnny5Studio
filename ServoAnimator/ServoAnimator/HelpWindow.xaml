@@ -38,6 +38,9 @@
             <DockPanel>
                 <TextBlock DockPanel.Dock="Top" Text="Contents / Search Results" Margin="5,4,5,8"
                            Foreground="{DynamicResource HeaderText}" FontWeight="SemiBold"/>
+                <CheckBox x:Name="CurrentAppOnly" DockPanel.Dock="Top"
+                          Content="Show only this application's topics"
+                          Margin="5,0,5,8" Checked="CurrentAppOnly_Changed" Unchecked="CurrentAppOnly_Changed"/>
                 <ListBox x:Name="TopicList" SelectionChanged="TopicList_SelectionChanged"
                          ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                     <ListBox.GroupStyle>

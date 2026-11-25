@@ -116,6 +116,11 @@ namespace ServoAnimator
         public string Title { get; set; } = "";
         public string File { get; set; } = "";
         public string Category { get; set; } = "Reference";
+        // An empty list means the topic applies to both editors.
+        public string[] Applications { get; set; } = Array.Empty<string>();
+        public bool AppliesTo(string application) =>
+            Applications.Length == 0 || Applications.Contains(application, StringComparer.OrdinalIgnoreCase);
+
         public string[] Keywords { get; set; } = Array.Empty<string>();
         public string[] Related { get; set; } = Array.Empty<string>();
         public override string ToString() => Title;

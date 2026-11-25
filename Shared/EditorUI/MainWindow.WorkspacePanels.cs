@@ -12,7 +12,7 @@ public partial class MainWindow
     private readonly Dictionary<ControllerKind, (Window Window, ControllerMappingDisplay Display)> _floatingControllers = new();
     private readonly List<NamedGroupTrack> _namedGroupTracks = new();
     private DispatcherTimer _groupTrackTimer;
-    private string _focusedCommandGroup;
+
     private sealed record GroupMetadata(Dictionary<string, int> Numbers, Dictionary<string, string> Names, HashSet<string> Timelines);
     private GroupMetadata CaptureGroupMetadata() => new(new(_doc.CommandGroupNumbers ?? new()), new(_doc.CommandGroupNames ?? new()), new(_doc.CommandGroupTimelines ?? new()));
     private void RestoreGroupMetadata(GroupMetadata groups)
@@ -26,9 +26,10 @@ public partial class MainWindow
 
     private void InitializeWorkspacePanels()
     {
-        Waveform.PreviewMouseDown += (_, _) => _focusedCommandGroup = null;
+
         AudioTimelineArea.SizeChanged += (_, _) => NamedGroupTimelineScroller.MaxHeight = Math.Max(0, Math.Min(360, AudioTimelineArea.ActualHeight * .6));
-        Waveform.ViewChanged += () => { foreach (var view in _namedGroupTracks) view.InvalidateVisual(); };
+        Waveform.ViewChanged += RedrawNamedGroupTracks;
+        Waveform.SelectionMovePreviewChanged += RedrawNamedGroupTracks;
         // Invalidate only when the cursor changes; stopped editors do no repeated drawing.
         double previous = double.NaN;
         _groupTrackTimer = new DispatcherTimer(DispatcherPriority.Background) { Interval = TimeSpan.FromMilliseconds(40) };
@@ -39,6 +40,11 @@ public partial class MainWindow
             foreach (var view in _namedGroupTracks) view.InvalidateVisual();
         };
         _groupTrackTimer.Start();
+    }
+
+    private void RedrawNamedGroupTracks()
+    {
+        foreach (var track in _namedGroupTracks) track.InvalidateVisual();
     }
 
     private Window WorkspaceWindow(string title, double width, double height, UIElement content)
@@ -144,6 +150,29 @@ public partial class MainWindow
 
     private string GroupDisplayName(string id) => _doc.CommandGroupNames.TryGetValue(id, out var name) && !string.IsNullOrWhiteSpace(name)
         ? name : $"Group {_doc.CommandGroupNumbers.GetValueOrDefault(id)}";
+    private string[] GroupDisplayNames(IEnumerable<ServoCommand> commands) => commands
+        .Select(c => c.GroupId).Where(id => !string.IsNullOrEmpty(id)).Distinct()
+        .OrderBy(id => _doc.CommandGroupNumbers.GetValueOrDefault(id)).Select(GroupDisplayName).ToArray();
+
+    private string SelectedGroupNameAtMarker(double time, int lane)
+    {
+        var names = GroupDisplayNames(_selectedTimelineCommands.Where(c => ServoCommand.TimeKey(c.OffsetSeconds) == time &&
+            (lane < 0 || TimelineLanes.For(c.Servo) == lane)));
+        return string.Join(", ", names);
+    }
+
+    private static void AddGroupMenuHeader(ContextMenu menu, params string[] names)
+    {
+        string label = names.Length == 1 ? "Group Name: " : "Group Names: ";
+        var text = new TextBlock { Text = label + string.Join(", ", names), FontWeight = FontWeights.SemiBold,
+            MaxWidth = 420, TextWrapping = TextWrapping.Wrap };
+        text.SetResourceReference(TextBlock.ForegroundProperty, "PrimaryText");
+        var highlight = new Border { Child = text, CornerRadius = new CornerRadius(3), Padding = new Thickness(8, 4, 8, 4) };
+        highlight.SetResourceReference(Border.BackgroundProperty, "SelectionBackground");
+        menu.Items.Add(new MenuItem { Header = highlight, IsEnabled = false });
+        menu.Items.Add(new Separator());
+    }
+
     private void GroupManager_Click(object sender, RoutedEventArgs e) => ShowGroupManager();
     private void ShowGroupManager()
     {
@@ -189,7 +218,9 @@ public partial class MainWindow
             void ActionButton(string text, Action action) { var b = new Button { Content = text, Margin = new Thickness(3), Padding = new Thickness(8, 3, 8, 3) }; b.Click += (_, _) => { if (_doc == document) action(); else RefreshGroupManager(); }; actions.Children.Add(b); }
             var timeline = new CheckBox { Content = "Own timeline", IsChecked = _doc.CommandGroupTimelines.Contains(id), Margin = new Thickness(6), VerticalAlignment = VerticalAlignment.Center };
             timeline.Click += (_, _) => { if (_doc == document) SetGroupTimeline(id, timeline.IsChecked == true); else RefreshGroupManager(); }; actions.Children.Add(timeline);
-            ActionButton("Select", () => { SelectNamedGroup(id); SetCursor(start); });
+            ActionButton("Select", () => { SelectNamedGroup(id, AddGroupToSelection); SetCursor(start); });
+            ActionButton(_editingCommandGroup == id ? "Finish group edit" : "Edit commands",
+                () => SetGroupEdit(_editingCommandGroup == id ? null : id));
             ActionButton(_doc.HiddenCommandGroups.Contains(id) ? "Show commands" : "Hide commands", () => { if (!_doc.HiddenCommandGroups.Remove(id)) _doc.HiddenCommandGroups.Add(id); RefreshGroupVisibility(); RefreshGroupManager(); });
             ActionButton("Duplicate at cursor", () => DuplicateNamedGroup(id));
             ActionButton("Offset…", () => OffsetNamedGroup(id));
@@ -207,18 +238,31 @@ public partial class MainWindow
         PushUndo(description); action(); RefreshMarkers(); UpdateDocumentStatusIndicators(); RefreshGroupManager();
     }
     private void SetGroupTimeline(string id, bool show) => ChangeGroupMetadata(show ? "Show group timeline" : "Hide group timeline", () => { if (show) _doc.CommandGroupTimelines.Add(id); else _doc.CommandGroupTimelines.Remove(id); });
-    private void SelectNamedGroup(string id)
+    private void SelectNamedGroup(string id) => SelectNamedGroup(id, toggle: false);
+
+    private void SelectNamedGroup(string id, bool toggle)
     {
-        if (_doc.HiddenCommandGroups.Remove(id)) RefreshGroupVisibility(); _focusedCommandGroup = id;
-        Waveform.SetMarkerSelection(_doc.Commands.Where(c => c.GroupId == id).Select(c => ServoCommand.TimeKey(c.OffsetSeconds)));
+        if (_doc.HiddenCommandGroups.Remove(id)) RefreshGroupVisibility();
+        var commands = VisibleCommands.Where(c => c.GroupId == id).ToArray();
+        if (toggle && commands.All(_selectedTimelineCommands.Contains)) _selectedTimelineCommands.ExceptWith(commands);
+        else
+        {
+            if (!toggle) _selectedTimelineCommands.Clear();
+            _selectedTimelineCommands.UnionWith(commands);
+        }
+        RefreshSelectedCommandMarkers();
     }
+
+    private static bool AddGroupToSelection => Keyboard.Modifiers.HasFlag(ModifierKeys.Control) ||
+        Keyboard.Modifiers.HasFlag(ModifierKeys.Shift);
+
     private void EditNamedGroup(string id, string description, Action<List<ServoCommand>> action)
     {
         if (!ApplyOpenCommandEditor()) return;
         if (IsRunning) PausePlayback();
         var commands = _doc.Commands.Where(c => c.GroupId == id).ToList();
         if (commands.Count == 0) return;
-        ApplySelectedGroupEdit(description, () => action(commands), Array.Empty<double>()); RefreshGroupManager();
+        ApplySelectedGroupEdit(description, () => action(commands)); RefreshGroupManager();
     }
     private void MoveNamedGroup(string id, double delta)
     {
@@ -251,7 +295,7 @@ public partial class MainWindow
     private void RefreshNamedGroupTracks()
     {
         _namedGroupTracks.Clear(); NamedGroupTimelineRows.Children.Clear();
-        if (!ReferenceEquals(_markerSelectionDocument, _doc)) _focusedCommandGroup = null;
+
         RefreshGroupManager();
         foreach (string id in _doc.CommandGroupTimelines.Where(id => _doc.Commands.Any(c => c.GroupId == id)).OrderBy(id => _doc.CommandGroupNumbers[id]))
         {
@@ -260,15 +304,27 @@ public partial class MainWindow
             var hide = new Button { Content = "▾", Width = 22, MinWidth = 0, Padding = new Thickness(0), ToolTip = "Hide this group timeline" };
             hide.Click += (_, _) => SetGroupTimeline(id, false); DockPanel.SetDock(hide, Dock.Right); label.Children.Add(hide);
             var caption = new Button { Content = GroupDisplayName(id), HorizontalContentAlignment = HorizontalAlignment.Left, FontWeight = FontWeights.SemiBold, Padding = new Thickness(2), ToolTip = "Select this group; right-click its timeline for group actions" };
-            caption.Click += (_, _) => SelectNamedGroup(id); label.Children.Add(caption); DockPanel.SetDock(label, Dock.Top); row.Children.Add(label);
+            caption.Click += (_, _) => SelectNamedGroup(id, AddGroupToSelection); label.Children.Add(caption); DockPanel.SetDock(label, Dock.Top); row.Children.Add(label);
             var commands = _doc.Commands.Where(c => c.GroupId == id).ToArray();
-            var track = new NamedGroupTrack(Waveform, commands, () => _cursorTime, _doc.HiddenCommandGroups.Contains(id));
+            var track = new NamedGroupTrack(Waveform, commands, () => _cursorTime, _doc.HiddenCommandGroups.Contains(id))
+            {
+                SelectedGroupName = () => commands.Any(_selectedTimelineCommands.Contains) ? GroupDisplayName(id) : null,
+                IsEditingGroup = () => _editingCommandGroup == id,
+                IsCommandSelected = _selectedTimelineCommands.Contains,
+                PreviewOffset = command => (Waveform.MarkerMoveAnchor.HasValue ? _previewDragCommands : _selectedTimelineCommands).Contains(command)
+                    ? Waveform.SelectedMarkerMoveOffset : 0,
+                SelectCommandList = (time, toggle) => SelectGroupCommandList(id, time, toggle),
+                EditCommandList = time => { SetCursor(time); EditCommandsAtCursor(groupScope: id); },
+            };
             var color = CommandGroupColor(_doc.CommandGroupNumbers[id]); track.Accent = new SolidColorBrush(Color.FromRgb(color.Red, color.Green, color.Blue));
-            track.SelectGroup = () => SelectNamedGroup(id); track.Seek = SetCursor; track.MoveGroup = delta => MoveNamedGroup(id, delta);
+            track.SelectGroup = toggle => SelectNamedGroup(id, toggle); track.Seek = SetCursor; track.MoveGroup = MoveSelectedCommandMarkers;
             track.GroupMenu = () =>
             {
                 var menu = new ContextMenu();
+                AddGroupMenuHeader(menu, GroupDisplayName(id));
                 void Item(string text, Action action) { var item = new MenuItem { Header = text }; item.Click += (_, _) => action(); menu.Items.Add(item); }
+                Item(_editingCommandGroup == id ? "Finish group edit" : "Edit commands within group",
+                    () => SetGroupEdit(_editingCommandGroup == id ? null : id));
                 Item("Group manager / rename…", ShowGroupManager); Item("Select group", () => SelectNamedGroup(id));
                 Item("Duplicate at cursor", () => DuplicateNamedGroup(id)); Item("Offset group…", () => OffsetNamedGroup(id)); Item("Hide timeline", () => SetGroupTimeline(id, false)); menu.IsOpen = true;
             };

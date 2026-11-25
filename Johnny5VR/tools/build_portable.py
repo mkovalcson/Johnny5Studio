@@ -10,7 +10,7 @@ import xml.etree.ElementTree as ET
 import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
-import sys
+import sys, subprocess
 sys.path.insert(0, str(ROOT.parent / "tools"))
 from maintain_artifacts import mark
 parser = argparse.ArgumentParser()
@@ -36,6 +36,8 @@ player_version = published_version(publish, 'Johnny5VR')
 editor_version = published_version(editor_publish, 'AnimationEditorPlayer')
 if player_version != version or editor_version != version:
     raise SystemExit(f'Expected Studio {version}; found VR Player {player_version} and VR Editor {editor_version}. Republish both apps.')
+subprocess.run([str(publish / 'Johnny5VR.exe'), '--validate-editor-build',
+                str(editor_publish / 'AnimationEditorPlayer.dll')], check=True, timeout=30)
 stamp = datetime.datetime.now().strftime('%Y%m%dT%H%M%S')
 release_dir = ROOT.parent / 'Releases' / 'VR' / version
 archive = release_dir / f'J5-Studio-VR-Full-{version}-win-x64.zip'

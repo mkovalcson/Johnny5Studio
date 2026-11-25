@@ -26,7 +26,7 @@ internal static partial class Program
         Call("SetPersistentCommandGroup", true);
         string id = doc.Commands[0].GroupId;
         Check(id.Length > 0 && doc.Commands[1].GroupId == id && doc.Commands[2].GroupId == "", "Grouping changes only selected commands");
-        Check(wave.SelectedMarkers.Count == 0 && wave.CommandGroups.Length == 1, "Grouping deselects markers while preserving group membership");
+        Check(wave.SelectedMarkers.Count == 0 && wave.GroupColors.Count == 2 && wave.GroupColors[1] == wave.GroupColors[2], "Grouping deselects markers while preserving group membership");
         Check((string)Call("CurrentSequenceFingerprint") != fingerprint, "Group-only edits mark the sequence dirty");
         var json = new JsonSerializerOptions(); json.Converters.Add(new ServoCommandJsonConverter());
         var roundtrip = JsonSerializer.Deserialize<ServoCommand[]>(JsonSerializer.Serialize(doc.Commands, json), json);
@@ -37,14 +37,14 @@ internal static partial class Program
         Check(repeats[0].GroupId == repeats[1].GroupId && repeats[2].GroupId == repeats[3].GroupId && repeats[0].GroupId != repeats[2].GroupId, "Each repeated group has independent membership");
         wave.SetMarkerSelection(new[] { 1.0 });
         Check(wave.SelectedMarkers.OrderBy(t => t).SequenceEqual(new[] { 1.0, 2 }), "Selecting one triangle selects the complete group");
-        Call("MoveSelectedCommandMarkers", 3.0);
+        Call("MoveSelectedCommandMarkers", 3.0, null);
         Check(doc.Commands.Where(c => c.GroupId == id).Select(c => c.OffsetSeconds).OrderBy(t => t).SequenceEqual(new[] { 4.0, 5 }) && doc.Commands.Single(c => c.GroupId == "").OffsetSeconds == 8, "Grouped triangles move together while unrelated commands stay put");
         Call("DeleteSelectedCommandGroup");
         Check(doc.Commands.Count == 1 && doc.Commands[0].Servo == ServoNames.NoseBasket, "Delete removes every group member");
         Call("UndoSteps", 1);
         Check(doc.Commands.Count(c => c.GroupId == id) == 2, "Undo restores deleted group membership");
         wave.SetMarkerSelection(new[] { 4.0 }); Call("SetPersistentCommandGroup", false);
-        Check(doc.Commands.All(c => c.GroupId == "") && wave.CommandGroups.Length == 0 && wave.SelectedMarkers.Count == 0, "Ungroup removes membership and grouped coloring and deselects");
+        Check(doc.Commands.All(c => c.GroupId == "") && wave.GroupColors.Count == 0 && wave.SelectedMarkers.Count == 0, "Ungroup removes membership and grouped coloring and deselects");
         Call("UndoSteps", 1); wave.SetMarkerSelection(Array.Empty<double>());
         wave.Width = 900; wave.Height = 180;
         wave.Measure(new Size(900, 180)); wave.Arrange(new Rect(0, 0, 900, 180));

@@ -18,7 +18,7 @@ internal sealed partial class ViewerWindow
         else
         {
             menu.Set("Playback · Standalone",[
-                new(player.Running?"Pause":"Play / Resume",()=>PlaybackAction(player.Toggle)),new("Stop and rewind",()=>PlaybackAction(()=>{player.Stop();scene?.Rig?.Reset();})),
+                new(player.TransportLabel,()=>PlaybackAction(player.Toggle)),new("Stop and rewind",()=>PlaybackAction(()=>{player.Stop();scene?.Rig?.Reset();})),
                 new("Next sequence / advance trigger",()=>PlaybackAction(player.Next)),new("Choose from library",BuildLibraryMenu),new("Robot effects",BuildEffectsMenu),
                 new("Playback details",BuildPlaybackDetails),new("Compact transport panel",()=>SetTransportVisible(true))],player.Status+(playbackWarnings!=""?"\n"+playbackWarnings:""));menu.LivePlaybackStatus=true;
         }
@@ -57,7 +57,7 @@ internal sealed partial class ViewerWindow
             new("Controller feedback · Sounds / Voice / Off",()=>{BuildControllerFeedbackMenu();menu.GoBack=BuildVrSettingsMenu;}),
             new("Compact transport: "+(settings.ShowTransport?"Shown":"Hidden"),()=>{SetTransportVisible(!settings.ShowTransport);BuildVrSettingsMenu();}),
             new("Bring compact transport here",()=>{SetTransportVisible(true);vr.Transport.Recenter();menu.Navigation.Close();}),
-            new("Reset my VR position",()=>vr.ResetPosition())],"Controller mappings stay unchanged. Follow mode left A toggles mirror; left B opens/closes Selections. Left stick drives/turns the robot; right stick moves/turns you. Right A opens the menu and right B stops/back. Scene and input-backend settings are available in the desktop sidebar.");
+            new("Reset my VR position",()=>vr.ResetPosition())],"Controller mappings stay unchanged. Follow mode left A toggles mirror; left B opens/closes Selections. In Movement, left stick drives the robot and right stick moves you. Either trigger switches to Hand unless the visible laser is lowered. Right stick click toggles finger tracking. Right A opens the menu and right B stops/back. Scene and input-backend settings are available in the desktop sidebar.");
     }
     private void SetTransportVisible(bool visible)
     {
@@ -68,7 +68,7 @@ internal sealed partial class ViewerWindow
     {
         session.Transport.Source=()=>
         {
-            if(!editorMode)return new(player.Current?.Name??"No sequence loaded",player.Position,false,false,false,player.Running?"Playing · Standalone":"Standalone playback");
+            if(!editorMode)return new(player.Current?.Name??"No sequence loaded",Math.Min(player.Position,player.Current?.Duration??0),false,false,false,player.Status) {PlayLabel=player.TransportLabel};
             var pose=lastEditorFrame?.Pose;var motion=session.BodyMotion;
             return new("VR Editor sequence",pose?.Cursor??0,pose?.Recording==true,pose?.HasTake==true,motion.Following,
                 motion.RecordingPending?motion.Status:pose?.RecordingMessage is {Length:>0} message?message:"Record or overdub from the current timeline cursor.")
@@ -91,7 +91,7 @@ internal sealed partial class ViewerWindow
                     {editor?.Recording(new(Guid.NewGuid().ToString(),pose.Token,operation,motion.RecordingTracks));return;}
                     editor?.Command(action==0?VrEditorCommand.PlayPause:VrEditorCommand.Stop);
                 }
-                else PlaybackAction(()=>{if(action==0)player.Toggle();else{player.Stop();scene?.Rig?.Reset();}});
+                else PlaybackAction(()=>{if(action==0)player.Toggle();else if(action==9)player.Next();else{player.Stop();scene?.Rig?.Reset();}});
             }
             catch(Exception ex){Fail(ex);}
         };

@@ -72,6 +72,7 @@ public static class ControlIconFiles
             [ServoNames.TrackForward] = "Track-Forward.png",
             [ServoNames.TvShow] = "TV-Show.png",
             [ServoNames.VideoClip] = "TV-Show.png",
+            [ServoNames.CameraShot] = "URDF-TV-Front.png",
             [ServoNames.LcdShow] = "LCD-Show.png",
             [ServoNames.HideLaser] = "Hide-Laser.png",
             [ServoNames.B_PanelsOpen] = "B_PanelsOpen.png",

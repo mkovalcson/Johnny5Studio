@@ -1,4 +1,4 @@
-﻿using System.IO;
+using System.IO;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
@@ -17,10 +17,18 @@ public partial class MainWindow
     private readonly Dictionary<string, double> _faceFiltered = new();
     private FaceTrackingSettings ActiveFaceSettings => _faceWindow?.PreviewEnabled == true ? _faceWindow.PreviewSettings : _faceSettings;
     private IEnumerable<RobotControls> FaceSpeedLimitedControls => ActiveFaceSettings.EnforceServoSpeeds && FaceOutputActive
-        ? ActiveFaceSettings.OwnedControls.Where(control => !FaceOverrideOwns(control)) : Array.Empty<RobotControls>();
+        ? ActiveFaceSettings.OwnedControls.Where(control => !FaceOverrideOwns(control) && UsesFaceSpeedLimit(control))
+        : Array.Empty<RobotControls>();
+
+    private bool UsesFaceSpeedLimit(RobotControls control)
+    {
+        if (!RecordingController || _webcamOverdub == null) return true;
+        return _controllerTake.OwnsControl(control) ||
+            (NeckMix.IsPiston(control) && !_webcamOverdub.SuppressFacePistonOutput);
+    }
     private void RefreshFaceSpeedLimits() => ForEachHeadView(view => view.SetFaceSpeedLimitedControls(FaceSpeedLimitedControls));
     private bool FaceOutputActive => _faceClient.Fresh && (_faceWindow?.PreviewEnabled == true || RecordingController && _recordingWindow.UsesFace || _meetingActive && MeetingUsesFace || _meetingPreviewFace)
-        && (_meetingActive || _meetingPreviewFace || IsActive || _faceWindow?.IsActive == true || _head?.IsActive == true || _recordingWindow?.IsActive == true);
+        && (_meetingActive || _meetingPreviewFace || ControllerWindowActive || _faceWindow?.IsActive == true);
     private void InitializeFaceTracking()
     {
         try { _faceSettings = FaceTrackingSettings.Load(ConfigRoot); } catch (Exception ex) { ShowStatus("Face mappings: " + ex.Message); }
@@ -39,6 +47,18 @@ public partial class MainWindow
             _faceSettings = System.Text.Json.JsonSerializer.Deserialize<FaceTrackingSettings>(System.Text.Json.JsonSerializer.Serialize(settings));
             _faceFiltered.Clear(); _faceLastPacket = -1;
             RefreshFaceSpeedLimits();
+        };
+        _faceWindow.PreviewChanged = () =>
+        {
+            _faceFiltered.Clear(); _faceLastPacket = -1;
+            RefreshFaceSpeedLimits();
+        };
+        _faceWindow.AppliedOutput = mapping =>
+        {
+            if (_faceWindow?.PreviewEnabled != true || !_faceClient.Fresh ||
+                !ActiveFaceSettings.Mappings.Any(m => m.Enabled && m.Signal == mapping.Signal && m.Target == mapping.Target)) return null;
+            string key = FaceTrackingSettings.IsNeckComponent(mapping) ? "NeckMix:" + mapping.Signal : mapping.Target;
+            return _faceFiltered.TryGetValue(key, out double output) ? output : null;
         };
         _faceWindow.SaveRequested = settings =>
         {
@@ -91,6 +111,7 @@ public partial class MainWindow
             bool mixedNeck = false, neckComplete = true;
             foreach (var mapping in settings.Mappings.Where(m => m.Enabled))
             {
+                if (RecordingController && _webcamOverdub?.UsesMapping(mapping) == false) continue;
                 if (FaceTrackingSettings.IsNeckComponent(mapping))
                 {
                     mixedNeck = true;
@@ -102,6 +123,8 @@ public partial class MainWindow
                     double blend = mapping.SmoothingMs <= 0 ? 1 : 1 - Math.Exp(-dt / (mapping.SmoothingMs / 1000));
                     double component = previous + blend * (mapping.Map(angle) - previous);
                     _faceFiltered[key] = component;
+                    if (TrySetWebcamLogicalNeck(mapping.Target, component, mapping.Speed))
+                    { mixedNeck = false; continue; }
                     if (mapping.Signal == "headPitch") pitch = component; else roll = component;
                     continue;
                 }
@@ -111,7 +134,8 @@ public partial class MainWindow
                 double before = _faceFiltered.TryGetValue(mapping.Target, out var old) ? old : ControllerCurrentValue(mapping.Target);
                 double alpha = mapping.SmoothingMs <= 0 ? 1 : 1 - Math.Exp(-dt / (mapping.SmoothingMs / 1000));
                 double value = before + alpha * (target - before); _faceFiltered[mapping.Target] = value;
-                ApplyControllerPositionWithSpeed(mapping.Target, value, mapping.Speed);
+                if (!TrySetWebcamLogicalNeck(mapping.Target, value, mapping.Speed))
+                    ApplyControllerPositionWithSpeed(mapping.Target, value, mapping.Speed);
             }
             if (mixedNeck && neckComplete)
             {
@@ -122,7 +146,11 @@ public partial class MainWindow
                 ApplyControllerPositionWithSpeed("Servo:NeckTiltRight", Math.Clamp(roll, range.Min, range.Max), neckSpeed);
             }
             _controllerPreview.Flush();
-            if (RecordingController) SampleControllerRecording(RecordingTime);
+            if (RecordingController)
+            {
+                if (_webcamNeckTargets.Count > 0) PushHeadPose();
+                SampleControllerRecording(RecordingTime);
+            }
         }
         catch (Exception ex) { ShowStatus("Face output stopped: " + ex.Message); _faceClient.Dispose(); }
         finally { _faceDriving = false; }

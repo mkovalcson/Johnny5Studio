@@ -12,40 +12,64 @@ namespace ServoAnimator
         private HelpCatalog Catalog => HelpCatalog.Current;
         private bool _selecting;
 
-        public HelpWindow()
+        private readonly string _application;
+
+        public HelpWindow() : this(MainWindow.AppDisplayName) { }
+
+        internal HelpWindow(string application)
         {
+            _application = application;
             InitializeComponent();
-            SetTopics(Catalog.Topics, grouped: true);
-            SearchStatus.Text = $"{Catalog.Topics.Count} topics";
+            CurrentAppOnly.ToolTip = $"Show topics for {_application}";
+            RefreshTopics();
         }
+
+        private bool IsVisibleInScope(HelpTopicDefinition topic) =>
+            CurrentAppOnly.IsChecked != true || topic.AppliesTo(_application);
 
         public void NavigateTo(string topicId)
         {
             var topic = Catalog.Find(topicId);
             if (topic == null) return;
+            if (!IsVisibleInScope(topic)) topic = Catalog.Topics.FirstOrDefault(IsVisibleInScope);
+            if (topic == null) return;
             if (!TopicList.Items.Contains(topic)) SearchBox.Clear();
-            _selecting = true;
-            TopicList.SelectedItem = topic;
-            TopicList.ScrollIntoView(topic);
-            _selecting = false;
-            RenderTopic(topic);
+            SelectTopic(topic);
         }
 
-        private void SearchBox_TextChanged(object sender, TextChangedEventArgs e)
+        private void SearchBox_TextChanged(object sender, TextChangedEventArgs e) => RefreshTopics();
+
+        private void CurrentAppOnly_Changed(object sender, RoutedEventArgs e) => RefreshTopics();
+
+        private void RefreshTopics()
         {
-            if (TopicList == null || SearchStatus == null) return;
-            var results = Catalog.Search(SearchBox.Text);
-            SetTopics(results, grouped: string.IsNullOrWhiteSpace(SearchBox.Text));
-            SearchStatus.Text = string.IsNullOrWhiteSpace(SearchBox.Text)
+            if (TopicList == null || SearchStatus == null || CurrentAppOnly == null) return;
+            var selected = TopicList.SelectedItem as HelpTopicDefinition;
+            bool grouped = string.IsNullOrWhiteSpace(SearchBox.Text);
+            var results = Catalog.Search(SearchBox.Text).Where(IsVisibleInScope).ToList();
+            SetTopics(results, grouped);
+            SearchStatus.Text = grouped
                 ? $"{results.Count} topics"
                 : $"{results.Count} matching topic{(results.Count == 1 ? "" : "s")}";
-            if (results.Count > 0)
+            SelectTopic(results.Contains(selected) ? selected : results.FirstOrDefault());
+        }
+
+        private void SelectTopic(HelpTopicDefinition topic)
+        {
+            _selecting = true;
+            TopicList.SelectedItem = topic;
+            if (topic != null) TopicList.ScrollIntoView(topic);
+            _selecting = false;
+
+            if (topic != null)
             {
-                _selecting = true;
-                TopicList.SelectedIndex = 0;
-                _selecting = false;
-                RenderTopic(results[0]);
+                RenderTopic(topic);
+                return;
             }
+
+            DocumentViewer.Document = MarkdownToFlowDocument(
+                "No matching topics. Try another search or show all applications.");
+            Title = $"{MainWindow.AppDisplayName} Help";
         }
 
         private void SetTopics(IReadOnlyList<HelpTopicDefinition> topics, bool grouped)
@@ -67,7 +91,25 @@ namespace ServoAnimator
             string markdown = Catalog.Read(topic);
             var document = MarkdownToFlowDocument(markdown);
 
-            if (topic.Related?.Length > 0)
+            string appliesTo = topic.Applications.Length == 0
+                ? "J5 Studio Desktop · J5 Studio VR Editor"
+                : string.Join(" · ", topic.Applications);
+            var scope = new Paragraph(new Run($"Applies to {appliesTo}"))
+            {
+                Foreground = Brush("SecondaryText", Colors.LightGray),
+                FontSize = 12,
+                Margin = new Thickness(0, 0, 0, 8)
+            };
+            if (document.Blocks.FirstBlock is Block firstBlock)
+                document.Blocks.InsertBefore(firstBlock, scope);
+            else
+                document.Blocks.Add(scope);
+
+            var relatedTopics = (topic.Related ?? Array.Empty<string>())
+                .Select(Catalog.Find)
+                .Where(related => related != null && IsVisibleInScope(related))
+                .ToList();
+            if (relatedTopics.Count > 0)
             {
                 document.Blocks.Add(new BlockUIContainer(new Border
                 {
@@ -81,10 +123,8 @@ namespace ServoAnimator
                     Foreground = Brush("HeaderText", Colors.White),
                     Margin = new Thickness(0, 10, 0, 4)
                 });
-                foreach (string id in topic.Related)
+                foreach (var related in relatedTopics)
                 {
-                    var related = Catalog.Find(id);
-                    if (related == null) continue;
                     var link = new Hyperlink(new Run(related.Title)) { Tag = related.Id,
                         Foreground = Brush("SequenceAccent", Colors.LightSkyBlue) };
                     link.Click += (_, _) => NavigateTo((string)link.Tag);
@@ -251,7 +291,14 @@ namespace ServoAnimator
                         var topic = Catalog.Topics.FirstOrDefault(t => string.Equals(t.File, file, StringComparison.OrdinalIgnoreCase));
                         if (topic != null)
                         {
-                            var link = new Hyperlink(InlineText(text[(i + 1)..labelEnd])) { Tag = topic.Id,
+                            var label = InlineText(text[(i + 1)..labelEnd]);
+                            if (!IsVisibleInScope(topic))
+                            {
+                                span.Inlines.Add(label);
+                                i = linkEnd + 1;
+                                continue;
+                            }
+                            var link = new Hyperlink(label) { Tag = topic.Id,
                                 Foreground = Brush("SequenceAccent", Colors.LightSkyBlue) };
                             link.Click += (_, _) => NavigateTo((string)link.Tag);
                             span.Inlines.Add(link);

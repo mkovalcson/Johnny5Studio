@@ -4,7 +4,7 @@ using NAudio.Wave;
 namespace Johnny5VR;
 
 internal enum FeedbackConfirmation { Sounds, Voice, Off }
-internal enum FollowToggle { Mirrored, Unmirrored, MoveMe, MoveRobot }
+internal enum FollowToggle { Mirrored, Unmirrored, MoveMe, MoveRobot, Movement, Hand }
 
 // Audio is independent of voice playback/mouth illumination and never runs on the render thread.
 internal sealed class ControllerFeedback:IDisposable
@@ -14,8 +14,8 @@ internal sealed class ControllerFeedback:IDisposable
     private readonly object gate=new();
     private volatile bool stopping;
     private int epoch;
-    private readonly int[] serials=new int[2];
-    internal static int ToggleGroup(FollowToggle toggle)=>toggle is FollowToggle.Mirrored or FollowToggle.Unmirrored?0:1;
+    private readonly int[] serials=new int[3];
+    internal static int ToggleGroup(FollowToggle toggle)=>toggle is FollowToggle.Mirrored or FollowToggle.Unmirrored?0:toggle is FollowToggle.Hand or FollowToggle.Movement?2:1;
     internal void Cancel(){Interlocked.Increment(ref epoch);while(queue.TryTake(out _)){} }
     internal static string Label(FollowToggle toggle)=>toggle switch{FollowToggle.MoveMe=>"Move me",FollowToggle.MoveRobot=>"Move robot",_=>toggle.ToString()};
     internal void Play(FollowToggle toggle,FeedbackConfirmation mode,float volume)

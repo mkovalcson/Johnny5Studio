@@ -13,6 +13,7 @@
     <DefaultItemExcludes>$(DefaultItemExcludes);packaging/**;Releases/**</DefaultItemExcludes>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="../Shared/VR/StudioBuildIdentity.cs" Link="Bridge/StudioBuildIdentity.cs" />
     <Compile Include="../Shared/VR/SceneWire.cs" Link="Bridge/SceneWire.cs" />
     <Compile Include="../Shared/VR/DesktopWire.cs" Link="Bridge/DesktopWire.cs" />
     <Compile Include="../Shared/VR/EditorCommands.cs" Link="Bridge/EditorCommands.cs" />

@@ -57,7 +57,7 @@ internal sealed partial class ViewerWindow
             new("Insert changed pose at timeline cursor",()=>Run(()=>{motion.Stop("Following stopped before insertion",byUser:true);vr.RobotPose.Insert();menu.Navigation.Close();})),
             new("Return to calibration / close menu",()=>menu.Navigation.Close()),
             new("Back to editor controls",BuildVrEditorMenu)],
-            motion.Status+"\nStand upright before starting/re-centering. Headset and two controllers estimate elbows and body; they do not measure them directly. B stops. No physical robot output. Profile saved under Config/VR. Base speeds use URDF/profile limits; shoulder rotate and elbows use 3× that rate. Left A: mirror toggle. Left B: Selections. Left stick drives/turns the robot; right stick moves/turns you. Left stick click raises/lowers a visible laser; left trigger fires it when lowered. Physical walking/turning never drives robot travel.");
+            motion.Status+"\nStand upright before starting/re-centering. Headset and two controllers estimate elbows and body; they do not measure them directly. B stops. No physical robot output. Profile saved under Config/VR. Base speeds use URDF/profile limits; shoulder rotate and elbows use 3× that rate. Left A: mirror toggle. Left B: Selections. Left stick drives/turns the robot; right stick moves/turns you. Left stick click raises/lowers a visible laser; either trigger previews it when lowered. Otherwise either trigger switches Movement / Hand. Right stick click toggles finger tracking. Physical walking/turning never drives robot travel.");
         menu.LiveBodyMotionStatus=true;
     }
 }

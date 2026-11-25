@@ -86,11 +86,11 @@ internal sealed class VrMenu:IDisposable
     }
 
     internal void Detail(string message)=>detail=message;
-    internal void PlaybackStatus(string message,bool running)
+    internal void PlaybackStatus(string message,bool running,string? transportLabel=null)
     {
         if(!LivePlaybackStatus)return;detail=message;
-        int index=Array.FindIndex(Rows,r=>r.Label is "Pause" or "Play / Resume");
-        if(index>=0)Rows[index]=Rows[index] with{Label=running?"Pause":"Play / Resume"};
+        int index=Array.FindIndex(Rows,r=>r.Label is "Pause" or "Play / Resume" or "Pause idle" or "Resume idle");
+        if(index>=0)Rows[index]=Rows[index] with{Label=transportLabel??(running?"Pause":"Play / Resume")};
     }
     internal static int FooterAt(Vector2 uv)=>uv.Y>=820f/900&&uv.Y<=882f/900?(uv.X>=30f/1100&&uv.X<=530f/1100?0:uv.X>=570f/1100&&uv.X<=1070f/1100?1:-1):-1;
     internal static float SliderAt(float u)=>Math.Clamp((u*1100-600)/400,0,1);

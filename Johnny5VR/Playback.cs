@@ -2,6 +2,7 @@ using System.Diagnostics;
 using System.Text.Json;
 using NAudio.Wave;
 using Johnny5VR.Lighting;
+using ServoAnimator;
 
 namespace Johnny5VR;
 
@@ -38,8 +39,10 @@ internal sealed class MotionTrack(string servo,string control,KeyPoint[] points,
 internal sealed record PlaybackSequence(string File,string Name,double Duration,MotionTrack[] Tracks,AudioCue[] Audio,bool Loop,string Trigger,string[] Warnings)
 {
     internal string SceneReference {get;init;}="";
+    internal IdleMood IdleMood {get;init;}
     internal RgbCommand[] RgbCommands {get;init;}=[];
     internal EffectCue[] Effects {get;init;}=[];
+    internal (double Time,CameraShotCue Cue)[] CameraCues {get;init;}=[];
     internal AudioCue? AudioAt(double time)=>Audio.LastOrDefault(a=>a.Start<=time&&a.Start+a.Length>time);
 }
 internal sealed record PlaybackShow(string Name,PlaybackSequence[] Sequences,string[] Warnings);
@@ -76,7 +79,8 @@ internal static class PlaybackLibrary
             {
                 if (movie.Sequences[i] == null) throw new InvalidDataException("Movie sequence path must be text.");
                 sequences.Add(Read(config, movie.Sequences[i], i < movie.SequenceLoops.Count && movie.SequenceLoops[i],
-                    i < movie.SequenceTriggers.Count ? movie.SequenceTriggers[i] ?? "" : "", envelopes));
+                    i < movie.SequenceTriggers.Count ? movie.SequenceTriggers[i] ?? "" : "", envelopes)
+                    with { IdleMood=ExpressiveIdle.For(movie,i) });
             }
         }
         else sequences.Add(Read(config,entry.File,false,"",envelopes));
@@ -90,6 +94,7 @@ internal static class PlaybackLibrary
         using var source = ServoAnimator.SequenceSource.Load(path); var r = source.Root;
         var warnings=new List<string>();var audio=new List<AudioCue>();var points=new Dictionary<(string Servo,string Control),List<KeyPoint>>();var rgb=new List<RgbCommand>();var effects=new List<EffectCue>();
         var splines=source.SplineServos.ToHashSet();
+        var shots=new List<(double Time,CameraShotCue Cue)>();
         double duration=source.DurationSeconds;bool scaled=source.ScaleValues;
         foreach(var c in source.Commands)
         {
@@ -99,6 +104,12 @@ internal static class PlaybackLibrary
                 double value=c.Number("value")*(scaled?100:1);
                 if(!points.TryGetValue((servo,control),out var list))points[(servo,control)]=list=[];
                 list.Add(new(time,value,c.Flag("breakSpline")));
+            }
+            else if(servo=="CameraShot"&&c.Text("value")!="Disable")
+            {
+                try { shots.Add((time,CameraShotCue.Read(c.Text("value")))); }
+                catch(Exception error) when(error is FormatException or JsonException)
+                { warnings.Add($"{Path.GetFileName(file)}: invalid camera shot at {time:0.###} s."); }
             }
             else if(servo=="Play")AddAudio(c.Text("value"),time,c.Get("audioTrim"));
             else if(servo=="RGBCommand")rgb.Add(new(time,c.Text("value"),c.Text("value")=="Disable"));
@@ -120,6 +131,11 @@ internal static class PlaybackLibrary
             }
             else if(c.Text("value")!="Disable")warnings.Add($"{Path.GetFileName(file)}: {servo} effects are not supported by this VR player yet.");
         }
+        if(shots.Count>0)
+        {
+            var lastShot=shots.OrderBy(s=>s.Time).Last();
+            duration=Math.Max(duration,lastShot.Time+lastShot.Cue.Seconds);
+        }
         string primary=source.PrimaryAudio;
         // Primary is considered first. An inserted Play clip wins an equal-start tie.
         if(!string.IsNullOrWhiteSpace(primary))
@@ -140,7 +156,7 @@ internal static class PlaybackLibrary
             }
             catch(Exception ex) when(ex is IOException or ArgumentException or System.Runtime.InteropServices.COMException or InvalidDataException){throw new InvalidDataException("Cannot load audio '"+reference+"': "+ex.Message,ex);}
         }
-        return new(file,Path.GetFileNameWithoutExtension(file),Math.Max(.1,duration),points.Select(k=>new MotionTrack(k.Key.Servo,k.Key.Control,k.Value.GroupBy(p=>p.Time).Select(g=>g.Last()).OrderBy(p=>p.Time).ToArray(),splines.Contains(k.Key.Servo))).ToArray(),audio.OrderBy(c=>c.Start).ToArray(),loop,trigger,warnings.ToArray()){SceneReference=source.SceneReference,RgbCommands=rgb.ToArray(),Effects=effects.OrderBy(c=>c.Time).ToArray()};
+        return new(file,Path.GetFileNameWithoutExtension(file),Math.Max(.1,duration),points.Select(k=>new MotionTrack(k.Key.Servo,k.Key.Control,k.Value.GroupBy(p=>p.Time).Select(g=>g.Last()).OrderBy(p=>p.Time).ToArray(),splines.Contains(k.Key.Servo))).ToArray(),audio.OrderBy(c=>c.Start).ToArray(),loop,trigger,warnings.ToArray()){SceneReference=source.SceneReference,RgbCommands=rgb.ToArray(),Effects=effects.OrderBy(c=>c.Time).ToArray(),CameraCues=shots.OrderBy(c=>c.Time).ToArray()};
     }
     internal static (string Robot,string Backdrop,string[] Warnings,ServoAnimator.UrdfStageSettings? Stage) Scene(string config,string reference,string robot,string backdrop)
     {
@@ -184,33 +200,40 @@ internal sealed partial class PlaybackPlayer:IDisposable
     internal PlaybackShow? Show {get;private set;}
     internal int Index {get;private set;}
     internal int Epoch {get;private set;}
+    private bool expressiveIdle;
     internal bool Running=>clock.IsRunning;
+    internal bool IsIdling=>expressiveIdle&&Current?.IdleMood!=IdleMood.None;
     internal double Position=>clock.Elapsed;
+    internal string TransportLabel=>IsIdling?(Running?"Pause idle":"Resume idle"):Running?"Pause":"Play / Resume";
     internal double MouthAmplitude=>Running&&Current?.AudioAt(Position) is {} cue?cue.Envelope.At(cue.Skip+Position-cue.Start):0;
     internal PlaybackSequence? Current=>Show?.Sequences[Index];
-    internal string Status=>Current==null?"Choose a movie or sequence":$"{(Running?"Playing":Position>0?"Paused":"Ready")} · {Current.Name} · {Math.Min(Position,Current.Duration):F1} / {Current.Duration:F1}s · {Index+1}/{Show!.Sequences.Length}"+(Current.Loop?" · Loop (Next advances)":"")+(!string.IsNullOrEmpty(Current.Trigger)?" · trigger: Next advances":"");
+    internal string Status=>Current==null?"Choose a movie or sequence":$"{(IsIdling?$"{(Running?"Waiting":"Paused")} · {Current.IdleMood} idle":Running?"Playing":Position>0?"Paused":"Ready")} · {Current.Name} · {Math.Min(Position,Current.Duration):F1} / {Current.Duration:F1}s · {Index+1}/{Show!.Sequences.Length}"+(Current.Loop?" · Loop (Next advances)":"")+(!string.IsNullOrEmpty(Current.Trigger)?" · trigger: Next advances":"");
     internal void Load(PlaybackShow show){Stop();Show=show;Index=0;}
     internal void Unload(){Stop();Show=null;}
     internal void Toggle()
     {
         if(Current==null)return;
-        if(!Running&&Index==Show!.Sequences.Length-1&&Position>=Current.Duration)Stop();
+        // Idle shares Pause/Resume with playback; Next is an explicit separate action.
+        if(!IsIdling&&!Running&&Index==Show!.Sequences.Length-1&&Position>=Current.Duration)Stop();
         if(Running){clock.Stop();foreach(var p in playing)p.Output.Pause();}
         else{clock.Start();foreach(var p in playing)p.Output.Play();}
     }
-    internal void Stop(){clock.Reset();StopAudio();carried.Clear();carriedEffects.Clear();effectCache=null;ResetRgb();Index=0;Epoch++;}
+    internal void Stop(){expressiveIdle=false;clock.Reset();StopAudio();carried.Clear();carriedEffects.Clear();effectCache=null;ResetRgb();Index=0;Epoch++;}
     private void StopAudio(){foreach(var p in playing){p.Output.Stop();p.Output.Dispose();p.Reader.Dispose();}playing.Clear();}
     internal void Next()
     {
         if(Show==null)return;
-        if(Index+1>=Show.Sequences.Length){clock.Stop();StopAudio();return;}
+        if(Index+1>=Show.Sequences.Length)return;
+        expressiveIdle=false;
         Capture(Current!.Duration);StopAudio();clock.Reset();Index++;Epoch++;effectCache=null;clock.Start();
     }
     internal void Tick()
     {
         if(!Running||Current==null)return;
+        if(IsIdling)return;
         if(Position>=Current.Duration)
         {
+            if(Current.IdleMood!=IdleMood.None){expressiveIdle=true;StopAudio();return;}
             if(Current.Loop){Capture(Current.Duration);StopAudio();Epoch++;effectCache=null;clock.Restart();}
             else if(Index+1<Show!.Sequences.Length&&string.IsNullOrEmpty(Show.Sequences[Index+1].Trigger)){Next();}
             else{clock.Stop();StopAudio();return;}
@@ -246,6 +269,14 @@ internal sealed partial class PlaybackPlayer:IDisposable
     {
         var pose=new Dictionary<string,(double Value,double Stamp,string Servo)>(carried);
         if(Current!=null)foreach(var t in Current.Tracks)if(t.At(Math.Min(Position,Current.Duration)) is {} value)pose[Key(t)]=(value.Value,value.Stamp,t.Servo);
+        if(IsIdling&&Current!=null)
+            foreach(var (servo,offset) in ExpressiveIdle.Offsets(Current.IdleMood,Position-Current.Duration))
+            {
+                string key="servo:"+servo;
+                double baseline=pose.TryGetValue(key,out var value)?value.Value:0;
+                double next=ExpressiveIdle.Value(servo,baseline,offset);
+                pose[key]=(next,Position,servo.ToString());
+            }
         return pose;
     }
     public void Dispose(){StopAudio();clock.Stop();}

@@ -1,6 +1,6 @@
 {
   "name": "johnny5-animation-editor-streamdeck",
-  "version": "2.16.1",
+  "version": "2.17.0",
   "private": true,
   "type": "module",
   "scripts": {

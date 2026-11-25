@@ -9,7 +9,7 @@ selects the whole group, so its commands move and delete together. Right-click
 a grouped triangle and choose **Ungroup Commands** to restore independent
 movement and normal colors. Grouping and ungrouping support Undo/Redo and survive
 saving and reopening the sequence. Pasted and repeated groups are independent
-of their source group. Each triangle represents all commands at its timestamp.
+of their source group. In split view, each triangle represents commands in its timeline lane at that time.
 
 **Hide Group** temporarily hides a group's command markers, spline points/segments
 and audio handles. All commands still play, including servo, spline, RGB and audio.
@@ -27,4 +27,18 @@ Right-click a selection and choose **Show all modified controls**. **Delete from
 
 ## Named groups and independent timelines
 
-Open **Edit > Named groups / timelines** to name groups, review command spans and affected controls, duplicate at the cursor, offset timing, hide command visuals, or show/hide each group’s own timeline strip. Dragging a group strip moves only that group. Names and strip visibility are saved with sequences and support undo/redo. Hiding is display-only and does not mute playback. **View** provides floating Control, Xbox, Steam Controller and Stream Deck control windows; closing a floating window docks it again.
+Open **Edit > Named groups / timelines** to name groups, review command spans and affected controls, duplicate at the cursor, offset timing, hide command visuals, or show/hide each group’s own timeline strip. Hold **Ctrl** while clicking markers, group labels, or group strips to select multiple groups and individual commands across lanes. Release **Ctrl** and drag a selected marker or group strip to move the selection together in one undoable step. Names and strip visibility are saved with sequences and support undo/redo. Hiding is display-only and does not mute playback. **View** provides floating Control, Xbox, Steam Controller and Stream Deck control windows; closing a floating window docks it again.
+
+## Ripple and group editing
+
+Turn on **Ripple** beside the Sequence play controls. Drag a command
+triangle to shift it and the commands to its right by the same amount.
+Sequence audio and video clips that start later move with their commands.
+
+Right-click a group and choose **Edit commands within group**. Drag a
+triangle or a tick on the group's own timeline to move that command list.
+Double-click it to edit the commands in the list. The commands keep their
+group membership. In this mode **Ripple** shifts later lists in the group.
+Dragging the group's final list with **Ripple** on shifts later commands
+across the whole sequence. Click **Done editing** on the transport bar to
+return to moving the group as a unit.

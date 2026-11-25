@@ -5,6 +5,7 @@ namespace Johnny5VR;
 internal sealed record TransportPanelState(string Title,double Time,bool Recording,bool HasTake,bool Following,string Status)
 {
     internal bool Rehearsal {get;init;}
+    internal string PlayLabel {get;init;}="Play / Pause";
     internal bool Pending {get;init;}
     internal bool Replaying {get;init;}
     internal int Countdown {get;init;}
@@ -41,7 +42,7 @@ internal sealed class VrTransportPanel:IDisposable
         s.Recording||s.Replaying?[(1,"■  Stop")]:
         s.HasTake?[(5,"▶  Replay"),(6,"Keep"),(7,"Discard")]:
         s.Rehearsal?[(0,"Play / Pause"),(1,"■  Stop"),(2,"●  Record"),(8,"●  Overdub")]:
-        [(0,"▶ / Ⅱ  Play / Pause"),(1,"■  Stop"),(2,"●  Record body")];
+        [(0,s.PlayLabel),(1,"■  Stop"),(9,"Next"),(2,"●  Record body")];
     internal static int Hit(Vector2 uv,TransportPanelState state)
     {
         int hit=Hit(uv);
@@ -87,7 +88,7 @@ internal sealed class VrTransportPanel:IDisposable
             if(canUse&&pressed&&hovered>=0&&hovered is not (3 or 4))Action?.Invoke(hovered);
             if(canUse&&!capture&&pressed&&hovered==4){Enabled=false;Action?.Invoke(3);Suspend();return true;}
             if(handle==0){Check(overlay.CreateOverlay("local.johnny5vr.transport."+Environment.ProcessId,"J5 compact transport",ref handle));Check(overlay.SetOverlayInputMethod(handle,VROverlayInputMethod.None));Check(overlay.SetOverlayWidthInMeters(handle,.72f));Check(overlay.SetOverlaySortOrder(handle,7));}
-            string key=$"{state.Title}|{state.Time:0.0}|{state.Recording}|{state.HasTake}|{state.Following}|{hovered}|{state.Status}|{state.Pending}|{state.Replaying}|{state.Countdown}|{state.Elapsed:0.0}|{state.Rehearsal}";
+            string key=$"{state.Title}|{state.Time:0.0}|{state.Recording}|{state.HasTake}|{state.Following}|{hovered}|{state.Status}|{state.Pending}|{state.Replaying}|{state.Countdown}|{state.Elapsed:0.0}|{state.Rehearsal}|{state.PlayLabel}";
             if(key!=previous&&Environment.TickCount64>=nextPaint)
             {
                 using var bitmap=Draw(state,hovered);var bits=bitmap.LockBits(new(0,0,1200,330),System.Drawing.Imaging.ImageLockMode.ReadOnly,System.Drawing.Imaging.PixelFormat.Format32bppArgb);var pixels=new byte[1200*330*4];

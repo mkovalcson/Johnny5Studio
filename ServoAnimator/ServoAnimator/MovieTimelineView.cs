@@ -103,6 +103,7 @@ namespace ServoAnimator
         public event Action<int> InsertRequested;
         public event Action<int> RemoveRequested;
         public event Action<int> LoopToggleRequested;
+        public event Action<int, IdleMood> IdleRequested;
         public event Action<int> AssignTriggerRequested;
         public event Action<int> DescriptionEditRequested;
         public event Action ViewChanged;
@@ -323,7 +324,7 @@ namespace ServoAnimator
                 var triggerText = new FormattedText(trigger, CultureInfo.CurrentCulture, FlowDirection.LeftToRight,
                     new Typeface("Segoe UI"), 10, primaryText, VisualTreeHelper.GetDpi(this).PixelsPerDip);
                 double triggerWidth = trigger.Length == 0 ? 0 : triggerText.Width + 12;
-                double loopReserve = Math.Max(triggerWidth, _items[i].IsLooping ? 22 : 0);
+                double loopReserve = Math.Max(triggerWidth, (_items[i].IsLooping || _items[i].IdleMood != IdleMood.None) ? 22 : 0);
                 if (triggerWidth > 0)
                 {
                     var keyRect = new Rect(rect.Right - 12 - triggerWidth, rect.Y + 3, triggerWidth, 18);
@@ -340,11 +341,11 @@ namespace ServoAnimator
                 title.SetForegroundBrush(secondaryText, durationStart, label.Length - durationStart);
                 title.SetFontSize(10, durationStart, label.Length - durationStart);
                 dc.DrawText(title, new Point(rect.X + 7, rect.Y + 5));
-                if (_items[i].IsLooping && rect.Width > 26)
+                if ((_items[i].IsLooping || _items[i].IdleMood != IdleMood.None) && rect.Width > 26)
                 {
                     dc.DrawRoundedRectangle(new SolidColorBrush(ThemeManager.GetColor("MoviePanelBackground", movieBg)), null,
                         new Rect(rect.Right - 35, rect.Y + 3 + (triggerWidth > 0 ? 21 : 0), 23, 18), 7, 7);
-                    DrawText(dc, "∞", new Point(rect.Right - 32, rect.Y + 1 + (triggerWidth > 0 ? 21 : 0)),
+                    DrawText(dc, _items[i].IdleMood != IdleMood.None ? "⌛" : "∞", new Point(rect.Right - 32, rect.Y + 1 + (triggerWidth > 0 ? 21 : 0)),
                              new SolidColorBrush(movieAccent), 16, 18);
                 }
                 double descriptionTop = rect.Y + 24;
@@ -603,6 +604,15 @@ namespace ServoAnimator
                 };
                 loop.Click += (_, _) => LoopToggleRequested?.Invoke(idx);
                 menu.Items.Add(loop);
+                var idle = new MenuItem { Header = "Expressive idle after sequence" };
+                foreach (var mood in Enum.GetValues<IdleMood>())
+                {
+                    var choice = new MenuItem { Header = mood == IdleMood.None ? "Off" : mood.ToString(),
+                        IsCheckable = true, IsChecked = _items[idx].IdleMood == mood };
+                    choice.Click += (_, _) => IdleRequested?.Invoke(idx, mood);
+                    idle.Items.Add(choice);
+                }
+                menu.Items.Add(idle);
 
                 var remove = new MenuItem
                 {

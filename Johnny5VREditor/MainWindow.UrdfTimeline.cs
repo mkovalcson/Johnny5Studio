@@ -15,7 +15,7 @@ public partial class MainWindow
         ApplyBeamTimeline();
         ApplyLcdTimeline();
         ApplyLaserTimeline();
-        var active = _rows.Where(r => ServoCommand.IsUrdfOnly(r.Servo) && !BodyControlCatalog.IsBody(r.Servo) && !UrdfStageSettings.IsMotion(r.Servo) && !UrdfCameraCommands.IsStageCamera(r.Servo) && r.Servo != ServoNames.LoadBackdrop && r.Servo != ServoNames.FallApart && r.Servo is not (ServoNames.TvFront or ServoNames.TvShow or ServoNames.TvReturn or ServoNames.UrdfBeam or ServoNames.LcdShow or ServoNames.HideLaser or ServoNames.ToolboxSwap or ServoNames.FireLaser) && r.Servo != ServoNames.TrackForward && r.Offset.HasValue && r.Offset.Value >= _activeBackdropTime).ToArray();
+        var active = _rows.Where(r => ServoCommand.IsUrdfOnly(r.Servo) && !BodyControlCatalog.IsBody(r.Servo) && !UrdfStageSettings.IsMotion(r.Servo) && !UrdfCameraCommands.IsStageCamera(r.Servo) && r.Servo != ServoNames.CameraShot && r.Servo != ServoNames.LoadBackdrop && r.Servo != ServoNames.FallApart && r.Servo is not (ServoNames.TvFront or ServoNames.TvShow or ServoNames.TvReturn or ServoNames.UrdfBeam or ServoNames.LcdShow or ServoNames.HideLaser or ServoNames.ToolboxSwap or ServoNames.FireLaser) && r.Servo != ServoNames.TrackForward && r.Offset.HasValue && r.Offset.Value >= _activeBackdropTime).ToArray();
         ForEachHeadView(view =>
         {
             var frame = view.CaptureCurrentFraming();

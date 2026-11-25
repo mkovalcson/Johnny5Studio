@@ -31,12 +31,17 @@ internal sealed partial class ViewerWindow
             if(editor==null||editor.Process.HasExited)
             {
                 editor?.Dispose();lastEditorFrame=null;editorResources=null;editorReady=false;
-                string executable=new[]{Path.Combine(ViewerSettings.Home,"Editor","AnimationEditorPlayer.exe"),Path.Combine(ViewerSettings.Home,"packaging","editor-"+ReleaseVersion,"AnimationEditorPlayer.exe")}.FirstOrDefault(File.Exists)
-                    ??throw new FileNotFoundException("This release needs its bundled Editor folder. Extract the complete ZIP.");
-                string editorVersion = System.Diagnostics.FileVersionInfo.GetVersionInfo(
-                    Path.ChangeExtension(executable, ".dll")).ProductVersion ?? "unknown";
-                if (editorVersion != ReleaseVersion)
-                    throw new InvalidOperationException($"VR Player {ReleaseVersion} requires the matching VR Editor. Found {editorVersion}.");
+                string configuration=typeof(ViewerWindow).Assembly.GetCustomAttributes(
+                    typeof(System.Reflection.AssemblyConfigurationAttribute),false)
+                    .Cast<System.Reflection.AssemblyConfigurationAttribute>().FirstOrDefault()?.Configuration??"Release";
+                string executable=StudioBuildIdentity.EditorPath(ViewerSettings.Home,AppContext.BaseDirectory,configuration);
+                if(!File.Exists(executable))throw new FileNotFoundException(
+                    "VR Editor is missing. Use the J5 Studio VR Editor shortcut to build it, or extract the complete VR Full ZIP.",executable);
+                var playerBuild=StudioBuildIdentity.Read(typeof(ViewerWindow).Assembly.Location);
+                var editorBuild=StudioBuildIdentity.Read(Path.ChangeExtension(executable,".dll"));
+                if(StudioBuildIdentity.Mismatch(playerBuild,editorBuild) is {} mismatch)
+                    throw new InvalidOperationException(mismatch);
+                Diagnostics.Log(new InvalidOperationException($"Opening VR Editor {editorBuild.Description} at {executable}"));
                 editor=new(executable,settings.ConfigFolder);
                 editor.Process.EnableRaisingEvents=true;
                 editor.Process.Exited+=(_,_)=>

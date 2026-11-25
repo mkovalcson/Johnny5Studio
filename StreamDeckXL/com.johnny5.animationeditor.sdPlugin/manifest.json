@@ -6,7 +6,7 @@
   "CategoryIcon": "images/category",
   "Author": "Mark Kovalcson",
   "Description": "Control Johnny 5 Library poses and sequences directly from Stream Deck XL. Includes looping, immediate replacement, Library pickers, and Stop.",
-  "Version": "2.16.1.0",
+  "Version": "2.17.0.0",
   "Icon": "images/plugin",
   "CodePath": "bin/plugin.js",
   "Nodejs": {

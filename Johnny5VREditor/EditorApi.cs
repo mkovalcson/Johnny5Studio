@@ -35,6 +35,7 @@ internal sealed class EditorApiRequest
     public string MediaPath { get; set; }
     public string Fit { get; set; }
     public double? StartSeconds { get; set; }
+    public double? DurationSeconds { get; set; }
     public double? Volume { get; set; }
     public string Direction { get; set; }
     public bool? Particles { get; set; }

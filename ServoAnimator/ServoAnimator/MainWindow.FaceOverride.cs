@@ -1,4 +1,4 @@
-﻿namespace ServoAnimator;
+namespace ServoAnimator;
 
 public partial class MainWindow
 {
@@ -19,6 +19,7 @@ public partial class MainWindow
         ShowStatus("Face Tracking Override " + (enabled ? "on — release button to resume webcam" : "off"));
     }
     private bool FaceOverrideOwns(RobotControls control) => _faceTrackingOverride
+        && (_webcamOverdub == null || (control != RobotControls.NeckTurn && !NeckMix.IsPiston(control)))
         && (_recordingWindow == null || _recordingWindow.UsesFace && _recordingWindow.UsesController && _faceOverrideControls.Contains(control));
 
     private bool FaceHasPriority => RecordingController && _recordingWindow.UsesFace

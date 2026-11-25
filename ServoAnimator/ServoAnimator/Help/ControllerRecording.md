@@ -2,9 +2,22 @@
 
 Click Record in the Sequence controls. This window configures a take at the current cursor; it does not begin recording immediately.
 
+## Overdub webcam motion on a VR body take
+
+1. In the VR Editor, keep the body take and save the sequence. Open that sequence in Desktop using the same Config folder.
+2. Start webcam tracking and apply your mappings. Turn **Drive HW** off. Set the cursor to the beginning of the face take.
+3. Choose **Record**, then **Webcam**, **Webcam + Xbox**, or **Webcam + Steam** and **Overdub selected controls**. Arm the controls you want to record and set the maximum duration. For a mixed take, use the controller's named capture mapping and record only the controls you want to change.
+4. Click **Ready to Record**. If existing neck keys or a held neck value affect that range, choose **Existing** or **Face tracking** for each available neck axis. Existing is preselected. Axes without an armed face mapping stay on the timeline. Direct piston keys or mappings link Nod and Tilt as one pair.
+5. In **Webcam Overdub**, use **Start take** or **F9**. The shoulder-square Front view, eye-level Robot POV, and Wide stage view show the same pose and playhead. Webcam-owned neck axes respond live as the existing body take plays.
+6. Stop and review the take. **Keep Take** replaces commands for the recorded controls in the actual take span. **Discard / close** drops the draft.
+
+For a mixed take, **Show Xbox Controller View** or **Show Steam Controller View** opens the selected controller's floating mapping display beside the preview. The neck source choices stay in effect for the take. Other shared face and controller controls continue to use the configured Face Tracking Override behavior.
+
+The three-pane preview shows the URDF scene. For logical Nod and Tilt, the take stores editable axis commands so an Existing axis stays independent. The combined pose still uses the robot's shared piston travel limits.
+
 ## Input and control selection
 
-Choose Xbox Controller, Steam Controller, Webcam, Webcam + Xbox or Webcam + Steam. Connect and enable the chosen controller. For webcam sources, first start the camera and apply enabled mappings in Webcam Face Tracking. Load the URDF, enable URDF Drive and leave Pose editing.
+Both editors offer Xbox Controller and Steam Controller. Desktop also offers Webcam, Webcam + Xbox and Webcam + Steam. In VR, use [Follow / Record](VrFollowing.md) to record headset and Index motion. Connect and enable the chosen controller. For webcam sources, first start the camera and apply enabled mappings in Webcam Face Tracking. Load the URDF, enable URDF Drive and leave Pose editing.
 
 Overdub selected controls limits recording to the selected parents or children. Select all and Clear selection affect the control selection. Select child controls toggles child visibility; only multi-child parents expand. Checking a child unchecks its parent, and checking a parent clears its children. Turning overdub off records all offered controls.
 

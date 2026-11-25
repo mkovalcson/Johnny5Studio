@@ -61,6 +61,9 @@ public sealed class TvShowCommand
     public TvFit Fit { get; set; } = TvFit.Contain;
     /// <summary>Video position shown at the command time.</summary>
     public double StartSeconds { get; set; }
+    /// <summary>Playback length after the cue starts. Zero uses the full video.</summary>
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
+    public double DurationSeconds { get; set; }
     public bool Loop { get; set; }
     /// <summary>Video volume, 0-100.</summary>
     public double Volume { get; set; } = 100;
@@ -70,6 +73,8 @@ public sealed class TvShowCommand
     public void Validate()
     {
         if (!double.IsFinite(StartSeconds) || StartSeconds < 0) throw new InvalidDataException("TV Show startSeconds must be zero or more.");
+        if (!double.IsFinite(DurationSeconds) || DurationSeconds < 0) throw new InvalidDataException("TV Show durationSeconds must be zero or more.");
+        if (!double.IsFinite(StartSeconds + DurationSeconds)) throw new InvalidDataException("TV Show start plus duration is too large.");
         if (!double.IsFinite(Volume) || Volume < 0 || Volume > 100) throw new InvalidDataException("TV Show volume must be between 0 and 100.");
         if (!IsBlank)
         {
@@ -156,6 +161,18 @@ internal static class TvTimeline
     }
 
     /// <summary>Video position to show, given its duration (null while unknown): wraps when looping, otherwise holds the end.</summary>
+    internal static (double Position, bool Ended) VideoPosition(TvShowCommand show, double seconds, double? sourceDuration)
+    {
+        bool capped = show.DurationSeconds > 0 && seconds - show.StartSeconds >= show.DurationSeconds - 1e-9;
+        if (capped)
+        {
+            seconds = show.StartSeconds + show.DurationSeconds;
+            if (show.Loop) seconds = Math.BitDecrement(seconds);
+        }
+        bool ended = capped || (!show.Loop && sourceDuration is > 0 && seconds >= sourceDuration.Value);
+        return (MediaPosition(seconds, sourceDuration, show.Loop), ended);
+    }
+
     internal static double MediaPosition(double seconds, double? duration, bool loop)
     {
         seconds = Math.Max(0, seconds);

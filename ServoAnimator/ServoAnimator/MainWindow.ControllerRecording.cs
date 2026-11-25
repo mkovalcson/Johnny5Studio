@@ -17,17 +17,25 @@ public partial class MainWindow
     private double RecordingTime => Math.Min(_recordingLimit, Math.Max(_controllerTake?.End ?? _recordingCursor,
         Math.Max(_cursorTime, IsRunning ? _playbackClock.EstimatedTime : _cursorTime)));
     private bool RecordingOwns(ServoNames servo, RobotControls? child = null) => RecordingController && _controllerTake?.Owns(servo, child) == true;
-    private bool ControllerDialogBlocks(Window window) => window.IsVisible && window != _head && !(window == _recordingWindow && (RecordingController || _recordingWindow.CanStart || _recordingReplayOutput));
-    private bool ControllerWindowActive => IsActive || _head?.IsActive == true || _recordingWindow?.IsActive == true;
+    private bool IsFloatingControllerView(Window window) => _floatingControllers.Values.Any(entry => entry.Window == window);
+    private bool ControllerDialogBlocks(Window window) => window.IsVisible && window != _head && window != _webcamOverdubView &&
+        !IsFloatingControllerView(window) && !(window == _recordingWindow && (RecordingController || _recordingWindow.CanStart || _recordingReplayOutput));
+    private bool ControllerWindowActive => IsActive || _head?.IsActive == true || _recordingWindow?.IsActive == true ||
+        _webcamOverdubView?.IsActive == true || _floatingControllers.Values.Any(entry => entry.Window.IsActive);
     private void UpdateRecordingButton() => SequenceRecordButton.Background = new System.Windows.Media.SolidColorBrush(
         (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString(RecordingController ? "#E02030" : "#701B24"));
 
     private void RecordController_Click(object sender, RoutedEventArgs e)
     {
         if (_meetingActive) StopMeeting();
-        if (_recordingWindow != null) { _recordingWindow.ShowConfiguration(); return; }
+        if (_recordingWindow != null)
+        {
+            if (_webcamOverdubView?.IsVisible == true) _webcamOverdubView.Activate();
+            else _recordingWindow.ShowConfiguration();
+            return;
+        }
         if (_speedCalibrationBusy || _controllerConfigOpen || !ApplyOpenCommandEditor()) return;
-        if (OwnedWindows.Cast<Window>().Any(w => w.IsVisible && w != _head))
+        if (OwnedWindows.Cast<Window>().Any(ControllerDialogBlocks))
         { ShowStatus("Close other configuration or library windows before recording a controller performance."); return; }
         CancelApiLibraryPicker(); StopPlayback(); ResetControllerMotion(); EndMovieBackgroundControl(); EndArrowPrompt();
         _recordingCursor = ServoCommand.TimeKey(_cursorTime);
@@ -38,7 +46,10 @@ public partial class MainWindow
             _faceOverrideControls = _recordingWindow.FaceOverrideControls;
             if (_recordingWindow.RecordAudio && string.IsNullOrEmpty(_jsonPath) && !SaveProjectAsInteractive())
             { _recordingWindow.ShowConfiguration(); return; }
-            ResetControllerMotion(); _recordingWindow.Hide(); Activate(); RefreshControllerOutputPermissions();
+            if (!PrepareWebcamOverdub()) { _recordingWindow.ShowConfiguration(); return; }
+            ResetControllerMotion(); _recordingWindow.Hide();
+            if (_webcamOverdubView != null) _webcamOverdubView.Show(); else Activate();
+            RefreshControllerOutputPermissions();
             ShowStatus("Ready to record — controller REC starts/stops; webcam takes also use F9. Esc returns to configuration.");
         };
         _recordingWindow.ReplayRequested += ReplayControllerRecording;
@@ -49,6 +60,8 @@ public partial class MainWindow
         _recordingProcessingTimer.Tick += RecordingProcessing_Tick;
         _recordingWindow.Closed += (_, _) =>
         {
+            CloseWebcamOverdubView();
+            _webcamOverdub = null;
             StopRecordingReplay();
             DiscardRecordingAudio();
             PlaybackSpeedSlider.Value = _recordingOriginalRate ?? PlaybackSpeedSlider.Value; _recordingOriginalRate = null;
@@ -69,7 +82,7 @@ public partial class MainWindow
     private void StartControllerRecording(ControllerKind source, HashSet<ServoNames> selected, double seconds)
     {
         if (_recordingWindow.UsesController && (!_controllerConnections.TryGetValue(source, out var connection) || !connection.Enabled || _controllerMappingErrors.ContainsKey(source)))
-        { _recordingWindow.Review(false); _recordingWindow.SetStatus("Connect and enable the selected controller first. Close this window to check its mappings."); _recordingWindow.ShowReview(); return; }
+        { CloseWebcamOverdubView(); _recordingWindow.Review(false); _recordingWindow.SetStatus("Connect and enable the selected controller first. Close this window to check its mappings."); _recordingWindow.ShowReview(); return; }
         try
         {
             if (_recordingWindow.UsesFace)
@@ -79,7 +92,13 @@ public partial class MainWindow
                 if (!_faceSettings.Mappings.Any(m => m.Enabled)) throw new InvalidOperationException("Enable at least one face mapping.");
                 _faceLastGood = Environment.TickCount64; _faceFiltered.Clear();
             }
-            _controllerTake = new ControllerRecording(_recordingCursor, selected, _recordingWindow.ArmedChildren);
+            _webcamNeckTargets.Clear();
+            var children = _recordingWindow.ArmedChildren.ToHashSet();
+            if (_webcamOverdub != null)
+                _webcamOverdub.RestrictRecordingControls(selected, children, _faceSettings, !_recordingWindow.UsesController);
+            _controllerTake = new ControllerRecording(_recordingCursor, selected, children, _webcamOverdub?.LogicalNeckAxes);
+            if (_controllerTake.Armed.Count == 0)
+                throw new InvalidOperationException("Arm at least one enabled webcam mapping or controller control.");
             if (_recordingWindow.UsesFace && _faceSettings.EnforceServoSpeeds)
                 _controllerTake.SpeedLimitedControls.UnionWith(_faceSettings.OwnedControls.Where(_controllerTake.OwnsControl));
             var view = (_urdfUndocked ? _head?.HeadView : EmbeddedHeadView) ?? EmbeddedHeadView;
@@ -95,6 +114,7 @@ public partial class MainWindow
                     _controllerTake.Accept(seed);
                 }
             }
+            SeedWebcamNeckTargets(view.CapturePose());
             if (_controllerTake.SpeedLimitedControls.Any(NeckMix.IsPiston))
             {
                 var pose = view.CapturePose(); var pistons = NeckMix.Pistons(_servoConfig, pose.NeckNod, pose.NeckTilt);
@@ -106,6 +126,7 @@ public partial class MainWindow
             _recordingLimit = _recordingCursor + seconds;
             _enabledController = _recordingWindow.UsesController ? source : null; _recordingWindow.Begin();
             if (_recordingWindow.IsVisible) { _recordingWindow.Hide(); Activate(); }
+            _webcamOverdubView?.SetRecording(true);
             UpdateRecordingButton();
             SetPlaybackControlSource(_recordingWindow.UsesController ? source : null);
             if (_controllerTake.SpeedLimitedControls.Count > 0)
@@ -135,7 +156,7 @@ public partial class MainWindow
         catch (Exception ex)
         {
             if (RecordingController) StopControllerRecording("Recording could not start: " + ex.Message);
-            else { DiscardRecordingAudio(); _recordingWindow.Review(false); _recordingWindow.SetStatus("Recording could not start: " + ex.Message); _recordingWindow.ShowReview(); }
+            else { CloseWebcamOverdubView(); DiscardRecordingAudio(); _recordingWindow.Review(false); _recordingWindow.SetStatus("Recording could not start: " + ex.Message); _recordingWindow.ShowReview(); }
         }
     }
 
@@ -165,6 +186,7 @@ public partial class MainWindow
         Waveform.CursorTime = _cursorTime; Waveform.InvalidateCursor(); UpdateTimeText();
         bool hasTake = _controllerTake.Frames.Count > 1 && _controllerTake.End > _controllerTake.Start;
         _recordingWindow.Review(hasTake);
+        CloseWebcamOverdubView();
         UpdateRecordingButton();
         StopPlayback(); ResetControllerMotion(); ForEachHeadView(v => v.CalibratedMotionPaused = true);
         RefreshControllerOutputPermissions();
@@ -194,7 +216,7 @@ public partial class MainWindow
             if (version != _recordingProcessingVersion || window != _recordingWindow) return;
             _processedTake = processed; window.SetProcessing(false);
             int raw = take.Frames.Sum(f => f.Commands.Length);
-            int replaced = _doc.Commands.Count(c => take.Armed.Contains(c.Servo) && ServoCommand.TimeKey(c.OffsetSeconds) >= take.Start && ServoCommand.TimeKey(c.OffsetSeconds) <= take.End);
+            int replaced = _doc.Commands.Count(c => take.OwnsTimelineCommand(c) && ServoCommand.TimeKey(c.OffsetSeconds) >= take.Start && ServoCommand.TimeKey(c.OffsetSeconds) <= take.End);
             window.SetStatus($"Take: {take.Start:F3}–{take.End:F3} s\n{raw:N0} sampled values → {processed.Count:N0} editable commands. Keep replaces {replaced:N0} existing commands in armed controls. One Undo restores the previous timeline.");
         }
         catch (Exception ex) { if (window == _recordingWindow) window.SetStatus("Could not process the take: " + ex.Message); }

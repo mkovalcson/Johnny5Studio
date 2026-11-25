@@ -156,6 +156,10 @@
                                 </ControlTemplate>
                             </Button.Template>
                         </Button>
+                        <CheckBox x:Name="RippleTimeline" Content="Ripple" VerticalAlignment="Center" Margin="0,0,10,0"
+                                  ToolTip="Move later commands with the dragged command. Inside a group edit, the last command ripples beyond the group."/>
+                        <Button x:Name="FinishGroupEditButton" Visibility="Collapsed" Click="FinishGroupEdit_Click"
+                                Style="{StaticResource StudioTransportButton}" Margin="0,0,9,0"/>
                         <Button x:Name="MeetingButton" Content="Meeting" Click="Meeting_Click" Style="{StaticResource StudioMeetingButton}" Margin="0,0,9,0"/>
                         <Border Background="{DynamicResource InputBackground}" CornerRadius="5" Padding="9,2">
                             <StackPanel Orientation="Horizontal">

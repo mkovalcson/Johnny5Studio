@@ -1,4 +1,4 @@
-﻿# URDF Scene Setup
+# URDF Scene Setup
 
 Open **Config > URDF Scene Setup**. The five tabs separate **Robot**, **Background**, **Robot Position**, **Camera**, and **Animation**. The saved-scene selector and the name of the scene being edited stay at the top. Apply, Save Scene, Save Scene As… and Close stay at the bottom.
 
@@ -51,6 +51,8 @@ is excluded when the view resumes.
 Under Movement and floor alignment, Keep robot framed (Robot Centric) keeps the robot framed while scenery moves around it. Move robot through room (Room Centric) uses perspective: moving toward the camera makes the robot larger, and the camera follows near the edges. Floor alignment can be detected from the scenery or set manually.
 
 ## Camera
+
+To switch framing during a sequence, add [Camera Shot commands](CameraShots.md) on the **URDF/Scene** timeline.
 
 - Horizontal and vertical framing use viewport percentages. Positive horizontal moves right; positive vertical moves down, including below the window.
 - Camera Zoom starts at 10%; 100% is the original camera distance. Opening the window does not alter the current zoom.

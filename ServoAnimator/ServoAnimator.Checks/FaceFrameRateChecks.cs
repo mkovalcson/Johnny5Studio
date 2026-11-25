@@ -50,7 +50,7 @@ internal static partial class Program
         var grid = (DataGrid)Get("_grid");
         Check(((CheckBox)Get("_advancedMappings")).IsChecked == true && grid.Columns.All(c => c.Visibility == System.Windows.Visibility.Visible), "Advanced mappings are checked and visible when the window opens");
         ((CheckBox)Get("_advancedMappings")).IsChecked = false;
-        Check(grid.Columns.Count(c => c.Visibility == System.Windows.Visibility.Visible) == 6, "Everyday mappings show only enable, movement, robot control, Speed, Reverse and remove");
+        Check(grid.Columns.Count(c => c.Visibility == System.Windows.Visibility.Visible) == 7, "Everyday mappings show enable, movement, robot control, live meters, Speed, Reverse and remove");
         ((CheckBox)Get("_advancedMappings")).IsChecked = true;
         Check(grid.Columns.All(c => c.Visibility == System.Windows.Visibility.Visible), "Advanced mapping settings reveal all existing calibration controls");
         ((CheckBox)Get("_advancedMappings")).IsChecked = false;

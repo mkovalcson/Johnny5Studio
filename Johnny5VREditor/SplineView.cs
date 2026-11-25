@@ -604,7 +604,7 @@ namespace ServoAnimator
         protected override void OnMouseRightButtonDown(MouseButtonEventArgs e)
         {
             base.OnMouseRightButtonDown(e);
-            if (ThreeLanes) SyncTarget?.ActivateLane(e.GetPosition(this));
+            if (ThreeLanes) SyncTarget?.ActivateLane(e.GetPosition(this), preserveSelection: CombinedMode);
 
             // Right press ON a control point: start a TIME drag (horizontal).
             var pc = HitPoint(e.GetPosition(this), out int idx);

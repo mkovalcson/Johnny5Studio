@@ -25,7 +25,9 @@ Expected result: green feedback identifies active inputs. With MUX enabled shoul
 
 Expected result: editable commands, reduced to useful keyframes, without changing unselected controls.
 
-## Combine webcam and controller input
+## Combine webcam and controller input (Desktop)
+
+In the VR Editor, use [Follow / Record](VrFollowing.md) for headset and Index body capture.
 
 1. Open Webcam Face Tracking, start the camera, Set neutral, and enable the intended signal mappings.
 2. Save/apply mappings. For LPiston/RPiston, avoid conflicting parent neck mappings.

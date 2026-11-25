@@ -70,23 +70,31 @@ internal sealed class CommandSettingsWindow : Window
     internal Func<double> AddNumber(string label, double value, double min, double max, string help)
     {
         var box = new TextBox { Text = value.ToString(CultureInfo.CurrentCulture), Width = 120, HorizontalAlignment = HorizontalAlignment.Left };
-        Row(label, help + $" ({min.ToString(CultureInfo.CurrentCulture)} to {max.ToString(CultureInfo.CurrentCulture)})").Children.Add(box);
+        string range = double.IsPositiveInfinity(max)
+            ? $" ({min.ToString(CultureInfo.CurrentCulture)} or more)"
+            : $" ({min.ToString(CultureInfo.CurrentCulture)} to {max.ToString(CultureInfo.CurrentCulture)})";
+        Row(label, help + range).Children.Add(box);
         return () =>
         {
             if (!double.TryParse(box.Text, NumberStyles.Float, CultureInfo.CurrentCulture, out double v) &&
                 !double.TryParse(box.Text, NumberStyles.Float, CultureInfo.InvariantCulture, out v))
                 throw new InvalidOperationException(label + " must be a number.");
-            if (!double.IsFinite(v) || v < min || v > max) throw new InvalidOperationException($"{label} must be between {min} and {max}.");
+            if (!double.IsFinite(v) || v < min || v > max)
+                throw new InvalidOperationException(double.IsPositiveInfinity(max) ? $"{label} must be a finite number at least {min}." : $"{label} must be between {min} and {max}.");
             return v;
         };
     }
 
-    internal Func<int> AddChoice(string label, IReadOnlyList<string> options, int selected, string help)
+    internal Func<int> AddChoice(string label, IReadOnlyList<string> options, int selected, string help) =>
+        AddChoice(label, options, selected, help, out _);
+
+    internal Func<int> AddChoice(string label, IReadOnlyList<string> options, int selected, string help, out Action<int> select)
     {
         var combo = new ComboBox { Width = 260, HorizontalAlignment = HorizontalAlignment.Left };
         foreach (var option in options) combo.Items.Add(option);
         combo.SelectedIndex = Math.Clamp(selected, 0, options.Count - 1);
         Row(label, help).Children.Add(combo);
+        select = index => combo.SelectedIndex = index;
         return () => combo.SelectedIndex;
     }
 
@@ -105,16 +113,22 @@ internal sealed class CommandSettingsWindow : Window
     }
 
     /// <summary>Path input with a Browse… button.</summary>
-    internal Func<string> AddFile(string label, string value, string filter, string help)
+    internal Func<string> AddFile(string label, string value, string filter, string help,
+        string configRoot = null, Action onPicked = null)
     {
         var row = Row(label, help);
         var browse = new Button { Content = "Browse…", Padding = new Thickness(10, 2, 10, 2), Margin = new Thickness(6, 0, 0, 0) };
         DockPanel.SetDock(browse, Dock.Right); row.Children.Add(browse);
-        var box = new TextBox { Text = ConfigPathService.Display(value), ToolTip = "Path relative to Config" }; row.Children.Add(box);
+        string root = configRoot ?? ConfigPathService.CurrentRoot;
+        var box = new TextBox { Text = ConfigPathService.Reference(root, value), ToolTip = "Path relative to Config" }; row.Children.Add(box);
         browse.Click += (_, _) =>
         {
             var dialog = new Microsoft.Win32.OpenFileDialog { Title = label, Filter = filter };
-            if (dialog.ShowDialog(this) == true) box.Text = ConfigPathService.Display(dialog.FileName);
+            if (dialog.ShowDialog(this) == true)
+            {
+                box.Text = ConfigPathService.Reference(root, dialog.FileName);
+                onPicked?.Invoke();
+            }
         };
         return () => box.Text.Trim();
     }

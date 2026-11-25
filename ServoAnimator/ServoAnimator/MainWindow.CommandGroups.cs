@@ -49,7 +49,12 @@ namespace ServoAnimator
         private void InitializeCommandGroups()
         {
             InitializeWorkspacePanels();
+            Waveform.SelectedGroupNameAtMarker = SelectedGroupNameAtMarker;
+            Waveform.MarkerSelectionRequested += SelectCommandMarkers;
+            Waveform.IsGroupedMarker = (time, lane) => VisibleCommands.Any(c => !string.IsNullOrEmpty(c.GroupId) &&
+                ServoCommand.TimeKey(c.OffsetSeconds) == time && (lane < 0 || TimelineLanes.For(c.Servo) == lane));
             Waveform.SelectedMarkersMoved += MoveSelectedCommandMarkers;
+            Waveform.DragMarkersFrom = BuildDragPreview;
             Waveform.MarkerSelectionChanged += () =>
             {
                 if (!_showModifiedControls) return;
@@ -72,7 +77,7 @@ namespace ServoAnimator
         {
             while (source != null)
             {
-                if (source is NamedGroupTrack || ReferenceEquals(source, MainMenuPanel)) return true;
+                if (source is NamedGroupTrack || ReferenceEquals(source, NamedGroupTimelineRows) || ReferenceEquals(source, MainMenuPanel)) return true;
                 if (ReferenceEquals(source, Waveform)) return true;
                 // Inspecting this temporary list must not end the selection it describes.
                 if (_showModifiedControls && ReferenceEquals(source, CommandsAtPointList)) return true;
@@ -94,25 +99,57 @@ namespace ServoAnimator
             Waveform.LaneGroupColors = VisibleCommands.Where(c => !string.IsNullOrEmpty(c.GroupId))
                 .GroupBy(c => (ServoCommand.TimeKey(c.OffsetSeconds), TimelineLanes.For(c.Servo)))
                 .ToDictionary(g => g.Key, g => CommandGroupColor(_doc.CommandGroupNumbers[g.First().GroupId]));
-            Waveform.LaneCommandGroups = Enumerable.Range(0, 3).ToDictionary(lane => lane, lane =>
-                VisibleCommands.Where(c => TimelineLanes.For(c.Servo) == lane && !string.IsNullOrEmpty(c.GroupId)).GroupBy(c => c.GroupId)
-                    .Select(g => g.Select(c => ServoCommand.TimeKey(c.OffsetSeconds)).Distinct().ToArray()).ToArray());
             RefreshHiddenGroupButtons();
-            Waveform.CommandGroups = VisibleCommands.Where(c => !string.IsNullOrEmpty(c.GroupId)).GroupBy(c => c.GroupId)
-                .Select(g => g.Select(c => ServoCommand.TimeKey(c.OffsetSeconds)).Distinct().ToArray()).ToArray();
-            var keys = ReferenceEquals(_markerSelectionDocument, _doc)
-                ? Waveform.SelectedMarkers.Intersect(Waveform.Markers).ToArray() : Array.Empty<double>();
+            if (!ReferenceEquals(_markerSelectionDocument, _doc))
+            {
+                _selectedTimelineCommands.Clear();
+                _editingCommandGroup = null;
+            }
+            if (!string.IsNullOrEmpty(_editingCommandGroup) && !VisibleCommands.Any(c => c.GroupId == _editingCommandGroup))
+                _editingCommandGroup = null;
+            UpdateGroupEditIndicator();
             _markerSelectionDocument = _doc;
-            Waveform.SetMarkerSelection(keys);
+            _selectedTimelineCommands.IntersectWith(VisibleCommands);
+            RefreshSelectedCommandMarkers();
         }
 
-        private List<ServoCommand> SelectedGroupCommands()
+        private readonly HashSet<ServoCommand> _selectedTimelineCommands = new();
+
+        private void RefreshSelectedCommandMarkers()
         {
-            var keys = Waveform.SelectedMarkers.ToHashSet();
-            var selected = VisibleCommands.Where(c => keys.Contains(ServoCommand.TimeKey(c.OffsetSeconds)) && Waveform.IncludesServo(c.Servo) && (_focusedCommandGroup == null || c.GroupId == _focusedCommandGroup)).ToList();
-            var groups = selected.Where(c => !string.IsNullOrEmpty(c.GroupId)).Select(c => c.GroupId).ToHashSet();
-            return VisibleCommands.Where(c => selected.Contains(c) || groups.Contains(c.GroupId)).ToList();
+            Waveform.ShowMarkerSelection(_selectedTimelineCommands.Select(c =>
+                (ServoCommand.TimeKey(c.OffsetSeconds), TimelineLanes.For(c.Servo))));
+            foreach (var strip in _namedGroupTracks) strip.InvalidateVisual();
         }
+
+        private void SelectCommandMarkers(IEnumerable<double> times, int lane, bool toggle, bool replace)
+        {
+            var keys = times.Select(ServoCommand.TimeKey).ToHashSet();
+            if (replace) _selectedTimelineCommands.Clear();
+            if (keys.Count == 0)
+            {
+                RefreshSelectedCommandMarkers();
+                return;
+            }
+            var hits = VisibleCommands.Where(c => keys.Contains(ServoCommand.TimeKey(c.OffsetSeconds)) &&
+                (lane < 0 || TimelineLanes.For(c.Servo) == lane)).ToHashSet();
+            if (_editingCommandGroup != null)
+            {
+                var groupTimes = hits.Where(c => c.GroupId == _editingCommandGroup)
+                    .Select(c => ServoCommand.TimeKey(c.OffsetSeconds)).ToHashSet();
+                hits.RemoveWhere(c => c.GroupId != _editingCommandGroup && groupTimes.Contains(ServoCommand.TimeKey(c.OffsetSeconds)));
+                hits.UnionWith(VisibleCommands.Where(c => c.GroupId == _editingCommandGroup &&
+                    groupTimes.Contains(ServoCommand.TimeKey(c.OffsetSeconds))));
+            }
+            var ids = hits.Select(c => c.GroupId)
+                .Where(id => !string.IsNullOrEmpty(id) && id != _editingCommandGroup).ToHashSet();
+            var selection = VisibleCommands.Where(c => hits.Contains(c) || ids.Contains(c.GroupId)).ToArray();
+            if (toggle && selection.All(_selectedTimelineCommands.Contains)) _selectedTimelineCommands.ExceptWith(selection);
+            else _selectedTimelineCommands.UnionWith(selection);
+            RefreshSelectedCommandMarkers();
+        }
+
+        private List<ServoCommand> SelectedGroupCommands() => VisibleCommands.Where(_selectedTimelineCommands.Contains).ToList();
 
         private void ShowSelectedCommandMenu()
         {
@@ -123,17 +160,18 @@ namespace ServoAnimator
                 item.Click += (_, _) => action();
                 menu.Items.Add(item);
             }
+            var groupNames = GroupDisplayNames(SelectedGroupCommands());
+            bool grouped = groupNames.Length > 0;
+            if (grouped) AddGroupMenuHeader(menu, groupNames);
+            if (_editingCommandGroup != null) Item("Finish group edit", () => SetGroupEdit(null));
+            else
+            {
+                var groupIds = SelectedGroupCommands().Select(c => c.GroupId).Where(id => !string.IsNullOrEmpty(id)).Distinct().ToArray();
+                if (groupIds.Length == 1) Item("Edit commands within group", () => SetGroupEdit(groupIds[0]));
+            }
             Item("Group manager…", ShowGroupManager);
             Item("Uniform offset…", UniformSelectedCommands);
             Item("Proportional Offset…", ProportionalSelectedCommands);
-            bool grouped = SelectedGroupCommands().Any(c => !string.IsNullOrEmpty(c.GroupId));
-            if (grouped)
-            {
-                EnsureCommandGroupNumbers();
-                menu.Items.Add(new MenuItem { Header = string.Join(", ", SelectedGroupCommands()
-                    .Where(c => !string.IsNullOrEmpty(c.GroupId)).Select(c => _doc.CommandGroupNumbers[c.GroupId])
-                    .Distinct().OrderBy(n => n).Select(n => GroupDisplayName(_doc.CommandGroupNumbers.First(p => p.Value == n).Key))), IsEnabled = false });
-            }
             Item(grouped ? "Ungroup Commands" : "Group Commands", () => SetPersistentCommandGroup(!grouped));
             if (grouped) Item("Hide Group", () =>
             {
@@ -159,7 +197,7 @@ namespace ServoAnimator
                 if (!PrepareGroupEdit()) return;
                 var selected = SelectedGroupCommands();
                 ApplySelectedGroupEdit($"Delete {selected.Count} selected commands", () =>
-                    _doc.Commands.RemoveAll(selected.Contains), Array.Empty<double>());
+                    _doc.Commands.RemoveAll(selected.Contains));
             });
             if (_clipboard.Count > 0)
             {
@@ -175,9 +213,8 @@ namespace ServoAnimator
             if (sender is not Button { DataContext: ModifiedCommandControl control } || !PrepareGroupEdit()) return;
             var selected = SelectedGroupCommands().Where(c => c.Servo == control.Servo && c.Control == control.Control).ToHashSet();
             if (selected.Count == 0) return;
-            var times = Waveform.SelectedMarkers.ToArray();
             ApplySelectedGroupEdit($"Delete {selected.Count} {control.NameText} commands from selection",
-                () => _doc.Commands.RemoveAll(selected.Contains), times);
+                () => _doc.Commands.RemoveAll(selected.Contains), keepSelection: true);
         }
 
         private void UpdateModifiedControlsList()
@@ -237,40 +274,47 @@ namespace ServoAnimator
             {
                 foreach (var c in _doc.Commands.Where(c => selected.Contains(c) || ids.Contains(c.GroupId))) c.GroupId = id;
                 if (group) { _doc.CommandGroupNames[id] = "New group"; _doc.CommandGroupTimelines.Add(id); }
-            }, Array.Empty<double>());
+            });
         }
 
         private void DeleteSelectedCommandGroup()
         {
             if (!PrepareGroupEdit()) return;
             var selected = SelectedGroupCommands();
-            ApplySelectedGroupEdit($"Delete {selected.Count} selected commands", () => _doc.Commands.RemoveAll(selected.Contains), Array.Empty<double>());
+            ApplySelectedGroupEdit($"Delete {selected.Count} selected commands", () => _doc.Commands.RemoveAll(selected.Contains));
         }
 
-        private void ApplySelectedGroupEdit(string description, Action edit, IEnumerable<double> resultingSelection)
+        private void ApplySelectedGroupEdit(string description, Action edit, bool keepSelection = false)
         {
-            var previous = Waveform.SelectedMarkers.ToArray();
-            var result = resultingSelection.ToArray();
+            var previous = _selectedTimelineCommands.Select(SelectionKey).ToHashSet();
             PushUndo(description);
             edit();
             bool accepted = RefreshAfterEdit();
-            Waveform.SetMarkerSelection((accepted ? result : previous).Intersect(Waveform.Markers));
+            if (!accepted)
+                _selectedTimelineCommands.UnionWith(VisibleCommands.Where(c => previous.Contains(SelectionKey(c))));
+            else if (!keepSelection)
+                _selectedTimelineCommands.Clear();
+            RefreshSelectedCommandMarkers();
             if (accepted) ShowStatus(description);
         }
 
-        private void MoveSelectedCommandMarkers(double offset)
+        private static (ServoNames, RobotControls?, double, string) SelectionKey(ServoCommand c) =>
+            (c.Servo, c.Control, ServoCommand.TimeKey(c.OffsetSeconds), c.GroupId);
+
+        private void MoveSelectedCommandMarkers(double offset, double? anchor)
         {
             if (!PrepareGroupEdit()) return;
-            var selected = SelectedGroupCommands();
-            double minimum = selected.Min(c => c.OffsetSeconds);
-            offset = Math.Max(-minimum, offset);
-            var times = selected.Select(c => ServoCommand.TimeKey(c.OffsetSeconds + offset)).Distinct().ToArray();
+            var selected = TimelineDragTargets(anchor);
+            if (selected.Count == 0) return;
+            offset = ServoCommand.TimeKey(Math.Max(-selected.Min(c => c.OffsetSeconds), offset));
+            if (offset == 0) return;
+
             ApplySelectedGroupEdit($"Move {selected.Count} selected commands by {offset:0.###} s", () =>
             {
                 _doc.Commands.RemoveAll(selected.Contains);
                 foreach (var command in selected) command.OffsetSeconds = ServoCommand.TimeKey(command.OffsetSeconds + offset);
                 _doc.Commands.AddRange(selected); // Conflicts list existing values before the newly moved values.
-            }, times);
+            }, keepSelection: true);
         }
 
         private void UniformSelectedCommands()
@@ -291,7 +335,7 @@ namespace ServoAnimator
                 _doc.Commands.RemoveAll(selected.Contains);
                 foreach (var command in selected) command.OffsetSeconds = map[ServoCommand.TimeKey(command.OffsetSeconds)];
                 _doc.Commands.AddRange(selected);
-            }, map.Values);
+            }, keepSelection: true);
         }
 
         private void ProportionalSelectedCommands()
@@ -319,7 +363,7 @@ namespace ServoAnimator
                 _doc.Commands.RemoveAll(selected.Contains);
                 foreach (var command in selected) command.OffsetSeconds = map[ServoCommand.TimeKey(command.OffsetSeconds)];
                 _doc.Commands.AddRange(selected);
-            }, map.Values);
+            }, keepSelection: true);
         }
 
         private void RepeatSelectedCommands()
@@ -330,7 +374,7 @@ namespace ServoAnimator
             try
             {
                 var copies = CommandGroupOperations.Repeat(SelectedGroupCommands(), dialog.Repetitions, dialog.Offset);
-                ApplySelectedGroupEdit($"Repeat selected commands {dialog.Repetitions} times", () => _doc.Commands.AddRange(copies), Waveform.SelectedMarkers);
+                ApplySelectedGroupEdit($"Repeat selected commands {dialog.Repetitions} times", () => _doc.Commands.AddRange(copies), keepSelection: true);
             }
             catch (ArgumentException error) { MessageBox.Show(this, error.Message, "Repeat commands", MessageBoxButton.OK, MessageBoxImage.Information); }
         }

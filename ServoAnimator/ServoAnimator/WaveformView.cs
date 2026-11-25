@@ -55,12 +55,13 @@ namespace ServoAnimator
         private int SelectedLane => LaneFilter >= 0 ? LaneFilter : ThreeLanes ? ActiveLane : -1;
         private IEnumerable<double> LaneMarkers => SelectedLane < 0 ? Markers :
             Markers.Where(t => MarkerLanes.TryGetValue(t, out var lanes) && lanes.Contains(SelectedLane));
-        internal void ActivateLane(Point point)
+        internal void ActivateLane(Point point, bool preserveSelection = false)
         {
             if (!ThreeLanes) return;
             int lane = Math.Clamp((int)(point.Y / Math.Max(1, ActualHeight / 3)), 0, 2);
             if (ActiveLane == lane) return;
-            SetMarkerSelection(Array.Empty<double>()); ActiveLane = lane;
+            if (!preserveSelection) SetMarkerSelection(Array.Empty<double>());
+            ActiveLane = lane;
         }
         private bool _combinedPresentation;
         public bool CombinedPresentation
@@ -203,6 +204,7 @@ namespace ServoAnimator
 
         /// <summary>Optional formatter supplied by MainWindow for rich marker hover text.</summary>
         public Func<double, string> MarkerToolTipProvider { get; set; }
+        internal Func<double, int, string> SelectedGroupNameAtMarker { get; set; }
         private readonly ToolTip _markerToolTip = new()
         {
             Placement = System.Windows.Controls.Primitives.PlacementMode.RelativePoint,
@@ -210,7 +212,7 @@ namespace ServoAnimator
             StaysOpen = true,
             MaxWidth = 640,
         };
-        private double? _hoverMarker;
+        private (double Time, int Lane)? _hoverMarker;
 
         private void HideMarkerToolTip()
         {
@@ -220,15 +222,19 @@ namespace ServoAnimator
 
         private void UpdateMarkerToolTip(Point point)
         {
-            if (!TryHitMarker(point, out double marker)) { HideMarkerToolTip(); return; }
-            if (_hoverMarker != marker)
+            if (!TryHitMarker(point, out double marker, out int lane)) { HideMarkerToolTip(); return; }
+            if (_hoverMarker != (marker, lane))
             {
-                _hoverMarker = marker;
-                _markerToolTip.Content = new TextBlock
-                {
-                    Text = MarkerToolTipProvider?.Invoke(marker) ?? $"Commands at {marker:F3} s",
-                    TextWrapping = TextWrapping.Wrap,
-                };
+                _hoverMarker = (marker, lane);
+                string summary = MarkerToolTipProvider?.Invoke(marker) ?? $"Commands at {marker:F3} s";
+                string groupName = IsMarkerSelected(marker, lane)
+                    ? SelectedGroupNameAtMarker?.Invoke(marker, lane) : null;
+                var content = new StackPanel();
+                if (!string.IsNullOrEmpty(groupName))
+                    content.Children.Add(new TextBlock { Text = groupName, FontWeight = FontWeights.SemiBold,
+                        TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 4) });
+                content.Children.Add(new TextBlock { Text = summary, TextWrapping = TextWrapping.Wrap });
+                _markerToolTip.Content = content;
             }
             _markerToolTip.HorizontalOffset = point.X + 14;
             _markerToolTip.VerticalOffset = point.Y + 12;
@@ -297,38 +303,35 @@ namespace ServoAnimator
         public event Action<double> CommandsEditRequested;
         /// <summary>The marker drag was released at the given final key.</summary>
         public event Action<double> MarkerDragCompleted;
-        public event Action<double> SelectedMarkersMoved;
+        public event Action<double, double?> SelectedMarkersMoved;
         public event Action MarkerSelectionChanged;
         public HashSet<double> HighlightedControlMarkers { get; } = new();
         private readonly HashSet<double> _selectedMarkers = new();
+        private readonly HashSet<(double Time, int Lane)> _selectedLaneMarkers = new();
         public IReadOnlyCollection<double> SelectedMarkers => _selectedMarkers;
-        public double[][] CommandGroups { get; set; } = Array.Empty<double[]>();
-        internal Dictionary<int, double[][]> LaneCommandGroups { get; set; } = new();
+        internal event Action<IEnumerable<double>, int, bool, bool> MarkerSelectionRequested;
+        internal Func<double, int, bool> IsGroupedMarker { get; set; }
         internal Dictionary<(double Time, int Lane), SKColor> LaneGroupColors { get; set; } = new();
-        private double[][] ActiveCommandGroups => SelectedLane >= 0 ? LaneCommandGroups.GetValueOrDefault(SelectedLane) ?? Array.Empty<double[]>() : CommandGroups;
         public Dictionary<double, SKColor> GroupColors { get; set; } = new();
-        private void ExpandPersistentSelection()
-        {
-            bool changed;
-            do
-            {
-                int count = _selectedMarkers.Count;
-                foreach (var group in ActiveCommandGroups) if (group.Any(_selectedMarkers.Contains)) _selectedMarkers.UnionWith(group);
-                changed = count != _selectedMarkers.Count;
-            } while (changed);
-        }
         private double? _selectionAnchor;
         private double _groupDragOffset;
 
-        public void SetMarkerSelection(IEnumerable<double> times)
+        private bool IsMarkerSelected(double time, int lane) => lane < 0
+            ? _selectedMarkers.Contains(time) : _selectedLaneMarkers.Contains((time, lane));
+
+        public void SetMarkerSelection(IEnumerable<double> times) =>
+            MarkerSelectionRequested?.Invoke(times, SelectedLane, false, true);
+
+        internal void ShowMarkerSelection(IEnumerable<(double Time, int Lane)> markers)
         {
-            var keys = times.Select(ServoCommand.TimeKey).ToArray();
+            _selectedLaneMarkers.Clear();
+            _selectedLaneMarkers.UnionWith(markers);
             _selectedMarkers.Clear();
-            _selectedMarkers.UnionWith(keys);
-            ExpandPersistentSelection();
+            _selectedMarkers.UnionWith(_selectedLaneMarkers.Select(marker => marker.Time));
             if (_selectedMarkers.Count == 0) _selectionAnchor = null;
             else if (!_selectionAnchor.HasValue || !_selectedMarkers.Contains(_selectionAnchor.Value))
                 _selectionAnchor = _selectedMarkers.Min();
+            HideMarkerToolTip();
             InvalidateVisual();
             MarkerSelectionChanged?.Invoke();
         }
@@ -340,37 +343,52 @@ namespace ServoAnimator
             {
                 double anchor = _selectionAnchor ?? (!LaneMarkers.Any() ? time : LaneMarkers.OrderBy(m => Math.Abs(m - CursorTime)).First());
                 _selectionAnchor = anchor;
-                _selectedMarkers.UnionWith(LaneMarkers.Where(m => m >= Math.Min(anchor, time) && m <= Math.Max(anchor, time)));
+                MarkerSelectionRequested?.Invoke(LaneMarkers.Where(m => m >= Math.Min(anchor, time) && m <= Math.Max(anchor, time)),
+                    SelectedLane, false, false);
+                return;
             }
-            else if (control)
-            {
-                if (_selectedMarkers.Remove(time))
-                {
-                    foreach (var group in ActiveCommandGroups.Where(g => g.Contains(time))) _selectedMarkers.ExceptWith(group);
-                    if (_selectionAnchor == time)
-                        _selectionAnchor = _selectedMarkers.Count == 0 ? null : _selectedMarkers.OrderBy(m => Math.Abs(m - time)).First();
-                }
-                else
-                {
-                    _selectedMarkers.Add(time);
-                    _selectionAnchor = time;
-                }
-            }
-            else
-            {
-                _selectedMarkers.Add(time);
-                _selectionAnchor = time;
-            }
-            ExpandPersistentSelection();
-            InvalidateVisual();
-            MarkerSelectionChanged?.Invoke();
+            _selectionAnchor = time;
+            MarkerSelectionRequested?.Invoke(new[] { time }, SelectedLane, control, !control);
         }
 
-        internal void PreviewSelectedMarkerMove(double offset)
+        internal double SelectedMarkerMoveOffset => _groupDragOffset;
+        internal double? MarkerMoveAnchor { get; private set; }
+        internal Func<double, IEnumerable<(double Time, int Lane)>> DragMarkersFrom { get; set; }
+        private HashSet<(double Time, int Lane)> _dragLaneMarkers;
+        private HashSet<double> _dragTimes;
+
+        private bool IsPreviewMarker(double time, int lane) => _dragTimes == null ? IsMarkerSelected(time, lane)
+            : lane < 0 ? _dragTimes.Contains(time) : _dragLaneMarkers.Contains((time, lane));
+        internal event Action SelectionMovePreviewChanged;
+
+        internal void CancelSelectedMarkerMove()
+        {
+            _dragLaneMarkers = null;
+            _dragTimes = null;
+            MarkerMoveAnchor = null;
+            SetSelectedMarkerMoveOffset(0);
+        }
+
+        private void SetSelectedMarkerMoveOffset(double offset)
+        {
+            if (_groupDragOffset == offset) return;
+            _groupDragOffset = offset;
+            InvalidateVisual();
+            SelectionMovePreviewChanged?.Invoke();
+        }
+
+        internal void PreviewSelectedMarkerMove(double offset, double? anchor = null)
         {
             if (_selectedMarkers.Count == 0) return;
-            _groupDragOffset = ServoCommand.TimeKey(Math.Clamp(offset, -_selectedMarkers.Min(), Math.Max(0, Duration - _selectedMarkers.Max())));
-            InvalidateVisual();
+            if (_dragTimes == null || MarkerMoveAnchor != anchor)
+            {
+                MarkerMoveAnchor = anchor;
+                _dragLaneMarkers = (anchor.HasValue && DragMarkersFrom != null
+                    ? DragMarkersFrom(anchor.Value) : _selectedLaneMarkers).ToHashSet();
+                _dragTimes = _dragLaneMarkers.Select(marker => marker.Time).ToHashSet();
+            }
+            if (_dragTimes.Count == 0) return;
+            SetSelectedMarkerMoveOffset(ServoCommand.TimeKey(Math.Clamp(offset, -_dragTimes.Min(), Math.Max(0, Duration - _dragTimes.Max()))));
         }
 
         private bool _markerPressPending;   // pressed a marker, not yet dragging
@@ -415,9 +433,9 @@ namespace ServoAnimator
             {
                 Array.Fill(lastX, float.NegativeInfinity);
                 foreach (double time in Markers.Where(t => (LaneFilter < 0 || MarkerLanes.TryGetValue(t, out var filtered) && filtered.Contains(LaneFilter)) &&
-                    (!ThreeLanes || MarkerLanes.TryGetValue(t, out var lanes) && lanes.Contains(category))).OrderBy(m => m + (_selectedMarkers.Contains(m) && (!ThreeLanes || category == ActiveLane) ? _groupDragOffset : 0)))
+                    (!ThreeLanes || MarkerLanes.TryGetValue(t, out var lanes) && lanes.Contains(category))).OrderBy(m => m + (IsPreviewMarker(m, ThreeLanes ? category : LaneFilter) ? _groupDragOffset : 0)))
                 {
-                    float x = XAtTime(time + (_selectedMarkers.Contains(time) && (!ThreeLanes || category == ActiveLane) ? _groupDragOffset : 0));
+                    float x = XAtTime(time + (IsPreviewMarker(time, ThreeLanes ? category : LaneFilter) ? _groupDragOffset : 0));
                     if (x < -12 || x > width + 12) continue;
 
                     int lane = -1;
@@ -451,9 +469,12 @@ namespace ServoAnimator
         /// <summary>Hit-test the visible triangle itself, including its
         /// staggered Y lane, so overlapping command times can be selected
         /// individually rather than only by nearest X coordinate.</summary>
-        private bool TryHitMarker(Point point, out double markerTime)
+        private bool TryHitMarker(Point point, out double markerTime) => TryHitMarker(point, out markerTime, out _);
+
+        private bool TryHitMarker(Point point, out double markerTime, out int lane)
         {
             markerTime = 0;
+            lane = -1;
             MarkerVisual best = null;
             double bestScore = double.MaxValue;
             foreach (var mv in BuildMarkerVisuals((float)ActualWidth))
@@ -471,6 +492,7 @@ namespace ServoAnimator
             }
             if (best == null) return false;
             markerTime = best.Time;
+            lane = ThreeLanes ? best.Category : LaneFilter;
             return true;
         }
 
@@ -1023,7 +1045,7 @@ namespace ServoAnimator
                 bool grouped = ThreeLanes ? LaneGroupColors.TryGetValue((mv.Time, mv.Category), out groupColor) : GroupColors.TryGetValue(mv.Time, out groupColor);
                 if (grouped) groupedFill.Color = groupColor;
                 var fill = grouped ? groupedFill : highlighted ? purpleFill : collision ? collisionPaint : normalPaint;
-                var outline = highlighted ? purpleOutline : (_selectedMarkers.Contains(mv.Time) && (!ThreeLanes || ActiveLane < 0 || ActiveLane == mv.Category)) ? selectedOutline : collision ? collisionOutline : normalOutline;
+                var outline = highlighted ? purpleOutline : IsMarkerSelected(mv.Time, ThreeLanes ? mv.Category : LaneFilter) ? selectedOutline : collision ? collisionOutline : normalOutline;
                 var stem = collision ? collisionStem : normalStem;
 
                 using var path = new SKPath();
@@ -1062,7 +1084,7 @@ namespace ServoAnimator
             // Aborted drags only discard their visual preview; document commands
             // are not changed until a normal left-button release.
             _markerPressPending = _draggingMarker = false;
-            _groupDragOffset = 0;
+            CancelSelectedMarkerMove();
             Cursor = Cursors.Arrow;
             InvalidateVisual();
         }
@@ -1073,7 +1095,8 @@ namespace ServoAnimator
             Focus();
 
             var pos = e.GetPosition(this);
-            ActivateLane(pos);
+            int previousLane = SelectedLane;
+            ActivateLane(pos, preserveSelection: true);
 
             // Library-selection arrows (while a mode is active) take priority
             // over everything else at the top of the view.
@@ -1151,8 +1174,9 @@ namespace ServoAnimator
             // individually selectable.
             if ((ThreeLanes || pos.Y <= MarkerLane + 4) && TryHitMarker(pos, out double hitKey))
             {
-                if (_selectedMarkers.Count == 0) SelectMarker(hitKey, false, false);
-                if (!_selectedMarkers.Contains(hitKey))
+                if (!IsMarkerSelected(hitKey, SelectedLane))
+                    SelectMarker(hitKey, false, false);
+                if (!IsMarkerSelected(hitKey, SelectedLane))
                 {
                     TimeClicked?.Invoke(hitKey);
                     e.Handled = true;
@@ -1167,6 +1191,7 @@ namespace ServoAnimator
                 return;   // TimeClicked deferred until release-without-drag
             }
 
+            if (previousLane != SelectedLane) SetMarkerSelection(Array.Empty<double>());
             // Elsewhere in the waveform, snap to the nearest command marker
             // if the click is within a few pixels in X.
             double snapSeconds = MarkerSnapPixels / PixelsPerSecond;
@@ -1184,7 +1209,8 @@ namespace ServoAnimator
         protected override void OnMouseRightButtonUp(MouseButtonEventArgs e)
         {
             base.OnMouseRightButtonUp(e);
-            ActivateLane(e.GetPosition(this));
+            HideMarkerToolTip();
+            ActivateLane(e.GetPosition(this), preserveSelection: true);
 
             // During a library insert, right-click always confirms the blue
             // insertion arrow, even when the pointer happens to be over an
@@ -1205,7 +1231,7 @@ namespace ServoAnimator
                 return;
             }
 
-            if (TryHitMarker(e.GetPosition(this), out double groupedHit) && ActiveCommandGroups.Any(g => g.Contains(groupedHit)))
+            if (TryHitMarker(e.GetPosition(this), out double groupedHit, out int lane) && IsGroupedMarker?.Invoke(groupedHit, lane) == true)
             {
                 SetMarkerSelection(new[] { groupedHit });
                 RightClicked?.Invoke(groupedHit); e.Handled = true; return;
@@ -1294,7 +1320,7 @@ namespace ServoAnimator
                 if (_selectedMarkers.Count > 0)
                 {
                     double offset = (e.GetPosition(this).X - _markerPressX) / PixelsPerSecond;
-                    PreviewSelectedMarkerMove(offset);
+                    PreviewSelectedMarkerMove(offset, _markerKey);
                     return;
                 }
                 double newKey = Math.Round(Math.Clamp(
@@ -1346,8 +1372,9 @@ namespace ServoAnimator
             // Rich hover information follows the actual staggered triangle
             // hit target, so closely spaced markers expose the intended group.
             var hover = e.GetPosition(this);
+            double laneTop = ThreeLanes ? Math.Clamp((int)(hover.Y / Math.Max(1, ActualHeight / 3)), 0, 2) * ActualHeight / 3 : 0;
             if (!_panning && e.LeftButton == MouseButtonState.Released &&
-                e.RightButton == MouseButtonState.Released && hover.Y <= MarkerLane + 5)
+                e.RightButton == MouseButtonState.Released && hover.Y - laneTop <= MarkerLane + 5)
                 UpdateMarkerToolTip(hover);
             else HideMarkerToolTip();
 
@@ -1396,8 +1423,8 @@ namespace ServoAnimator
                 if (wasDrag && _selectedMarkers.Count > 0)
                 {
                     double offset = _groupDragOffset;
-                    _groupDragOffset = 0;
-                    if (offset != 0) SelectedMarkersMoved?.Invoke(offset);
+                    CancelSelectedMarkerMove();
+                    if (offset != 0) SelectedMarkersMoved?.Invoke(offset, _markerKey);
                     InvalidateVisual();
                 }
                 else if (wasDrag)

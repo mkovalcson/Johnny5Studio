@@ -57,7 +57,11 @@ internal sealed partial class UrdfScene
         if (!double.IsFinite(degrees)||!double.IsFinite(left)||!double.IsFinite(right) || _casterLastAngle == degrees&&_casterLastLeft==left&&_casterLastRight==right&&_casterLastRoll==_tipToeWheelRoll) return;
         _casterLastAngle = degrees;
         _casterLastLeft=left;_casterLastRight=right;_casterLastRoll=_tipToeWheelRoll;
-        left+=_tipToeWheelRoll;right+=_tipToeWheelRoll;
+        var tipToe = CasterWheelTravel.DuringTipToe(degrees, _tipToeWheelRoll, CasterTrail);
+        degrees = tipToe.Angle;
+        double radiusScale = CasterWheelVisualRadius / (_tipToe?.CasterWheelRadius ?? CasterWheelVisualRadius);
+        left += tipToe.Left * radiusScale;
+        right += tipToe.Right * radiusScale;
         foreach (var visual in _casterVisuals)
         {
             var matrix = visual.OriginalToWorld;

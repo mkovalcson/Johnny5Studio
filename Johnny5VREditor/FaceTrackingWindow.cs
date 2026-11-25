@@ -31,7 +31,7 @@ internal sealed partial class FaceTrackingWindow : Window
     private readonly TextBlock _captureDiagnostics = new() { TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 6),
         ToolTip = "Resolution comes from received frames. Driver FPS is reported by the camera, not measured throughput. Camera wait includes acquiring/decoding a frame. Face processing includes color conversion, MediaPipe and signal calculations, excluding camera wait, preview preparation and rate pacing. Timings average completed frames over about one second." };
     private readonly TextBox _values = new() { IsReadOnly = true, TextWrapping = TextWrapping.Wrap, Height = 110, VerticalScrollBarVisibility = ScrollBarVisibility.Auto };
-    private readonly CheckBox _preview = new() { Content = "Drive URDF preview (no physical output from this window)" };
+    private readonly CheckBox _preview = new() { Content = "Drive URDF preview using applied settings (no physical output)" };
     private readonly CheckBox _mirrorVideo = new() { Content = "Mirror webcam", Margin = new Thickness(6), VerticalAlignment = VerticalAlignment.Center,
         ToolTip = "Flip the webcam image horizontally before face tracking and preview. Changing this restarts a running camera. Save configuration to retain it. Mirroring in both the webcam software and editor cancels out." };
     private readonly CheckBox _servoSpeeds = new() { Content = "Enforce Servo Speed limits in preview and recording", Margin = new Thickness(0, 8, 0, 8),
@@ -46,6 +46,8 @@ internal sealed partial class FaceTrackingWindow : Window
     }
     public bool PreviewEnabled => _preview.IsChecked == true;
     public Action<FaceTrackingSettings> ApplyRequested;
+    public Action PreviewChanged;
+    internal Func<FaceMapping,double?> AppliedOutput;
     public Action<FaceTrackingSettings> SaveRequested;
     public FaceTrackingWindow(FaceTrackingClient client, FaceTrackingSettings current, FaceTrackingSettings savedSettings = null)
     {
@@ -130,7 +132,9 @@ internal sealed partial class FaceTrackingWindow : Window
         _servoSpeeds.Unchecked += (_, _) => _draft.EnforceServoSpeeds = false;
         help.Children.Add(_servoSpeeds);
         _servoSpeeds.ToolTip += " Nod and tilt must use matching Speed profiles. N/C keeps the current profile.";
-        _preview.Checked += (_, _) => { try { Apply(); } catch (Exception ex) { _preview.IsChecked = false; _status.Text = _message = ex.Message; } };
+        _preview.Checked += (_, _) => PreviewChanged?.Invoke();
+        _preview.Unchecked += (_, _) => PreviewChanged?.Invoke();
+        _preview.ToolTip = "Uses the last applied mappings. Draft mapping edits take effect when you click Apply.";
         help.Children.Add(_status);
         help.Children.Add(new TextBlock { Text = "To record: Apply, close this window, then choose Webcam in Record. The camera keeps running. Applied settings also remain active for Meetings until you exit the editor.", Margin = new Thickness(0, 10, 0, 0), TextWrapping = TextWrapping.Wrap });
         var details = new StackPanel(); details.Children.Add(_captureDiagnostics); details.Children.Add(_captureTestButton); details.Children.Add(_captureTestReadout); details.Children.Add(_values);
@@ -144,7 +148,13 @@ internal sealed partial class FaceTrackingWindow : Window
         HelpSystem.SetTopic(pistonSettings, "piston-signals"); upper.Children.Add(pistonSettings);
         var mappingHeading = new WrapPanel { Margin = new Thickness(0, 8, 0, 8) };
         mappingHeading.Children.Add(new TextBlock { Text = "Face movement → Robot control", FontSize = 16, FontWeight = FontWeights.SemiBold });
-        mappingHeading.Children.Add(_advancedMappings); upper.Children.Add(mappingHeading);
+        mappingHeading.Children.Add(_advancedMappings);
+        var learn = new Button { Content = "Learn range for selected mapping…", Margin = new Thickness(12,0,0,0), Padding = new Thickness(8,3,8,3) };
+        learn.Click += (_, _) => LearnSelectedRange();
+        mappingHeading.Children.Add(learn);
+        upper.Children.Add(mappingHeading);
+        upper.Children.Add(new TextBlock { Text = "Live meters show input relative to neutral and the draft target. The cyan marker shows the applied target after smoothing. Servo speed limits can make the model follow more slowly.",
+            TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0,0,0,6), FontSize = 11 });
         void FooterButton(string text, Action action)
         {
             var button = new Button { Content = text, Padding = new Thickness(14, 6, 14, 6), Margin = new Thickness(0, 0, 8, 0) };
@@ -182,7 +192,7 @@ internal sealed partial class FaceTrackingWindow : Window
         _grid.Columns.Add(new DataGridComboBoxColumn { Header = "Robot control", ItemsSource = targets, SelectedValueBinding = new Binding("Target") { Mode = BindingMode.TwoWay, UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged }, SelectedValuePath = "Value", DisplayMemberPath = "Label", Width = 250, ElementStyle = mappingPicklistStyle, EditingElementStyle = mappingPicklistStyle });
         _grid.Columns.Add(new DataGridComboBoxColumn { Header = "Speed", ItemsSource = Enum.GetValues<ServoSpeed>().Select(s => new Choice<ServoSpeed>(s, s == ServoSpeed.NoChange ? "N/C · Keep current" : s.ToString())).ToArray(), SelectedValueBinding = new Binding("Speed") { Mode = BindingMode.TwoWay, UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged }, SelectedValuePath = "Value", DisplayMemberPath = "Label", Width = 125, ElementStyle = mappingPicklistStyle, EditingElementStyle = mappingPicklistStyle });
         foreach (var (name, label, width) in new[] { ("InputMin", "Input minimum", 72), ("InputMax", "Input maximum", 72), ("OutputMin", "Output minimum", 72), ("OutputMax", "Output maximum", 72), ("DeadZone", "Dead zone", 65), ("SmoothingMs", "Smoothing (ms)", 80) })
-            _grid.Columns.Add(new DataGridTextColumn { Header = label, Binding = new Binding(name), Width = width });
+            _grid.Columns.Add(new DataGridTextColumn { Header = label, Binding = new Binding(name) { StringFormat = "0.####" }, Width = width });
         var neutralText = new FrameworkElementFactory(typeof(TextBlock)); neutralText.SetBinding(TextBlock.TextProperty, new Binding("Neutral") { StringFormat = "0.#####" }); neutralText.SetValue(FrameworkElement.MarginProperty, new Thickness(3));
         var neutralEdit = new FrameworkElementFactory(typeof(TextBox)); neutralEdit.SetBinding(TextBox.TextProperty, new Binding("Neutral") { Mode = BindingMode.TwoWay, UpdateSourceTrigger = UpdateSourceTrigger.LostFocus });
         _grid.Columns.Add(new DataGridTemplateColumn { Header = "Neutral", Width = 85, CellTemplate = new DataTemplate { VisualTree = neutralText }, CellEditingTemplate = new DataTemplate { VisualTree = neutralEdit } });
@@ -196,6 +206,7 @@ internal sealed partial class FaceTrackingWindow : Window
         _advancedMappings.Checked += (_, _) => ShowAdvancedMappings();
         _advancedMappings.Unchecked += (_, _) => ShowAdvancedMappings();
         _advancedMappings.IsChecked = true;
+        AddLiveMappingColumn();
         _grid.Columns.Add(new DataGridCheckBoxColumn { Header = "Reverse", Binding = new Binding("Reverse"), Width = 62 });
         var remove = new FrameworkElementFactory(typeof(Button)); remove.SetValue(ContentControl.ContentProperty, "X"); remove.SetValue(FrameworkElement.ToolTipProperty, "Remove this signal mapping"); remove.SetValue(Control.PaddingProperty, new Thickness(4, 0, 4, 0));
         remove.AddHandler(System.Windows.Controls.Primitives.ButtonBase.ClickEvent, new RoutedEventHandler((sender, _) => { if (((FrameworkElement)sender).DataContext is FaceMapping mapping) RemoveMapping(mapping); }));
@@ -260,6 +271,7 @@ internal sealed partial class FaceTrackingWindow : Window
             : _appliedSignature != _savedSignature ? "Applied · not saved" : "Saved configuration";
         _warnings.Text = string.Join("\n", _draft.PistonWarnings());
         var packet = _client.Latest;
+        RefreshMappingMeters(packet);
         _processingRate.Text = _client.ProcessingFps is double fps
             ? $"Processing: {fps:0.0} fps average · target {_client.RequestedFrameRate} fps"
             : _client.HasRecentResults ? "Processing: measuring average…" : "Processing: — fps · no recent results";

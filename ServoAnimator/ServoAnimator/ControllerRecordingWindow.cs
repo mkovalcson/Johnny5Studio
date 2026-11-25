@@ -24,6 +24,9 @@ internal sealed partial class ControllerRecordingWindow : Window
     internal bool Armed { get; private set; }
     private HashSet<ServoNames> _armedControls;
     private double _armedDuration;
+    internal double ArmedDuration => _armedDuration;
+    internal IReadOnlySet<ServoNames> ArmedControls => _armedControls;
+    internal bool IsWebcamOverdub => UsesFace && _overdub.IsChecked == true;
     internal bool CanStart => !Recording && !_hasTake;
     internal void StartFromController(ControllerKind source)
     {

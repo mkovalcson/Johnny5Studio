@@ -4,7 +4,7 @@ Click Record in the Sequence controls. This window configures a take at the curr
 
 ## Input and control selection
 
-Choose Xbox Controller, Steam Controller, Webcam, Webcam + Xbox or Webcam + Steam. Connect and enable the chosen controller. For webcam sources, first start the camera and apply enabled mappings in Webcam Face Tracking. Load the URDF, enable URDF Drive and leave Pose editing.
+Both editors offer Xbox Controller and Steam Controller. Desktop also offers Webcam, Webcam + Xbox and Webcam + Steam. In VR, use [Follow / Record](VrFollowing.md) to record headset and Index motion. Connect and enable the chosen controller. For webcam sources, first start the camera and apply enabled mappings in Webcam Face Tracking. Load the URDF, enable URDF Drive and leave Pose editing.
 
 Overdub selected controls limits recording to the selected parents or children. Select all and Clear selection affect the control selection. Select child controls toggles child visibility; only multi-child parents expand. Checking a child unchecks its parent, and checking a parent clears its children. Turning overdub off records all offered controls.
 

@@ -1,0 +1,22 @@
+<Project>
+  <PropertyGroup>
+    <_StudioRoot>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..'))</_StudioRoot>
+  </PropertyGroup>
+  <Target Name="PrepareStudioBuildIdentity" BeforeTargets="GetAssemblyVersion"
+          Condition="'$(DesignTimeBuild)' != 'true' and ('$(MSBuildProjectName)' == 'ServoAnimator' or '$(MSBuildProjectName)' == 'Johnny5VR')">
+    <PropertyGroup>
+      <_StudioIdentityProps>$([System.IO.Path]::GetFullPath('$(MSBuildProjectDirectory)/$(IntermediateOutputPath)StudioBuildIdentity.props'))</_StudioIdentityProps>
+    </PropertyGroup>
+    <Exec Command="powershell.exe -NoProfile -ExecutionPolicy Bypass -File &quot;$(_StudioRoot)/tools/Write-StudioBuildIdentity.ps1&quot; -StudioRoot &quot;$(_StudioRoot)&quot; -OutputPath &quot;$(_StudioIdentityProps)&quot;" />
+    <XmlPeek XmlInputPath="$(_StudioIdentityProps)" Query="/Project/PropertyGroup/StudioBuildId/text()">
+      <Output TaskParameter="Result" PropertyName="StudioBuildId" />
+    </XmlPeek>
+    <XmlPeek XmlInputPath="$(_StudioIdentityProps)" Query="/Project/PropertyGroup/StudioSceneProtocol/text()">
+      <Output TaskParameter="Result" PropertyName="StudioSceneProtocol" />
+    </XmlPeek>
+    <ItemGroup>
+      <AssemblyMetadata Include="StudioBuildId" Value="$(StudioBuildId)" />
+      <AssemblyMetadata Include="StudioSceneProtocol" Value="$(StudioSceneProtocol)" />
+    </ItemGroup>
+  </Target>
+</Project>

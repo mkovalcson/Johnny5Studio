@@ -94,6 +94,6 @@ The Start a sequence panel offers New Sequence…, Open Sequence… and Insert A
 
 Insert Audio… (and File → Open Audio… and Insert audio on the timeline) accepts a file from anywhere. A file outside the Configuration folder is copied into `Library/Audio` (your original stays where it is) and the sequence uses that copy; a file already inside Configuration is used where it is. If `Library/Audio` already has a different file with the same name, the copy is named `name-2`, `name-3` and so on; an identical file already there is reused.
 
-Record opens Record from Controller / Webcam for movement capture, optional mono microphone WAV recording, overdubbing and take review. Meeting, immediately to its right, opens microphone-driven live URDF puppeteering without recording. See their dedicated help topics for setup and source ownership.
+Record opens Record from Controller / Webcam for movement capture, optional mono microphone WAV recording, overdubbing and take review. In Desktop, Meeting sits to the right of Record and opens microphone-driven live URDF puppeteering without recording. See their dedicated help topics for setup and source ownership.
 
 Playback Speed ranges from 10% to 200%, default 100%. Its value is displayed as a bright percentage. Recorded audio takes temporarily use 100% until the recording window closes. Playback Volume changes listening volume, not recorded microphone gain. Status messages appear in the right half of the Movie controls area.

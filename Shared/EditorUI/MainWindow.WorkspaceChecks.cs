@@ -34,6 +34,56 @@ public partial class MainWindow
             Check(window._namedGroupTracks.Count == 2, "Each requested group has an independent timeline strip.");
             window.SelectNamedGroup("left");
             Check(window.SelectedGroupCommands().Count == 2 && window.SelectedGroupCommands().All(c=>c.GroupId=="left"), "Selecting a group excludes other commands at the same timestamps.");
+            Check(window.SelectedGroupNameAtMarker(1, -1) == "Arm take",
+                "Hover text uses the focused group when another group shares the marker time.");
+            Check(window._namedGroupTracks[0].SelectedGroupName() == "Arm take" && window._namedGroupTracks[1].SelectedGroupName() == null,
+                "Only the selected group strip uses a group-name hover label.");
+            var groupMenu = new ContextMenu();
+            AddGroupMenuHeader(groupMenu, "Arm take");
+            Check(groupMenu.Items[0] is MenuItem { IsEnabled: false, Header: Border { Child: TextBlock { Text: "Group Name: Arm take" } } },
+                "The first context-menu row identifies the group and is read-only.");
+            var loose = new ServoCommand { Servo = ServoNames.B_WristRollRight, OffsetSeconds = 2 };
+            var untouched = new ServoCommand { Servo = ServoNames.B_ElbowRight, OffsetSeconds = 3 };
+            window._doc.Commands.AddRange(new[] { loose, untouched });
+            window.RefreshMarkers();
+            window.SelectNamedGroup("right", toggle: true);
+            window.SelectCommandMarkers(new[] { 2d }, TimelineLanes.For(loose.Servo), toggle: true, replace: false);
+            Check(window.SelectedGroupCommands().Count == 4, "Adding another group and a loose marker preserves a mixed selection across lanes.");
+            window.Waveform.Duration = 10;
+            window.Waveform.PreviewSelectedMarkerMove(.5);
+            window._namedGroupTracks[0].MoveGroup(window.Waveform.SelectedMarkerMoveOffset, null);
+            window.Waveform.CancelSelectedMarkerMove();
+            Check(window.SelectedGroupCommands().Select(c => c.OffsetSeconds).Order().SequenceEqual(new[] { 1.5, 1.5, 2.5, 3.5 })
+                && loose.GroupId == "" && untouched.OffsetSeconds == 3, "Dragging a selected group strip moves all selected commands together and leaves an overlapping unselected marker in place.");
+            window.UndoSteps(1);
+            Check(window._doc.Commands.Where(c => c.GroupId == "left").Select(c => c.OffsetSeconds).SequenceEqual(new[] { 1d, 3d })
+                && window._doc.Commands.Single(c => c.Servo == loose.Servo).OffsetSeconds == 2, "A mixed drag undoes as one move.");
+            window._doc.Commands.RemoveAll(c => c.Servo == loose.Servo || c.Servo == untouched.Servo);
+            window.RefreshMarkers();
+            var later = new ServoCommand { Servo = ServoNames.B_ElbowRight, OffsetSeconds = 5 };
+            window._doc.Commands.Add(later);
+            window.RefreshMarkers();
+            window.RippleTimeline.IsChecked = true;
+            window.SetGroupEdit("left");
+            window.SelectGroupCommandList("left", 1, toggle: false);
+            Check(window.SelectedGroupCommands().Count == 1 && window.GroupEditScopeAt(1, null) == "left",
+                "Group edit selects a single command list and scopes the editor even when another group shares the timestamp.");
+            Check(window.TimelineDragTargets(1).Count == 2 && !window.TimelineDragTargets(1).Contains(later),
+                "Rippling an interior group list moves only later lists in that group.");
+            window.SelectGroupCommandList("left", 3, toggle: false);
+            window.MoveSelectedCommandMarkers(.5, 3);
+            Check(window._doc.Commands.Single(c => c.GroupId == "left" && c.OffsetSeconds > 1).OffsetSeconds == 3.5
+                && later.OffsetSeconds == 5.5, "Rippling the final list moves downstream commands and retains group membership.");
+            window.UndoSteps(1);
+            window.SetGroupEdit(null);
+            window.SelectCommandMarkers(new[] { 5d }, -1, toggle: false, replace: true);
+            window.MoveSelectedCommandMarkers(.5, 5);
+            Check(window._doc.Commands.Single(c => c.Servo == later.Servo).OffsetSeconds == 5.5
+                && window._doc.Commands.Where(c => c.GroupId == "left").All(c => c.OffsetSeconds <= 3), "Ordinary ripple starts at the grabbed marker.");
+            window.UndoSteps(1);
+            window.RippleTimeline.IsChecked = false;
+            window._doc.Commands.RemoveAll(c => c.Servo == later.Servo);
+            window.RefreshMarkers();
             var metadata = window.CaptureGroupMetadata();
             window._doc.CommandGroupNames["left"] = "Changed"; window._doc.CommandGroupTimelines.Clear();
             window.RestoreGroupMetadata(metadata);

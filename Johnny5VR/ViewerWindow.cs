@@ -87,6 +87,8 @@ internal sealed partial class ViewerWindow:Form
         status.Dock=DockStyle.Top;status.Height=38;status.Padding=Padding.Empty;controllerReadout.Dock=DockStyle.Fill;
         statusHost.Controls.Add(controllerReadout);statusHost.Controls.Add(status);statusHost.Controls.Add(statusTitle);
         Controls.Add(workspace);Controls.Add(statusHost);
+        var identity=Johnny5.VrBridge.StudioBuildIdentity.Read(typeof(ViewerWindow).Assembly.Location);
+        Text+=" · build "+identity.BuildId[..Math.Min(12,identity.BuildId.Length)];
         AddLabel("JOHNNY 5 VR",17,true);AddLabel("Standalone scene viewer",10);
         AddLabel("Shared Config folder",10,true);sidebar.Controls.Add(config);config.Text=settings.ConfigFolder;
         var browse=Button("Choose Config folder…",()=>
@@ -96,6 +98,9 @@ internal sealed partial class ViewerWindow:Form
         });sidebar.Controls.Add(browse);browseConfig=browse;
         sidebar.Controls.Add(Button("Open J5 Studio VR Editor",()=>_=OpenEditor()));
         sidebar.Controls.Add(Button("Standalone playback",UseStandalone));
+        sidebar.Controls.Add(Button("Build information",()=>MessageBox.Show(this,
+            identity.Description+Environment.NewLine+typeof(ViewerWindow).Assembly.Location,
+            "J5 Studio VR Player build")));
         sidebar.Controls.Add(Button("Laser Range setup…",OpenArcadeSettings));
         sidebar.Controls.Add(Button("Laser Range · VR game",()=>{BuildArcadeMenu();vr?.Menu?.Navigation.Open();}));
         AddLabel("Robot",10,true);sidebar.Controls.Add(robot);AddLabel("3D backdrop",10,true);sidebar.Controls.Add(backdrop);
@@ -287,7 +292,7 @@ internal sealed partial class ViewerWindow:Form
     private void PlaybackAction(Action action)
     {
         if(arcade!=null){status.Text="Exit Laser Range before playing a movie or sequence.";return;}
-        try{if(loadingShow||preparingScene)return;action();playbackStatus.Text=player.Status;if(vr?.Menu?.LivePlaybackStatus==true)BuildPlaybackMenu();}
+        try{if(loadingShow||preparingScene)return;action();playbackStatus.Text=player.Status;if(playButton!=null)playButton.Text=player.TransportLabel;if(vr?.Menu?.LivePlaybackStatus==true)BuildPlaybackMenu();}
         catch(Exception ex){player.Stop();Fail(ex);}
     }
     private void BuildVrHome()
@@ -471,12 +476,19 @@ internal sealed partial class ViewerWindow:Form
             if(Environment.TickCount64-lastPlaybackStatus>=250)
             {
                 lastPlaybackStatus=Environment.TickCount64;
+                if(playButton!=null)playButton.Text=player.TransportLabel;
                 playbackStatus.Text=arcade?.Status??(loadingShow?"Loading playback…":player.Status+(playbackWarnings!=""?" · compatibility notices":""));
             }
             }
             if(smoke&&smokeFrames>=70)ApplySecondarySmoke();
             if(effectsSmoke)ApplyEffectsSmoke();
             var eye=target+new Vector3(MathF.Sin(yaw)*MathF.Cos(pitch),MathF.Sin(pitch),MathF.Cos(yaw)*MathF.Cos(pitch))*orbitDistance;
+            if(!editorMode)
+            {
+                renderer.CaptureCamera=settings.CleanOutputEnabled&&arcade==null&&scene?.Rig is {} shotRig&&
+                    player.Current is {CameraCues.Length:>0} current
+                    ?shotRig.CaptureShot(current.CameraCues,player.Position,eye,target):null;
+            }
             bool tracked=renderer.Render(vr,Matrix4x4.CreateLookAt(eye,target,Vector3.UnitY),eye);
             if(settings.CleanOutputEnabled&&cleanOutputWindow!=null&&!renderer.CleanOutputActive)
                 DisableCleanOutput(true,"Clean Output unavailable — application preview restored. "+renderer.CleanOutputFailure);
@@ -497,7 +509,7 @@ internal sealed partial class ViewerWindow:Form
             }
             frames++;
             double elapsed=clock.Elapsed.TotalSeconds-lastStats;
-            if(elapsed>=1){performance.Text=$"{(vr==null?"Preview":"VR submission")}: {frames/elapsed:F1} fps"+(vr!=null?$"\n{vr.Width} × {vr.Height} per eye\n{vr.InputStatus}":"")+(!tracked?"\nWaiting for headset tracking":"")+(BridgeTiming.Summary!=""?"\n"+BridgeTiming.Summary:"");if(vr!=null){controllerReadout.Text=vr.InputDetails+"\n"+vr.TimingStatus;vr.Menu?.PlaybackStatus(player.Status,player.Running);}frames=0;lastStats=clock.Elapsed.TotalSeconds;}
+            if(elapsed>=1){performance.Text=$"{(vr==null?"Preview":"VR submission")}: {frames/elapsed:F1} fps"+(vr!=null?$"\n{vr.Width} × {vr.Height} per eye\n{vr.InputStatus}":"")+(!tracked?"\nWaiting for headset tracking":"")+(BridgeTiming.Summary!=""?"\n"+BridgeTiming.Summary:"");if(vr!=null){controllerReadout.Text=vr.InputDetails+"\n"+vr.TimingStatus;vr.Menu?.PlaybackStatus(player.Status,player.Running,player.TransportLabel);}frames=0;lastStats=clock.Elapsed.TotalSeconds;}
             if(smoke&&scene!=null&&smokeReady)
             {
                 smokeFrames++;

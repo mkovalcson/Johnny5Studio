@@ -23,7 +23,12 @@ internal static partial class Program
     {
         try
         {
-            if(args.Contains("--paired-body"))
+            if(args.Contains("--face-mapping-ui"))
+            {
+                FaceMappingUiChecks();
+                Console.WriteLine($"PASS: {_checks} focused face mapping UI and learned-range assertions.");
+            }
+            else if(args.Contains("--paired-body"))
             {
                 var app=new App();app.InitializeComponent();DisableTestStartup(app);
                 PairedBodyEditorChecks.Run(Check,Path.GetFullPath("Config/Models/Robots/Johnny5FullBody/johnny5_head.urdf"));
@@ -279,6 +284,11 @@ internal static partial class Program
             {
                 PersistentCommandGroupChecks();
                 Console.WriteLine($"PASS: {_checks} persistent command group assertions.");
+            }
+            else if (args.Contains("--webcam-overdub"))
+            {
+                WebcamOverdubChecks();
+                Console.WriteLine($"PASS: {_checks} webcam overdub take and camera assertions.");
             }
             else if (args.Contains("--controller-recording"))
             {
@@ -699,6 +709,16 @@ internal static partial class Program
     private static void CommandGroupEditing()
     {
         var wave = new WaveformView { Duration = 30, Markers = new[] { 1.0, 3, 5, 9, 14 }, CursorTime = 1 };
+        // A standalone view supplies gestures. The editor normally owns
+        // command identity and projects the resolved selection back to it.
+        var selection = new HashSet<double>();
+        wave.MarkerSelectionRequested += (times, lane, toggle, replace) =>
+        {
+            if (replace) selection.Clear();
+            foreach (double time in times)
+                if (!toggle || !selection.Remove(time)) selection.Add(time);
+            wave.ShowMarkerSelection(selection.Select(time => (time, lane)));
+        };
         wave.SelectMarker(3, true, false); wave.SelectMarker(9, true, false);
         Check(wave.SelectedMarkers.OrderBy(t => t).SequenceEqual(new[] { 3.0, 9 }), "Ctrl selection didn't add separate triangles");
         wave.SelectMarker(3, true, false);
@@ -717,7 +737,7 @@ internal static partial class Program
         wave.PreviewSelectedMarkerMove(100);
         Check(Delta() == 21, "Group drag distorted timing at the right boundary");
         wave.PreviewSelectedMarkerMove(1.25);
-        double moved = 0; wave.SelectedMarkersMoved += delta => moved = delta;
+        double moved = 0; wave.SelectedMarkersMoved += (delta, _) => moved = delta;
         typeof(WaveformView).GetField("_draggingMarker", flags).SetValue(wave, true);
         var up = new System.Windows.Input.MouseButtonEventArgs(System.Windows.Input.Mouse.PrimaryDevice, 0, System.Windows.Input.MouseButton.Left);
         typeof(WaveformView).GetMethod("OnMouseUp", flags).Invoke(wave, new object[] { up });
@@ -1133,8 +1153,8 @@ internal static partial class Program
             catalog.Read(catalog.Find("scene-guide")).Contains("Change Robot Model…") &&
             catalog.Read(catalog.Find("scene-guide")).Contains("Choose Scene…"),
             "Task guides do not match the current setup and scene-loading controls");
-        Check(catalog.Topics.All(t => !string.IsNullOrWhiteSpace(t.Category)) && catalog.Topics.Select(t => t.Category).Distinct().Count() == 7,
-            "Help topics are not organized into the seven workflow sections");
+        Check(catalog.Topics.All(t => !string.IsNullOrWhiteSpace(t.Category)) && catalog.Topics.Select(t => t.Category).Distinct().Count() == 9,
+            "Help topics are not organized into the expected workflow sections");
         Check(catalog.Search("overview").Any(t => t.Id == "getting-started"),
             "Help search must match indexed keywords even when absent from the body");
         Check(catalog.Topics.Select(t => t.Id).Distinct().Count() == catalog.Topics.Count,
@@ -1150,7 +1170,7 @@ internal static partial class Program
         try
         {
             var topicList = (System.Windows.Controls.ListBox)window.FindName("TopicList");
-            Check(((System.ComponentModel.ICollectionView)topicList.ItemsSource).Groups.Count == 7,
+            Check(((System.ComponentModel.ICollectionView)topicList.ItemsSource).Groups.Count == 9,
                 "The Help contents actually displays grouped sections");
             var linkedDocument = window.MarkdownToFlowDocument("Open [Scene Setup](UrdfFraming.md).");
             var link = linkedDocument.Blocks.OfType<System.Windows.Documents.Paragraph>().Single().Inlines
@@ -1160,6 +1180,35 @@ internal static partial class Program
             Check(((HelpTopicDefinition)topicList.SelectedItem).Id == "urdf-framing" &&
                 ((System.Windows.Controls.TextBox)window.FindName("SearchBox")).Text == "",
                 "Task links navigate to their topic even when a search filter excludes it");
+            var appFilter = (System.Windows.Controls.CheckBox)window.FindName("CurrentAppOnly");
+            var search = (System.Windows.Controls.TextBox)window.FindName("SearchBox");
+            appFilter.IsChecked = true;
+            Check(topicList.Items.Cast<HelpTopicDefinition>().Any(t => t.Id == "webcam-face-tracking") &&
+                topicList.Items.Cast<HelpTopicDefinition>().All(t => t.Id != "vr-calibration"),
+                "Current-app contents in Desktop should keep webcam Help and exclude VR calibration");
+            search.Text = "tight shot";
+            Check(topicList.Items.Cast<HelpTopicDefinition>().Any(t => t.Id == "camera-shots"),
+                "Desktop Help search should find Camera Shots with the app filter enabled");
+            search.Text = "VR Body Calibration";
+            Check(topicList.Items.Cast<HelpTopicDefinition>().All(t => t.Id != "vr-calibration"),
+                "Current-app search should exclude VR calibration in Desktop");
+            appFilter.IsChecked = false;
+            Check(topicList.Items.Cast<HelpTopicDefinition>().Any(t => t.Id == "vr-calibration"),
+                "Clearing the app filter should restore VR results to the existing search");
+            search.Clear();
+
+            var vrWindow = new HelpWindow("J5 Studio VR Editor");
+            try
+            {
+                var vrTopics = (System.Windows.Controls.ListBox)vrWindow.FindName("TopicList");
+                ((System.Windows.Controls.CheckBox)vrWindow.FindName("CurrentAppOnly")).IsChecked = true;
+                Check(vrTopics.Items.Cast<HelpTopicDefinition>().Any(t => t.Id == "vr-following") &&
+                    vrTopics.Items.Cast<HelpTopicDefinition>().All(t =>
+                        t.Id != "meeting-mode" && t.Id != "webcam-face-tracking" && t.Id != "vr-clean-output"),
+                    "Current-app contents in VR Editor should keep Follow Help and exclude Desktop and Player-only features");
+            }
+            finally { vrWindow.Close(); }
+
             var document = window.MarkdownToFlowDocument("# Test\n\n1. **First** step\n2. Second step\nAfter the list\n\n- Bullet\n1) Numbered again\n\n3. Continue here");
             var blocks = document.Blocks.Cast<System.Windows.Documents.Block>().ToList();
             var lists = blocks.OfType<System.Windows.Documents.List>().ToList();

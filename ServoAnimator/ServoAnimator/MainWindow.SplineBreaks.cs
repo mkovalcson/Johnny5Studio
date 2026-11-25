@@ -47,7 +47,7 @@ public partial class MainWindow
             SplineBreakOperations.SupportsSpline(c) && !c.Disable && SplineServosEnabled().Contains(c.Servo)).ToArray();
         if (commands.Any(c => c.BreakSpline != value))
             ApplySelectedGroupEdit($"{(value ? "Set" : "Clear")} selected {control.NameText} spline breaks",
-                () => { foreach (var c in commands) c.BreakSpline = value; }, Waveform.SelectedMarkers);
+                () => { foreach (var c in commands) c.BreakSpline = value; }, keepSelection: true);
         e.Handled = true;
     }
 

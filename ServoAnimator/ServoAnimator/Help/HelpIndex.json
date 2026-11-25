@@ -129,6 +129,7 @@
     },
     {
       "id": "meeting-guide",
+      "applications": ["J5 Studio Desktop"],
       "title": "Present live through OBS or Teams",
       "file": "MeetingGuide.md",
       "keywords": [
@@ -392,6 +393,7 @@
     },
     {
       "id": "webcam-face-tracking",
+      "applications": ["J5 Studio Desktop"],
       "title": "Webcam Face Tracking",
       "file": "WebcamFaceTracking.md",
       "keywords": [
@@ -488,6 +490,7 @@
     },
     {
       "id": "meeting-mode",
+      "applications": ["J5 Studio Desktop"],
       "title": "Meeting Mode",
       "file": "MeetingMode.md",
       "keywords": [
@@ -510,6 +513,7 @@
     },
     {
       "id": "face-signals",
+      "applications": ["J5 Studio Desktop"],
       "title": "Face Signal Reference",
       "file": "FaceSignals.md",
       "keywords": [
@@ -530,6 +534,7 @@
     },
     {
       "id": "piston-signals",
+      "applications": ["J5 Studio Desktop"],
       "title": "LPiston and RPiston",
       "file": "PistonSignals.md",
       "keywords": [
@@ -545,6 +550,27 @@
         "face-signals"
       ],
       "category": "Capture and live performance"
+    },
+    {
+      "id": "camera-shots",
+      "title": "Camera Shots — Tight, Wide and Hand",
+      "file": "CameraShots.md",
+      "category": "Scenes and presentation",
+      "keywords": [
+        "camera shot",
+        "tight shot",
+        "wide shot",
+        "hand shot",
+        "cut",
+        "blend",
+        "stage front offset",
+        "clean output"
+      ],
+      "related": [
+        "scene-guide",
+        "urdf-framing",
+        "vr-clean-output"
+      ]
     },
     {
       "id": "urdf-framing",
@@ -568,6 +594,7 @@
     },
     {
       "id": "urdf-viewer",
+      "applications": ["J5 Studio Desktop"],
       "title": "URDF 3D Viewer",
       "file": "UrdfViewer.md",
       "keywords": [
@@ -725,6 +752,7 @@
     },
     {
       "id": "live-drive-hardware",
+      "applications": ["J5 Studio Desktop"],
       "title": "Drive HW and Hardware",
       "file": "LiveDriveHardware.md",
       "keywords": [
@@ -775,6 +803,7 @@
     },
     {
       "id": "speed-calibration",
+      "applications": ["J5 Studio Desktop"],
       "title": "Servo Speed Calibration",
       "file": "SpeedCalibration.md",
       "keywords": [
@@ -1011,6 +1040,7 @@
     },
     {
       "id": "vr-guide",
+      "applications": ["J5 Studio VR Editor","J5 Studio VR Player"],
       "title": "VR Player and Editor",
       "file": "VrGuide.md",
       "category": "VR Player and Editor",
@@ -1024,6 +1054,7 @@
     },
     {
       "id": "vr-calibration",
+      "applications": ["J5 Studio VR Editor","J5 Studio VR Player"],
       "title": "VR Body Calibration",
       "file": "VrCalibration.md",
       "category": "VR Player and Editor",
@@ -1038,6 +1069,7 @@
     },
     {
       "id": "vr-following",
+      "applications": ["J5 Studio VR Editor","J5 Studio VR Player"],
       "title": "VR Follow Controls and Tuning",
       "file": "VrFollowing.md",
       "category": "VR Player and Editor",
@@ -1054,6 +1086,7 @@
     },
     {
       "id": "vr-diagnostics",
+      "applications": ["J5 Studio VR Editor","J5 Studio VR Player"],
       "title": "VR Tracking and Timing Diagnostics",
       "file": "VrDiagnostics.md",
       "category": "VR Player and Editor",
@@ -1070,6 +1103,7 @@
     },
     {
       "id": "urdf-tiptoe",
+      "applications": ["J5 Studio Desktop","J5 Studio VR Editor","J5 Studio VR Player"],
       "title": "TipToe and Caster Linkage",
       "file": "UrdfTipToe.md",
       "category": "URDF",
@@ -1085,6 +1119,7 @@
     },
     {
       "id": "vr-rehearsal-panel",
+      "applications": ["J5 Studio VR Editor","J5 Studio VR Player"],
       "title": "VR Rehearsal and Recording",
       "file": "VR-Rehearsal-Panel.md",
       "category": "VR Player and Editor",
@@ -1100,6 +1135,7 @@
     },
     {
       "id": "vr-follow-input-tuning",
+      "applications": ["J5 Studio VR Editor","J5 Studio VR Player"],
       "title": "VR Smoothing, Input Scaling and Travel Extents",
       "file": "VR-Follow-Input-Tuning.md",
       "category": "VR Player and Editor",
@@ -1118,6 +1154,7 @@
     },
     {
       "id": "vr-follow-neutral-pose",
+      "applications": ["J5 Studio VR Editor","J5 Studio VR Player"],
       "title": "VR Neutral Pose Defaults",
       "file": "VR-Follow-Neutral-Pose.md",
       "category": "VR Player and Editor",
@@ -1133,6 +1170,7 @@
     },
     {
       "id": "vr-follow-arm-hand-speeds",
+      "applications": ["J5 Studio VR Editor","J5 Studio VR Player"],
       "title": "VR Arm and Hand Speeds",
       "file": "VR-Follow-Arm-Hand-Speeds.md",
       "category": "VR Player and Editor",
@@ -1149,6 +1187,7 @@
     },
     {
       "id": "vr-clean-output",
+      "applications": ["J5 Studio VR Player"],
       "title": "VR Clean Output",
       "file": "VR-Clean-Output.md",
       "category": "VR Player and Editor",
@@ -1163,6 +1202,7 @@
     },
     {
       "id": "vr-clean-output-overlays",
+      "applications": ["J5 Studio VR Player"],
       "title": "VR Clean Output Overlays",
       "file": "VR-Clean-Output-Overlays.md",
       "category": "VR Player and Editor",
@@ -1178,6 +1218,7 @@
     },
     {
       "id": "vr-controller-feedback",
+      "applications": ["J5 Studio VR Editor","J5 Studio VR Player"],
       "title": "VR Controller Feedback",
       "file": "VR-Controller-Feedback.md",
       "category": "VR Player and Editor",
@@ -1192,6 +1233,7 @@
     },
     {
       "id": "urdf-prop-library",
+      "applications": ["J5 Studio Desktop","J5 Studio VR Editor","J5 Studio VR Player"],
       "title": "URDF Prop Library",
       "file": "URDF-Prop-Library.md",
       "category": "VR Player and Editor",
@@ -1206,6 +1248,7 @@
     },
     {
       "id": "vr-laser-range-game",
+      "applications": ["J5 Studio VR Player"],
       "title": "VR Laser Range",
       "file": "VR-Laser-Range-Game.md",
       "category": "VR Player and Editor",
@@ -1220,6 +1263,7 @@
     },
     {
       "id": "vr-laser-range-combat-and-teleport",
+      "applications": ["J5 Studio VR Player"],
       "title": "VR Laser Range Combat and Teleport",
       "file": "VR-Laser-Range-Combat-And-Teleport.md",
       "category": "VR Player and Editor",
@@ -1237,6 +1281,7 @@
     },
     {
       "id": "desktop-system-requirements",
+      "applications": ["J5 Studio Desktop"],
       "title": "Desktop Editor System Requirements",
       "file": "DesktopSystemRequirements.md",
       "category": "Start here",
@@ -1256,6 +1301,7 @@
     },
     {
       "id": "vr-system-requirements",
+      "applications": ["J5 Studio VR Player"],
       "title": "VR Player System Requirements",
       "file": "VrSystemRequirements.md",
       "category": "VR Player and Editor",

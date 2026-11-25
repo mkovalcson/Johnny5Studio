@@ -10,6 +10,7 @@ public sealed partial class RobotHeadView
     private BeamState _beamState = BeamState.Visible;
     private double _beamSeconds;
     private bool _beamHidesRobot;
+    private UrdfScene _beamScene;
     internal bool BeamHidesRobot => _beamHidesRobot;
 
     private void InitializeBeamLayer()
@@ -23,17 +24,24 @@ public sealed partial class RobotHeadView
     internal void SetTimelineBeam(BeamState state, double cursorSeconds)
     {
         state ??= BeamState.Visible;
+        bool sameScene = ReferenceEquals(_beamScene, _scene);
         bool unchanged = !state.Active && !_beamState.Active && state.Hidden == _beamState.Hidden;
-        _beamState = state; _beamSeconds = cursorSeconds;
-        if (unchanged && _scene?.BeamActive != true) return;
+        if (sameScene && ((unchanged && _scene?.BeamActive != true) ||
+                          (state == _beamState && cursorSeconds == _beamSeconds))) return;
+        _beamState = state;
+        _beamSeconds = cursorSeconds;
+        _beamScene = _scene;
         double opacity = state.RobotOpacity, glow = state.Glow;
         if (_scene != null)
         {
             if (state.Active && (opacity < .999 || glow > .001)) _scene.SetBeamLook(opacity, glow);
             else _scene.ClearBeamLook();
         }
-        _beamHidesRobot = state.Hidden || (state.Active && opacity < .005 && glow < .005);
-        UpdateCamera();                                   // applies robot visibility and lays out the overlay
+        bool hidden = state.Hidden || (state.Active && opacity < .005 && glow < .005);
+        bool visibilityChanged = !sameScene || hidden != _beamHidesRobot;
+        _beamHidesRobot = hidden;
+        if (visibilityChanged) UpdateCamera();
+        else LayoutBeamOverlay();
     }
 
     /// <summary>Called from UpdateCamera: the sparkle column follows the robot's projected bounds.</summary>
@@ -66,6 +74,10 @@ public sealed partial class RobotHeadView
         internal BeamState State;
         internal double Seconds;
 
+        private static readonly Brush ColumnGlow = Frozen(new RadialGradientBrush(new GradientStopCollection
+        {
+            new(Color.FromArgb(110, 140, 205, 255), 0), new(Color.FromArgb(0, 80, 160, 255), 1)
+        }));
         private static readonly Brush Spark = Frozen(new RadialGradientBrush(new GradientStopCollection
         {
             new(Color.FromArgb(255, 255, 255, 255), 0), new(Color.FromArgb(220, 170, 225, 255), .35), new(Color.FromArgb(0, 90, 170, 255), 1)
@@ -83,11 +95,9 @@ public sealed partial class RobotHeadView
             if (sparkle > .001)
             {
                 // Column glow
-                var glow = new RadialGradientBrush(new GradientStopCollection
-                {
-                    new(Color.FromArgb((byte)(110 * sparkle), 140, 205, 255), 0), new(Color.FromArgb(0, 80, 160, 255), 1)
-                });
-                dc.DrawEllipse(glow, null, new Point(Column.X + Column.Width / 2, Column.Y + Column.Height / 2), Column.Width * .62, Column.Height * .58);
+                dc.PushOpacity(sparkle);
+                dc.DrawEllipse(ColumnGlow, null, new Point(Column.X + Column.Width / 2, Column.Y + Column.Height / 2), Column.Width * .62, Column.Height * .58);
+                dc.Pop();
                 // Flickering vertical streaks
                 for (int i = 0; i < 7; i++)
                 {

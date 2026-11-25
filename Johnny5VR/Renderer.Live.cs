@@ -61,7 +61,7 @@ internal sealed partial class Renderer
     private Vector4 liveAmbient=new(.38f,.38f,.38f,1),liveKey=new(.55f,.55f,.55f,1),liveDirection=new(-.4f,.85f,.4f,0);
     internal void ClearLive()
     {
-        Live=false;PoseState=null;posePicker.Clear();foreach(var b in liveBatches)b.Buffer.Dispose();liveBatches.Clear();liveDynamic?.Dispose();liveDynamic=null;liveDynamicCount=liveDynamicCapacity=0;liveSlots.Clear();liveStaticSlots.Clear();nextSlot=1;
+        Live=false;PoseState=null;CaptureCamera=null;posePicker.Clear();foreach(var b in liveBatches)b.Buffer.Dispose();liveBatches.Clear();liveDynamic?.Dispose();liveDynamic=null;liveDynamicCount=liveDynamicCapacity=0;liveSlots.Clear();liveStaticSlots.Clear();nextSlot=1;
         nodeMotionCount=0;motionIndex.Clear();blending=false;liveArrival=0;treadDraws.Clear();treadMoving=false;
     }
     private float BlendFraction(long now)=>blending||treadMoving?(float)Math.Clamp(System.Diagnostics.Stopwatch.GetElapsedTime(liveArrival,now).TotalMilliseconds/LiveBlendIntervalMs,0,1):1;
@@ -196,6 +196,8 @@ internal sealed partial class Renderer
         var robotPlacement=Matrix4x4.CreateScale(scale)*Matrix4x4.CreateTranslation(0,0,-frame.RobotFloor*scale)*placement;
         poseFloor=Vector3.Transform(new Vector3(0,0,frame.RobotFloor),robotPlacement).Y;
         poseHeight=frame.RobotHeight*scale*settings.Scale;
+        CaptureCamera=frame.CaptureCamera is {} camera
+            ?new(Vector3.Transform(camera.Eye,robotPlacement),Vector3.Transform(camera.Target,robotPlacement)):null;
         posePicker.Update(frame,robotPlacement);
         var stagePlacement=Matrix4x4.CreateTranslation(0,0,-frame.StageFloor)*placement;
         PoseState=frame.Pose is {} pose?pose with{Handles=pose.Handles.Select(h=>h with{Anchor=Vector3.Transform(h.Anchor,robotPlacement)}).ToArray()}:null;

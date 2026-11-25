@@ -50,6 +50,16 @@ internal static partial class Program
         Check(TvTimeline.MediaPosition(25, 10, true) == 5 && TvTimeline.MediaPosition(25, 10, false) == 10 && TvTimeline.MediaPosition(3, null, false) == 3,
               "Video loops or holds its last frame");
 
+        var limited = TvShowCommand.Read("{\"path\":\"x.mp4\",\"startSeconds\":2,\"durationSeconds\":5}");
+        Check(TvShowCommand.Read(limited.ToJson()).DurationSeconds == 5 && show.DurationSeconds == 0 &&
+              Throws(() => TvShowCommand.Read("{\"durationSeconds\":-1}")), "TV length round-trips, defaults to unlimited, and rejects negatives.");
+        Check(TvTimeline.VideoPosition(limited, 6.9, 20) == (6.9, false) &&
+              TvTimeline.VideoPosition(limited, 7, 20) == (7d, true) &&
+              TvTimeline.VideoPosition(limited, 10, 20) == (7d, true), "A five-second TV cue holds the endpoint on playback and seeks.");
+        limited.Loop = true;
+        Check(TvTimeline.VideoPosition(limited, 6, 3) == (0d, false) &&
+              TvTimeline.VideoPosition(limited, 9, 3).Ended, "A loop stops when the cue reaches its chosen length.");
+
         // Real backdrop: the TV screen and the camera fit
         var stage = UrdfScene.Load(Path.GetFullPath("ServoAnimator/Models/MatrixConstruct_backdrop.urdf"), optimizeExterior: false);
         var screen = TvScreen.FromBoxCorners(stage.GetWorldVisualBoundsPoints(new[] { TvFrontCommand.DefaultScreen }).Take(8).ToArray(), new Point3D());

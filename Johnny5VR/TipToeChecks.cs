@@ -50,6 +50,24 @@ internal static class TipToeChecks
         float spokeBefore=MathF.Atan2((lug-wheelCentre).Z,(lug-wheelCentre).X),spokeAfter=MathF.Atan2((lugNow-centreNow).Z,(lugNow-centreNow).X);
         float turned=MathF.IEEERemainder(spokeBefore-spokeAfter,2*MathF.PI),expected=MathF.IEEERemainder((casterNow.X-caster.X)/geometry.CasterWheelRadius,2*MathF.PI);
         check(MathF.Abs(MathF.IEEERemainder(turned-expected,2*MathF.PI))<.05f,$"Playback turns the caster wheel {turned*180/MathF.PI:F0}° for {(casterNow.X-caster.X)*100:F1} cm of rolling (no slipping).");
+        var sideways = new TravelState(0, 0, 0, 90, 90, 0);
+        Vector3 WheelAxle(double amount)
+        {
+            rig.Apply(new() { { "servo:B_TipToe", (amount, 0, "B_TipToe") } }, sideways);
+            const string left = "body_caster_wheel_l_link", right = "body_caster_wheel_r_link";
+            return Vector3.Normalize(Now(left, rig.RestPoint(left, Vector3.Zero)) - Now(right, rig.RestPoint(right, Vector3.Zero)));
+        }
+        var parked = WheelAxle(0);
+        var during = WheelAxle(50);
+        var raised = WheelAxle(100);
+        check(Math.Abs(parked.X) > .95 && Math.Abs(during.X) < Math.Abs(parked.X) && Math.Abs(raised.X) < .1,
+            "TipToe steers a sideways caster into line with the tracks as it rolls forward.");
+        check(Vector3.Distance(WheelAxle(50), during) < 1e-5 && Vector3.Distance(WheelAxle(0), parked) < 1e-5,
+            "Lowering TipToe reverses the same caster path, including when seeking.");
+        var reversed = ServoAnimator.CasterWheelTravel.DuringTipToe(180, full.CasterRoll, rig.CasterTrail);
+        check(reversed.Angle == 180 && reversed.Left < 0 && reversed.Right == reversed.Left,
+            "An already aligned reverse-facing caster rolls backwards through TipToe.");
+
         rig.Apply(new(){{"servo:B_TipToe",(0,0,"B_TipToe")}});
         check(rig.TipToeRadians==0&&Vector3.Distance(Now("body_pelvis_drum_link",drum),drum)<1e-5f,"Playback returns to the rest pose at 0.");
     }

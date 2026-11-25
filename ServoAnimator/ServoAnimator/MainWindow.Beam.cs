@@ -34,14 +34,31 @@ public partial class MainWindow
     private string _beamSoundPath;
     private double? _beamSoundDuration;
     private bool _beamSoundPlaying, _beamSoundHooked;
+    private double _beamSoundCueStart = double.NaN;
 
-    private void ApplyBeamTimeline()
+    private readonly PlaybackFrameCadence _beamFrameCadence = new(60, earlyToleranceSeconds: .001);
+    private bool _refreshBeamThisFrame;
+    private ServoCommand[] _beamPlaybackSource;
+    private (double Time, BeamCommand Settings)[] _beamPlaybackCues = Array.Empty<(double, BeamCommand)>();
+
+    private void ApplyBeamTimeline(bool syncSound = true)
     {
         if (_controllerBeamCommand != null && !IsRunning) return;
         if (IsRunning) StopControllerBeam();
-        var state = BeamTimeline.StateAt(_doc.Commands, _cursorTime);
+        BeamState state;
+        if (IsRunning)
+        {
+            if (!ReferenceEquals(_beamPlaybackSource, _orderedCommands))
+            {
+                _beamPlaybackSource = _orderedCommands;
+                _beamPlaybackCues = BeamTimeline.Prepare(_orderedCommands);
+            }
+            if (_beamPlaybackCues.Length == 0 && !syncSound) return;
+            state = BeamTimeline.PreparedStateAt(_beamPlaybackCues, _cursorTime);
+        }
+        else state = BeamTimeline.StateAt(_doc.Commands, _cursorTime);
         ForEachHeadView(view => view.SetTimelineBeam(state, _cursorTime));
-        SyncBeamSound(state);
+        if (syncSound) SyncBeamSound(state);
     }
 
     /// <summary>The latest beam's sound plays from its command time while the timeline runs (following the playback
@@ -58,7 +75,7 @@ public partial class MainWindow
         double offset = _cursorTime - state.StartSeconds;
         bool sameFile = string.Equals(path, _beamSoundPath, StringComparison.OrdinalIgnoreCase);
         double length = (sameFile ? _beamSoundDuration : null) ?? (state.Settings?.Seconds ?? 0) + 2;
-        bool inWindow = path != null && File.Exists(path) && offset >= 0 && offset < length;
+        bool inWindow = path != null && state.Settings.Volume > 0 && File.Exists(path) && offset >= 0 && offset < length;
         if (!inWindow || !IsRunning)
         {
             if (_beamSoundPlaying) { _beamSound.Pause(); _beamSoundPlaying = false; }
@@ -72,7 +89,13 @@ public partial class MainWindow
         _beamSound.Volume = state.Settings.Volume / 100;
         _beamSound.SpeedRatio = Math.Clamp(_playbackClock?.Rate ?? 1, .1, 4);
         var target = TimeSpan.FromSeconds(offset);
-        if (!_beamSoundPlaying) { _beamSound.Position = target; _beamSound.Play(); _beamSoundPlaying = true; }
+        if (!_beamSoundPlaying || _beamSoundCueStart != state.StartSeconds)
+        {
+            _beamSound.Position = target;
+            _beamSound.Play();
+            _beamSoundPlaying = true;
+            _beamSoundCueStart = state.StartSeconds;
+        }
         else if (Math.Abs((_beamSound.Position - target).TotalSeconds) > .15) _beamSound.Position = target;
     }
 
@@ -94,23 +117,15 @@ public partial class MainWindow
                 : Enum.TryParse<BeamDirection>(request.Direction, true, out var d) ? d : throw new InvalidOperationException("direction must be in or out."),
             Seconds = request.Seconds ?? 3.5, Particles = request.Particles ?? true, Volume = request.Volume ?? 100, Rgb = request.Rgb ?? true,
         };
-        if (!string.IsNullOrWhiteSpace(request.Sound))
-        {
-            if (request.Sound.Equals(BeamCommand.DefaultSound, StringComparison.OrdinalIgnoreCase) || request.Sound.Equals(BeamCommand.NoSound, StringComparison.OrdinalIgnoreCase))
-                settings.Sound = request.Sound.ToLowerInvariant();
-            else
-            {
-                string full = Path.IsPathRooted(request.Sound) ? request.Sound : Path.Combine(ConfigRoot, request.Sound);
-                if (!File.Exists(full)) throw new InvalidOperationException("Beam sound file not found: " + full);
-                settings.Sound = ConfigPathService.IsWithin(ConfigRoot, full) ? Path.GetRelativePath(ConfigRoot, full) : full;
-            }
-        }
+
         settings.Validate();
         double end = _cursorTime + settings.Seconds;
         if (end > 86400) throw new InvalidOperationException("The effect would end after the 24-hour timeline limit.");
-        var command = new ServoCommand { Servo = ServoNames.UrdfBeam, TextValue = settings.ToJson(), OffsetSeconds = ServoCommand.TimeKey(_cursorTime),
+        var command = new ServoCommand { Servo = ServoNames.UrdfBeam, OffsetSeconds = ServoCommand.TimeKey(_cursorTime),
             Reason = string.IsNullOrWhiteSpace(request.Description) ? settings.Label() : request.Description };
         if (CommandConflicts.Find(_doc.Commands.Append(command)).Count != 0) throw new InvalidOperationException("A command already occupies that target/time. Nothing changed.");
+        if (!string.IsNullOrWhiteSpace(request.Sound)) settings.Sound = BeamCommand.ImportSound(ConfigRoot, request.Sound);
+        command.TextValue = settings.ToJson();
         var previousUndo = _undoStack.ToArray(); var previousRedo = _redoStack.ToArray();
         try { PushUndo("Codex: " + request.Method); _doc.Commands.Add(command); RefreshAfterEdit(); }
         catch

@@ -11,3 +11,10 @@ updating expected baselines, and record what was checked and what needs headset 
 For local editor automation see [Editor API](ServoAnimator/ServoAnimator/Help/EditorApi.md)
 and [MCP setup](Johnny5-Editor-MCP/README.md). Read editor state before editing and use the
 current context token; don't rewrite project files behind an open editor.
+
+Before starting feature work, read [CHANGELOG.md](CHANGELOG.md). When you finish a
+user-visible change, add or update a concise bullet under **Unreleased** in the
+same change. Include the affected app and any compatibility or verification notes.
+Record implemented changes here. Keep proposals in the Future Features List.
+When preparing release notes, use **Unreleased** and move only the shipped entries
+to a versioned section. Keep pending entries under **Unreleased**.

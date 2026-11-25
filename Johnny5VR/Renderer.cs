@@ -7,6 +7,8 @@ using SharpDX.Direct3D;
 using SharpDX.Direct3D11;
 using SharpDX.DXGI;
 using Valve.VR;
+using Johnny5.VrBridge;
+using Vector3=System.Numerics.Vector3;
 using Buffer=SharpDX.Direct3D11.Buffer;
 using Device=SharpDX.Direct3D11.Device;
 
@@ -123,6 +125,16 @@ internal sealed partial class Renderer:IDisposable
         context.OutputMerger.SetTargets((DepthStencilView?)null,(RenderTargetView?)null);
         if(samples>1)context.ResolveSubresource(target.Color,0,target.Resolved,0,Format.R8G8B8A8_UNorm);
     }
+    internal VrCaptureCamera? CaptureCamera {get;set;}
+    private (Matrix4x4 ViewProjection,Vector3 Eye)? ShotProjection(Target mirror)
+    {
+        if(!CleanOutputActive||CaptureCamera is not {} shot)return null;
+        float aspect=(float)mirror.Width/mirror.Height;
+        float halfWidth=MathF.Tan(ServoAnimator.ShotView.HorizontalFov*.5f);
+        float vertical=2*MathF.Atan(Math.Max(halfWidth/aspect,halfWidth/(16f/9)));
+        return (Matrix4x4.CreateLookAt(shot.Eye,shot.Target,Vector3.UnitY)*
+            Matrix4x4.CreatePerspectiveFieldOfView(vertical,aspect,.03f,150),shot.Eye);
+    }
     internal bool Render(VrSession? vr,Matrix4x4 desktopView,System.Numerics.Vector3 desktopEye)
     {
         if(desktop==null||back==null)return false;
@@ -151,10 +163,11 @@ internal sealed partial class Renderer:IDisposable
                 vr.Submit(EVREye.Eye_Left,left.Resolved.NativePointer);vr.Submit(EVREye.Eye_Right,right!.Resolved.NativePointer);
                 BridgeTiming.Stop(BridgeTiming.Section.Submit,submitStart);
                 var mirrorStart=BridgeTiming.Start();
-                var preview=vr.MirrorCamera(head,mirror.Width,mirror.Height);
+                var shot=ShotProjection(mirror);
+                var preview=shot??vr.MirrorCamera(head,mirror.Width,mirror.Height);
                 Draw(mirror,preview.ViewProjection,preview.Eye);
                 if(CleanOutputActive&&IncludeCleanOverlays)
-                    TryDrawCapturedOverlays(mirror,vr.OverlayViewProjection(head,mirror.Width,mirror.Height),head.Translation);
+                    TryDrawCapturedOverlays(mirror,shot?.ViewProjection??vr.OverlayViewProjection(head,mirror.Width,mirror.Height),shot?.Eye??head.Translation);
                 else ClearCapturedOverlays();
                 PresentMirror(true);
                 vr.EndFrame();
@@ -167,7 +180,8 @@ internal sealed partial class Renderer:IDisposable
         {
             rays=[];gloveCount=0;ClearCapturedOverlays();
             var projection=Matrix4x4.CreatePerspectiveFieldOfView(MathF.PI/3,(float)mirror.Width/mirror.Height,.03f,150);
-            Draw(mirror,desktopView*projection,desktopEye);
+            if(ShotProjection(mirror) is {} shot)Draw(mirror,shot.ViewProjection,shot.Eye);
+            else Draw(mirror,desktopView*projection,desktopEye);
         }
         if(tracked)
         {

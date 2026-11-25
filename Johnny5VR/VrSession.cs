@@ -50,7 +50,7 @@ internal sealed class VrSession:IDisposable
     internal void TeleportArcade(Matrix4x4 head,Vector3 feet,Vector3 lookAt)=>locomotion.Teleport(head,feet,lookAt);
     internal Vector3 ArcadeLookAt;
     internal Action<ControllerReading,bool,float,Matrix4x4,Matrix4x4>? ArcadeFrame;
-    private bool followBHeld,followStickHeld,leftFireHeld;
+    private bool followBHeld,followStickHeld,rightStickHeld,followTriggerHeld;
     private Action<VrEditorCommand>? editorCommand;
     internal void AttachEditor(int process,Action<VrEditorCommand>? command=null,Action<VrEditorNavigation>? navigate=null,Func<EditorDesktopFrame?>? capture=null,Action<VrPoseRequest>? pose=null,Action<VrMotionBatch>? motion=null,string? config=null,Action<VrRecordingRequest>? recording=null)
     {
@@ -72,7 +72,7 @@ internal sealed class VrSession:IDisposable
     internal string InputStatus {get;private set;}="Index controllers: waiting";
     internal string InputDetails=> $"{controllers?.Mode}: Left ({lastInput.Move.X:+0.00;-0.00;0.00}, {lastInput.Move.Y:+0.00;-0.00;0.00}) [{lastInput.LeftStatus}] · Right ({lastInput.Right.X:+0.00;-0.00;0.00}, {lastInput.Right.Y:+0.00;-0.00;0.00}) [{lastInput.RightStatus}]\n"+
         $"Movement {(navigation.ControllerLocomotion?"on":"off")} · Input focus {(inputFocus?"yes":"no")} · Virtual offset {locomotion.Origin.Translation.X:F2}, {locomotion.Origin.Translation.Z:F2} m"+
-        (ArcadeActive?" · Laser Range: Left drive/turn · Right Y aim · Trigger fire":"")+(bodyMotion?.Following==true?" · Left stick: Robot · Right stick: Me":"")+(lastInput.Error!=""?" · "+lastInput.Error:"")+(EditorPanel?.Error is {Length:>0} error?" · Editor panel: "+error:"")+(Menu?.Error is {Length:>0} menuError?" · "+menuError:"");
+        (ArcadeActive?" · Laser Range: Left drive/turn · Right Y aim · Trigger fire":"")+(bodyMotion?.Following==true?(bodyMotion.Hands.Manual?" · Hand mode":" · Left stick: Robot · Right stick: Me"):"")+(lastInput.Error!=""?" · "+lastInput.Error:"")+(EditorPanel?.Error is {Length:>0} error?" · Editor panel: "+error:"")+(Menu?.Error is {Length:>0} menuError?" · "+menuError:"");
     internal void Configure(ViewerSettings settings){navigation=settings;if(Transport!=null)Transport.Enabled=settings.ShowTransport;if(bodyMotion!=null){bodyMotion.ShowFollowingStatus=settings.ShowFollowStatus;bodyMotion.TrackWaistSwivel=settings.TrackWaistSwivel;}}
     internal static bool BodyInputAllowed(bool focus,bool menuVisible,bool otherInteraction,bool calibration)
         =>focus&&!menuVisible&&(calibration||!otherInteraction);
@@ -166,11 +166,8 @@ internal sealed class VrSession:IDisposable
         followBHeld=lastInput.LeftB;
         if(wasFollowing&&focus&&Menu?.Navigation.Visible!=true&&lastInput.LeftStickClick&&!followStickHeld)bodyMotion?.ToggleLaser();
         followStickHeld=lastInput.LeftStickClick;
-        if(wasFollowing&&focus&&leftHand.HasValue&&Menu?.Navigation.Visible!=true&&lastInput.LeftTrigger&&!leftFireHeld&&bodyMotion?.CanFireLaser==true)
-            editorCommand?.Invoke(VrEditorCommand.PreviewFireLaser);
-        leftFireHeld=lastInput.LeftTrigger;
         bodyMotion?.FollowButtons(lastInput,wasFollowing&&focus&&Menu?.Navigation.Visible!=true);
-        if(wasFollowing){(move,turn)=FollowStickRouting.Viewer(lastInput,true);lastInput=lastInput.ForFollowing();}
+        if(wasFollowing)lastInput=lastInput.ForFollowing();
         if(ArcadeActive&&ArcadeTeleport!=null)
         {
             Matrix4x4? hand=rightHand.HasValue?rightHand.Value*locomotion.Origin:null;
@@ -184,6 +181,22 @@ internal sealed class VrSession:IDisposable
         selectionsFrame|=Menu is {FollowSelections:true,Navigation.Visible:true};
         if(bodyMotion!=null){bodyMotion.SelectionsOpen=selectionsFrame;bodyMotion.TuningSpeeds=Menu is {LiveFollowing:true,Navigation.Visible:true};}
         menuActive|=Transport.Step(head,locomotion.Origin,pointer,lastInput,focus&&Menu?.Navigation.Visible!=true&&!ArcadeActive,focus&&!menuActive&&bodyMotion?.Wizard==null&&!ArcadeActive);
+        bool trigger=lastInput.LeftTrigger||lastInput.RightTrigger;
+        bool followControls=wasFollowing&&focus&&leftHand.HasValue&&rightHand.HasValue&&!menuActive
+            &&Menu?.Navigation.Visible!=true&&!lastInput.Menu&&!lastInput.Back;
+        if(followControls&&bodyMotion is {} follow)
+        {
+            if(lastInput.RightStickClick&&!rightStickHeld)follow.Hands.ToggleTracking();
+            if(trigger&&!followTriggerHeld)
+            {
+                if(follow.CanFireLaser)editorCommand?.Invoke(VrEditorCommand.PreviewFireLaser);
+                else follow.ToggleHandMode();
+            }
+        }
+        followTriggerHeld=trigger;
+        rightStickHeld=lastInput.RightStickClick;
+        if(wasFollowing)
+            (move,turn)=bodyMotion!.Hands.Manual?(Vector2.Zero,0f):FollowStickRouting.Viewer(lastInput,true);
         if(EditorPanel!=null)
         {
             var panelStart=BridgeTiming.Start();
@@ -232,7 +245,7 @@ internal sealed class VrSession:IDisposable
             if(wasFollowing||followLabels!=null)
             {
                 followLabels??=new(Adapter);
-                followLabels.Draw(head,leftHand,rightHand,bodyMotion?.Following==true&&focus,bodyMotion?.MirrorFacing==true,bodyMotion?.MovementTarget??FollowMovementTarget.Robot);
+                followLabels.Draw(head,leftHand,rightHand,bodyMotion?.Following==true&&focus,bodyMotion?.MirrorFacing==true,bodyMotion?.MovementTarget??FollowMovementTarget.Robot,bodyMotion?.Hands.Tracking??true,bodyMotion?.Hands.Manual??false);
             }
         }
         catch(Exception ex){Diagnostics.Log(ex);followLabels?.Dispose();followLabels=null;}

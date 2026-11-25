@@ -157,7 +157,8 @@ public sealed partial class RobotHeadView
     internal VrFrame CaptureVrScene(string status,bool following=false,bool useBackdrop=true)
     {
         _vrGraph??=new();
-        return _vrGraph.Capture(_sceneLightingRoot,_presentationModel,_stageModel,_vrRestBounds,(float)_stageFloor,LoadedModelFile,status,VrExtraGeometry(),!following||useBackdrop,following&&useBackdrop&&CaptureBackground().BackgroundMode==UrdfBackgroundMode.Urdf3D,_scene?.VrTreadState());
+        return _vrGraph.Capture(_sceneLightingRoot,_presentationModel,_stageModel,_vrRestBounds,(float)_stageFloor,LoadedModelFile,status,VrExtraGeometry(),!following||useBackdrop,following&&useBackdrop&&CaptureBackground().BackgroundMode==UrdfBackgroundMode.Urdf3D,_scene?.VrTreadState()) with
+        { CaptureCamera = CleanCameraShot is {} shot ? new(shot.Eye,shot.Target) : null };
     }
 }
 

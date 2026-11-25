@@ -1,4 +1,4 @@
-﻿using System.Windows;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
 
@@ -53,6 +53,7 @@ public partial class MainWindow
         if (_recordingWindow != null && !RecordingController && !_recordingReplayOutput) return false;
         if (_safeguardHolding) return false;
         if (_speedCalibrationBusy) return false;
+        if (physical && _webcamOverdub != null) return false;
         if (FaceOutputActive) return !physical || (RecordingController && LiveDrive);
         if (_apiLibraryOwnsOutput) return ApiLibraryOutputAllowed(physical);
         if (_controllerConfigOpen) return !physical && _controllerMappingWindow?.CanTestWithCurrentFocus != false;
@@ -74,7 +75,7 @@ public partial class MainWindow
         // transitions so a later render cannot integrate time spent blocked.
         ForEachHeadView(v => v.RefreshCalibratedMotionPermission());
     }
-    private bool PlaybackOutputAllowed(bool physical) => !_speedCalibrationBusy && !_safeguardHolding && (!_controllerPlaybackSource.HasValue || FocusControlPolicy.Controller(
+    private bool PlaybackOutputAllowed(bool physical) => !(physical && _webcamOverdub != null) && !_speedCalibrationBusy && !_safeguardHolding && (!_controllerPlaybackSource.HasValue || FocusControlPolicy.Controller(
         ControllerWindowActive, _focusControl.AllowsOutput(_controllerPlaybackSource.Value, physical),
         !IsEnabled || OwnedWindows.Cast<Window>().Any(ControllerDialogBlocks)));
     private void SetPlaybackControlSource(ControllerKind? source)

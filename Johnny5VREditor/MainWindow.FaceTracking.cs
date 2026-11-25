@@ -41,6 +41,18 @@ public partial class MainWindow
             _faceFiltered.Clear(); _faceLastPacket = -1;
             RefreshFaceSpeedLimits();
         };
+        _faceWindow.PreviewChanged = () =>
+        {
+            _faceFiltered.Clear(); _faceLastPacket = -1;
+            RefreshFaceSpeedLimits();
+        };
+        _faceWindow.AppliedOutput = mapping =>
+        {
+            if (_faceWindow?.PreviewEnabled != true || !_faceClient.Fresh ||
+                !ActiveFaceSettings.Mappings.Any(m => m.Enabled && m.Signal == mapping.Signal && m.Target == mapping.Target)) return null;
+            string key = FaceTrackingSettings.IsNeckComponent(mapping) ? "NeckMix:" + mapping.Signal : mapping.Target;
+            return _faceFiltered.TryGetValue(key, out double output) ? output : null;
+        };
         _faceWindow.SaveRequested = settings =>
         {
             settings.Save(ConfigRoot);

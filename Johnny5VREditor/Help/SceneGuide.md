@@ -1,4 +1,4 @@
-﻿# Build a scene and animate the robot
+# Build a scene and animate the robot
 
 Stop timeline playback completely before opening Help.
 
@@ -21,6 +21,10 @@ Expected result: body and framing commands animate only the URDF. Model settings
 5. Preview, then save. Use negative Track Forward to reverse.
 
 Expected result: the robot travels relative to its front. Treads and rear casters animate on a compatible model. Robot Centric moves the scenery around the robot; Room Centric changes apparent size with distance. Scenery does not provide wall collision avoidance.
+
+## Switch camera shots during playback
+
+Use [Camera Shots](CameraShots.md) to cut or blend between a wide view, a tight shot of Johnny's head and shoulders, and a view of his hands. Add **Standard view** to return to the scene camera.
 
 ## Present TV media or collapse the robot
 

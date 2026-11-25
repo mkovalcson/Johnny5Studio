@@ -4,6 +4,10 @@ Desktop/ contains development history, design notes, measurements, and workflow 
 
 Open **Help → VR Guides** in J5 Studio Desktop or VR Editor for the searchable user guides. The shared topics live in `Shared/UserHelp`. The notes below cover implementation history.
 
+[Changelog](../CHANGELOG.md) tracks implemented changes for the next release.
+
+[Prioritized usability review](Usability-Review-2026-11-18.md) records open behavior mismatches and follow-up suggestions.
+
 ## Start here: VR Player, VR Editor and body work (November 2026)
 
 Each document says what changed and why, the files involved, the checks that cover it, and

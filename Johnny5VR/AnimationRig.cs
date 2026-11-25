@@ -192,8 +192,11 @@ internal sealed partial class AnimationRig
             return worlds[l]=w;
         }
         double Value(string s)=>pose.TryGetValue("servo:"+s,out var v)?v.Value:0;
-        // TipToe: the caster wheels roll in from behind as the four-bar swings down and the body moves forward.
-        if(tipToe!=null&&TipToeRadians>0){double roll=tipToe.At(TipToeRadians).CasterRoll;travel=travel with{CasterLeft=travel.CasterLeft+roll,CasterRight=travel.CasterRight+roll};}
+        if (tipToe != null && TipToeRadians > 0)
+        {
+            var caster = ServoAnimator.CasterWheelTravel.DuringTipToe(travel.Caster, tipToe.At(TipToeRadians).CasterRoll, CasterTrail);
+            travel = travel with { Caster = caster.Angle, CasterLeft = travel.CasterLeft + caster.Left, CasterRight = travel.CasterRight + caster.Right };
+        }
         var secondary=SecondaryTransforms(Value("URDFSpin")+Value("URDFStageHeading"),travel);
         var sceneMotion=Matrix4x4.CreateRotationZ((float)(Value("URDFSpin")*Math.PI/180))*Matrix4x4.CreateRotationX((float)(-Value("URDFRotate")*Math.PI/180))*Matrix4x4.CreateRotationZ((float)(Value("URDFStageHeading")*Math.PI/180))*Matrix4x4.CreateTranslation((float)(Value("URDFStageX")/100+travel.X),(float)(Value("URDFStageY")/100+travel.Y),0);
         foreach(var l in links)World(l);

@@ -29,6 +29,12 @@ internal static class BridgeChecks
         receiver.Apply(SceneWire.Decode(SceneWire.Encode(unchanged,new HashSet<long>{5},new HashSet<long>{11})));
         var movedFrame=frame with{Nodes=[frame.Nodes[0] with{World=Matrix4x4.CreateTranslation(4,5,6)}],Materials=[frame.Materials[0] with{Diffuse=Vector4.One}]};
         var moved=sender.Prepare(movedFrame,receiver.Sequence);var assembled=receiver.Apply(SceneWire.Decode(SceneWire.Encode(moved,new HashSet<long>{5},new HashSet<long>{11})));
+        var camera=new VrCaptureCamera(new(2,3,4),new(1,0,0));
+        var cameraSender=new VrSceneDeltaWriter();var cameraReceiver=new VrSceneAccumulator();
+        cameraReceiver.Apply(cameraSender.Prepare(frame,0));
+        var cameraDelta=cameraSender.Prepare(frame with{CaptureCamera=camera},cameraReceiver.Sequence);
+        var cameraFrame=cameraReceiver.Apply(SceneWire.Decode(SceneWire.Encode(cameraDelta,new HashSet<long>(),new HashSet<long>())));
+        check(cameraDelta.Nodes.Length==0&&cameraFrame.CaptureCamera==camera,"Capture camera travels with scene deltas independently of geometry.");
         check(moved.Nodes.Length==1&&moved.Materials.Length==1&&assembled.Nodes[0].World==movedFrame.Nodes[0].World&&assembled.Materials[0].Diffuse==Vector4.One,"Delta transfer preserves changed transforms and same-ID material edits.");
         // The renderer may skip the preceding ready frame; the background accumulator may not skip a packet.
         var skippedReady=sender.Prepare(movedFrame with{Nodes=[movedFrame.Nodes[0],new(10,5,7,Matrix4x4.Identity,false)]},receiver.Sequence);receiver.Apply(skippedReady);

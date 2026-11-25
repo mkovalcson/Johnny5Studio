@@ -51,7 +51,7 @@ From the body-tracking review of November 12, 2026 (see VR-Follow-Wrist-Pivot.md
 1. **Named Follow presets.** Save neutral pose, speed, smoothing, and input scaling together. Switch between presets such as Conversation, Expressive, and Precise Hands without recalibrating. Keep URDF travel limits separate. This is the suggested first priority.
 2. **Take bin.** Keep multiple drafts of the same section and audition them before choosing which to keep. Starting another take should leave earlier drafts available.
 3. **Prop interactions.** Give props named grab points and timeline commands for attaching, releasing, and interacting with them. Use the one-button remote as the first example: pick it up, press its button to cue a scene animation or sound, and set it down.
-4. **Camera bookmarks and shot cues.** Save views such as a wide shot, face close-up, or hand detail, and switch between them on the timeline for desktop preview or Clean Output. Leave headset viewing under the user's control.
+4. **Saved custom camera bookmarks.** Save manually composed views for reuse. Automatic Tight, Wide and Hand timeline cues with cuts and blends are implemented.
 5. **Motion cleanup for recorded takes.** Preview and apply cleanup to a selected section: remove tiny movements, smooth a shaky gesture, or reduce redundant commands without changing live Follow settings.
 
 ## Completed from this list

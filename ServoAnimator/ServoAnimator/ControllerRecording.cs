@@ -1,4 +1,4 @@
-﻿namespace ServoAnimator;
+namespace ServoAnimator;
 
 /// <summary>A draft take. Values are accepted native controller targets or modeled speed-limited webcam positions, not servo feedback.
 /// No timeline or hardware is mutated by sampling or processing this class.</summary>
@@ -12,12 +12,23 @@ internal sealed class ControllerRecording
     internal bool OwnsControl(RobotControls control) => _armedChildren.Contains(control);
     private readonly HashSet<RobotControls> _armedChildren;
     private readonly HashSet<ServoNames> _childGroups;
+    private readonly HashSet<ServoNames> _logicalNeck;
+
+    internal bool OwnsTimelineCommand(ServoCommand command) =>
+        _logicalNeck != null && NeckMix.IsNeckParent(command.Servo)
+            ? (command.Control.HasValue ? _logicalNeck.Count == 2 : _logicalNeck.Contains(command.Servo))
+            : Owns(command.Servo, command.Control);
     internal bool Owns(ServoNames servo, RobotControls? child = null) => child.HasValue
         ? _armedChildren.Contains(child.Value)
         : ServoConfiguration.ControlsFor(servo) is var controls && controls.Length > 0 && controls.All(_armedChildren.Contains);
     internal bool Touches(ServoNames servo) => ServoConfiguration.ControlsFor(servo).Any(_armedChildren.Contains);
     internal IEnumerable<ServoCommand> Unrecorded(ServoCommand command)
     {
+        if (_logicalNeck != null && NeckMix.IsNeckParent(command.Servo))
+        {
+            if (!OwnsTimelineCommand(command)) yield return command.Clone();
+            yield break;
+        }
         if (command.IsTextServo || !Touches(command.Servo)) { yield return command.Clone(); yield break; }
         if (command.Control.HasValue) { if (!Owns(command.Servo, command.Control)) yield return command.Clone(); yield break; }
         foreach (var child in ServoConfiguration.ControlsFor(command.Servo).Where(c => !Owns(command.Servo, c)))
@@ -30,13 +41,18 @@ internal sealed class ControllerRecording
     }
     internal double Start { get; }
     internal double End => Frames.Count == 0 ? Start : Frames[^1].Time;
-    internal ControllerRecording(double start, IEnumerable<ServoNames> armed, IEnumerable<(ServoNames Servo, RobotControls Control)> children = null)
+    internal ControllerRecording(double start, IEnumerable<ServoNames> armed,
+        IEnumerable<(ServoNames Servo, RobotControls Control)> children = null, IEnumerable<ServoNames> logicalNeck = null)
     {
-        Start = ServoCommand.TimeKey(start); Armed = ExpandSelection(armed);
-        var individual = (children ?? Array.Empty<(ServoNames, RobotControls)>()).ToArray();
+        Start = ServoCommand.TimeKey(start);
+        _logicalNeck = logicalNeck?.ToHashSet();
+        Armed = ExpandSelection(armed.Where(s => _logicalNeck == null || !NeckMix.IsNeckParent(s)));
+        var individual = (children ?? Array.Empty<(ServoNames, RobotControls)>())
+            .Where(c => _logicalNeck == null || !NeckMix.IsPiston(c.Control)).ToArray();
         _childGroups = individual.Select(p => p.Servo).ToHashSet();
         _armedChildren = Armed.SelectMany(ServoConfiguration.ControlsFor).Concat(individual.Select(p => p.Control)).ToHashSet();
         Armed.UnionWith(Enum.GetValues<ServoNames>().Where(Touches));
+        if (_logicalNeck != null) Armed.UnionWith(_logicalNeck);
     }
 
     internal static HashSet<ServoNames> ExpandSelection(IEnumerable<ServoNames> selected)
@@ -51,6 +67,16 @@ internal sealed class ControllerRecording
 
     internal void Accept(ServoCommand command)
     {
+        if (_logicalNeck != null && NeckMix.IsNeckParent(command.Servo))
+        {
+            if (!command.Control.HasValue && !command.Disable && _logicalNeck.Contains(command.Servo))
+            {
+                var value = command.Clone();
+                value.ClampToRange();
+                _targets[(value.Servo, null)] = value;
+            }
+            return;
+        }
         if (!Touches(command.Servo) || command.Disable || command.IsTextServo) return;
         if (command.Servo == ServoNames.BothEyePop)
         {

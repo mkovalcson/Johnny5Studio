@@ -26,6 +26,18 @@ To use one, position the sequence cursor at the desired time, right-click the Au
 
 **Insert commands from JSON file** remains a separate generic importer. It preserves the relative timing in the selected JSON and adds the current cursor time to those offsets, so it can insert a multi-time command pattern or sequence fragment.
 
+## Insert a sequence over existing commands
+
+An inserted Library Sequence forms a new group so you can select and move the inserted commands together. When the insertion span contains existing commands for any of the same controls, a review shows the number of **Existing** and **Inserted** commands for each overlapping control.
+
+For example, if you insert a three-second sequence at 5 seconds and it contains four Elbow R commands, the review counts those four commands and any existing Elbow R commands from 5 through 8 seconds. Choose separately for each overlapping control:
+
+1. **Keep original** keeps the existing commands and skips the inserted commands for that control.
+2. **Use inserted** replaces the existing commands for that control within the insertion span.
+3. **Merge** keeps both sets and uses the inserted command when both land at the same time. This is the default.
+
+Commands outside the insertion span stay in place. Cancel leaves the timeline as it was. Undo reverses an accepted insertion in one step.
+
 ## Audio Timeline insertion
 
 At the top of the Audio Timeline right-click menu are **Insert new Command**, **Insert Library Pose**, and **Insert Library Sequence**. Library Poses place all stored commands at the selected time point. Library Sequences preserve their stored relative offsets and rebase the sequence start to the selected time.

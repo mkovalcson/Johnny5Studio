@@ -128,6 +128,7 @@ public enum ServoNames
     B_WristRoll,
     // Appended 2026-11-12: both tracks rotate front-down about the pelvis drum (URDF only).
     B_TipToe,
+    CameraShot,
 }
 
 public enum ServoSpeed

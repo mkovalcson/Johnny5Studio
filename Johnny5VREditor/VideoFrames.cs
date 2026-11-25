@@ -24,7 +24,9 @@ internal static partial class VideoFrames
 
     /// <summary>The pictures shown at each video position (seconds, ascending works best). A position past the end
     /// gives the last picture. Top-down BGRA rows.</summary>
-    internal static List<Frame> Read(string path, IReadOnlyList<double> seconds)
+    internal static List<Frame> Read(string path, IReadOnlyList<double> seconds) => ReadSequential(path, seconds).ToList();
+
+    internal static IEnumerable<Frame> ReadSequential(string path, IReadOnlyList<double> seconds, CancellationToken token = default)
     {
         if (!System.IO.File.Exists(path)) throw new System.IO.FileNotFoundException("Video not found.", path);
         double duration = VideoClipCommand.ProbeSeconds(path);
@@ -54,12 +56,13 @@ internal static partial class VideoFrames
         try
         {
             Open();
-            var frames = new List<Frame>();
+
             double position = 0;                   // a fresh reader starts at the beginning
             bool seekable = true;
             byte[] last = null; double lastTime = 0, lastEnd = 0;
             foreach (double requested in seconds)
             {
+                token.ThrowIfCancellationRequested();
                 double target = Math.Clamp(requested, 0, Math.Max(0, duration - .001));   // past the end: the last picture
                 if (target < position - 1e-9 || target > lastEnd + ReadAheadSeconds)
                 {
@@ -88,10 +91,9 @@ internal static partial class VideoFrames
                     finally { Marshal.ReleaseComObject(sample); }
                 }
                 if (last == null) throw new InvalidOperationException("No picture could be decoded from this video.");
-                frames.Add(new Frame(width, height, last, lastTime));
+                yield return new Frame(width, height, last, lastTime);
                 if (ended) position = double.PositiveInfinity;   // reposition for any later request
             }
-            return frames;
         }
         finally { if (reader != null) Marshal.ReleaseComObject(reader); }
     }
@@ -110,29 +112,55 @@ internal static partial class VideoFrames
         finally { Marshal.FreeHGlobal(ptr); }
     }
 
-    /// <summary>Copy one picture into top-down rows (a negative stride means the source is bottom-up).</summary>
+    [ComImport, Guid("7DC9D5F9-9ED9-44EC-9BBF-0600BB589FBB"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+    private interface VideoBuffer2D
+    {
+        void Lock2D(out IntPtr firstScanline, out int pitch);
+        void Unlock2D();
+    }
+
+    /// <summary>Copy RGB32 into top-down, tightly packed BGRA rows.</summary>
     private static byte[] Copy(IMFSample sample, int width, int height, int stride)
     {
-        sample.ConvertToContiguousBuffer(out IMFMediaBuffer buffer);
+        sample.GetBufferCount(out int count);
+        IMFMediaBuffer buffer;
+        if (count == 1) sample.GetBufferByIndex(0, out buffer);
+        else sample.ConvertToContiguousBuffer(out buffer);
+
+        int rowBytes = checked(width * 4);
+        var pixels = new byte[checked(rowBytes * height)];
         try
         {
-            buffer.Lock(out IntPtr data, out _, out int length);
-            try
+            if (buffer is VideoBuffer2D surface)
             {
-                int row = width * 4, pitch = Math.Abs(stride);
-                if ((long)pitch * height > length) pitch = length / Math.Max(1, height);
-                var pixels = new byte[row * height];
-                for (int y = 0; y < height; y++)
-                {
-                    int source = stride < 0 ? (height - 1 - y) * pitch : y * pitch;
-                    Marshal.Copy(data + source, pixels, y * row, Math.Min(row, pitch));
-                }
-                for (int i = 3; i < pixels.Length; i += 4) pixels[i] = 255;   // RGB32's fourth byte is unused, not alpha
-                return pixels;
+                // A 2D surface supplies the actual pitch and the address of
+                // the visual top row, even for a bottom-up image.
+                surface.Lock2D(out var firstScanline, out int pitch);
+                try { CopyRows(firstScanline, pitch); }
+                finally { surface.Unlock2D(); }
             }
-            finally { buffer.Unlock(); }
+            else
+            {
+                buffer.Lock(out var data, out _, out int length);
+                try
+                {
+                    int pitch = VideoFrameLayout.LinearPitch(rowBytes, height, stride, length);
+                    CopyRows(stride < 0 ? data + (height - 1) * pitch : data, stride < 0 ? -pitch : pitch);
+                }
+                finally { buffer.Unlock(); }
+            }
+
+            for (int i = 3; i < pixels.Length; i += 4) pixels[i] = 255;
+            return pixels;
         }
         finally { Marshal.ReleaseComObject(buffer); }
+
+        void CopyRows(IntPtr top, int pitch)
+        {
+            if (Math.Abs((long)pitch) < rowBytes) throw new System.IO.InvalidDataException("Invalid RGB32 video row pitch.");
+            for (int y = 0; y < height; y++)
+                Marshal.Copy(top + checked(y * pitch), pixels, y * rowBytes, rowBytes);
+        }
     }
 
     internal static BitmapSource ToBitmap(Frame frame, int maxWidth)

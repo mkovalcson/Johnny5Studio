@@ -59,7 +59,7 @@ internal static class HeadroomTimelineEditor
         foreach(var c in output)
             if(c.AudioSourceSeconds.HasValue && takes.TryGetValue(c.AudioTakeId,out double origin)) c.AudioSourceSeconds=c.OffsetSeconds-origin;
         var active=doc.Commands.ToArray();
-        var tracks=active.Where(c=>c.Servo!=ServoNames.Play && c.Servo!=ServoNames.LoadBackdrop && c.Servo!=ServoNames.FallApart && c.Servo is not (ServoNames.TvFront or ServoNames.TvShow or ServoNames.TvReturn or ServoNames.UrdfBeam or ServoNames.LcdShow or ServoNames.HideLaser or ServoNames.ToolboxSwap or ServoNames.FireLaser or ServoNames.VideoClip))
+        var tracks=active.Where(c=>c.Servo!=ServoNames.Play && c.Servo!=ServoNames.LoadBackdrop && c.Servo!=ServoNames.FallApart && c.Servo is not (ServoNames.TvFront or ServoNames.TvShow or ServoNames.TvReturn or ServoNames.UrdfBeam or ServoNames.LcdShow or ServoNames.HideLaser or ServoNames.ToolboxSwap or ServoNames.FireLaser or ServoNames.VideoClip or ServoNames.CameraShot))
             .GroupBy(c=>(Servo: Neck(c.Servo) ? ServoNames.NeckNodUp : c.Servo,c.Control))
             .ToDictionary(g=>g.Key,g=>new Track(g,!g.Key.Control.HasValue &&
                 (splineServos.Contains(g.Key.Servo) || Neck(g.Key.Servo) && splineServos.Contains(ServoNames.NeckTiltRight))));

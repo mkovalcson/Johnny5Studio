@@ -1,4 +1,5 @@
 <Project>
+  <Import Project="StudioBuild.targets" />
   <PropertyGroup>
     <_StudioVersionRecord>$(MSBuildThisFileDirectory)../ServoAnimator/Build/PROJECT_VERSION.json</_StudioVersionRecord>
     <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>

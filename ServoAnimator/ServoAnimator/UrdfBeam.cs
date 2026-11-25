@@ -44,6 +44,16 @@ public sealed class BeamCommand
     public string ToJson() => JsonSerializer.Serialize(this, Options);
     internal string Label() => Direction == BeamDirection.In ? "Beam in" : "Beam out";
 
+    internal static string ImportSound(string configRoot, string sound)
+    {
+        if (string.Equals(sound, DefaultSound, StringComparison.OrdinalIgnoreCase)) return DefaultSound;
+        if (string.Equals(sound, NoSound, StringComparison.OrdinalIgnoreCase)) return NoSound;
+        string source = ConfigPathService.Resolve(configRoot, sound);
+        if (!File.Exists(source)) throw new FileNotFoundException("Beam sound file not found: " + source, source);
+        string imported = LibraryAudioImport.ImportIntoConfig(configRoot, source, out _);
+        return ConfigPathService.ToRelative(configRoot, imported);
+    }
+
     /// <summary>The audio file to play, or null for none.</summary>
     internal string SoundFile(string configRoot)
     {
@@ -85,17 +95,32 @@ internal static class BeamTimeline
     /// <summary>Stateless evaluation. No beam commands: the robot is visible. Before the first beam command the robot
     /// is hidden if that command beams in. Otherwise the latest enabled beam at or before the cursor decides: while it
     /// runs the effect is active; afterwards the robot is visible (in) or hidden (out). Invalid settings are skipped.</summary>
-    internal static BeamState StateAt(IEnumerable<ServoCommand> commands, double cursor)
+    internal static BeamState StateAt(IEnumerable<ServoCommand> commands, double cursor) =>
+        PreparedStateAt(Prepare(commands), cursor);
+
+    internal static (double Time, BeamCommand Settings)[] Prepare(IEnumerable<ServoCommand> commands)
     {
         var beams = new List<(double Time, BeamCommand Settings)>();
         foreach (var c in commands.Where(c => c.Servo == ServoNames.UrdfBeam && !c.Disable).OrderBy(c => c.OffsetSeconds))
         {
             try { beams.Add((c.OffsetSeconds, BeamCommand.Read(c.TextValue))); } catch (Exception) { }
         }
-        if (beams.Count == 0) return BeamState.Visible;
-        var latest = beams.LastOrDefault(b => b.Time <= cursor + 1e-9);
-        if (latest.Settings == null)
+        return beams.ToArray();
+    }
+
+    internal static BeamState PreparedStateAt((double Time, BeamCommand Settings)[] beams, double cursor)
+    {
+        if (beams.Length == 0) return BeamState.Visible;
+        int lo = 0, hi = beams.Length;
+        while (lo < hi)
+        {
+            int mid = lo + (hi - lo) / 2;
+            if (beams[mid].Time <= cursor + 1e-9) lo = mid + 1;
+            else hi = mid;
+        }
+        if (lo == 0)
             return beams[0].Settings.Direction == BeamDirection.In ? new BeamState(false, true, BeamDirection.In, 0, beams[0].Settings, beams[0].Time) : BeamState.Visible;
+        var latest = beams[lo - 1];
         double progress = (cursor - latest.Time) / latest.Settings.Seconds;
         if (progress < 1) return new BeamState(true, false, latest.Settings.Direction, Math.Max(0, progress), latest.Settings, latest.Time);
         return latest.Settings.Direction == BeamDirection.In ? BeamState.Visible with { Settings = latest.Settings, StartSeconds = latest.Time }

@@ -3767,6 +3767,7 @@ namespace ServoAnimator
                 cameraTarget.X + distance * cp * Math.Cos(yaw),
                 cameraTarget.Y + distance * cp * Math.Sin(yaw),
                 cameraTarget.Z + distance * Math.Sin(_cameraPitch));
+            ApplyShotCamera(ref position, ref cameraTarget);
             ApplyTvCamera(ref position, ref cameraTarget);
             _camera.Position = position;
             _camera.LookDirection = cameraTarget - position;

@@ -31,7 +31,7 @@ public static class ControlDefinitions
     };
 
     public static bool IsTextValued(ServoNames s) =>
-                s == ServoNames.RGBCommand || s == ServoNames.Play || s == ServoNames.LoadBackdrop || s == ServoNames.FallApart || s is ServoNames.TvFront or ServoNames.TvShow or ServoNames.TvReturn or ServoNames.UrdfBeam or ServoNames.LcdShow or ServoNames.HideLaser or ServoNames.ToolboxSwap or ServoNames.FireLaser or ServoNames.VideoClip;
+                s == ServoNames.RGBCommand || s == ServoNames.Play || s == ServoNames.LoadBackdrop || s == ServoNames.FallApart || s is ServoNames.TvFront or ServoNames.TvShow or ServoNames.TvReturn or ServoNames.UrdfBeam or ServoNames.LcdShow or ServoNames.HideLaser or ServoNames.ToolboxSwap or ServoNames.FireLaser or ServoNames.VideoClip or ServoNames.CameraShot;
 
     public static readonly Dictionary<ServoNames, RobotControls[]> GangMap = new()
     {

@@ -12,6 +12,7 @@ internal sealed partial class VrBodyMotion:IDisposable
     internal readonly FollowNeutralSettings Neutrals=new();
     internal readonly FollowNeutralMapper NeutralMapper=new();
     internal readonly FollowInputSettings InputTuning=new();
+    internal readonly FollowHands Hands=new();
     internal bool TuningSpeeds {get;set;}
     private ulong panel;
     private long nextPaint;
@@ -64,6 +65,11 @@ internal sealed partial class VrBodyMotion:IDisposable
         }
         leftAHeld=input.LeftA;
     }
+    internal void ToggleHandMode()
+    {
+        Hands.ToggleMode(result?.Targets,mirrorFacing);
+        ToggleFeedback?.Invoke(Hands.Manual?FollowToggle.Hand:FollowToggle.Movement);
+    }
     private string config="",path="",token="";
     private readonly HashSet<string> sentIds=[];
     private readonly Queue<string> sentOrder=new();
@@ -115,7 +121,7 @@ internal sealed partial class VrBodyMotion:IDisposable
         if(SendRecording==null)throw new InvalidOperationException("Open the matching updated VR Editor first.");
         if(LatestPose?.HasTake==true)throw new InvalidOperationException("Keep or discard the previous take first.");
         if(RecordingTracks==0)throw new InvalidOperationException("Arm at least one control group.");
-        StartFollowing();countdownLength=Math.Clamp(countdownSeconds,0,10);countdownUntil=0;startRecording=overdub?VrRecordingAction.Overdub:VrRecordingAction.Record;
+        StartFollowing(preserveHands:Following);countdownLength=Math.Clamp(countdownSeconds,0,10);countdownUntil=0;startRecording=overdub?VrRecordingAction.Overdub:VrRecordingAction.Record;
         // All three neck axes stay off together for overdub unless explicitly armed.
         Status="Stand upright, arms down; recording starts after tracking is acquired and the trigger is released.";
     }
@@ -168,12 +174,13 @@ internal sealed partial class VrBodyMotion:IDisposable
         if(w.Complete&&recorder!=null){BridgeTiming.Event("Calibration complete");recorder.Dispose();recorder=null;}
     }
     internal void Previous(){if(save is {IsCompleted:false})throw new InvalidOperationException("Wait for the calibration to finish saving.");wizard?.Back();save=null;awaitRelease=true;}
-    internal void StartFollowing()
+    internal void StartFollowing()=>StartFollowing(preserveHands:false);
+    private void StartFollowing(bool preserveHands)
     {
         if(!HasCalibration)throw new InvalidOperationException("Complete body calibration first.");
         if(save is {IsCompleted:false})throw new InvalidOperationException("Wait for calibration to finish saving.");
         startRecording=null;recordingRequested=recordingActive=false;laserLowerTarget=null;SelectionsOpen=false;
-        sentIds.Clear();sentOrder.Clear();wizard=null;solver=new(profile!);Following=true;waitingStart=true;startDeadline=Environment.TickCount64+5000;editorWaitDeadline=Environment.TickCount64+EditorWaitMs;editorWaitLogged=false;invalidElapsed=0;awaitRelease=true;
+        sentIds.Clear();sentOrder.Clear();if(!preserveHands)Hands.Reset();wizard=null;solver=new(profile!);Following=true;waitingStart=true;startDeadline=Environment.TickCount64+5000;editorWaitDeadline=Environment.TickCount64+EditorWaitMs;editorWaitLogged=false;invalidElapsed=0;awaitRelease=true;
         InputTuning.Filter.Reset();inDropout=false;BridgeTiming.FollowStarted();
         recorder?.Dispose();recorder=null;try{recorder=new(Diagnostics.Folder);}catch(Exception ex){Diagnostics.Log(ex);}
         Status="Stand upright, arms relaxed down, facing forward; acquiring tracking and current robot placement…";
@@ -270,13 +277,18 @@ internal sealed partial class VrBodyMotion:IDisposable
             SendRecording?.Invoke(new(recordingRequest,pose.Token,action,RecordingTracks));return;
         }
         if(token!=pose.Token){Stop("Timeline/cursor changed — following stopped to protect the new editing context.");return;}
-        var drive=TuningSpeeds?(Forward:0f,Turn:0f):FollowStickRouting.Robot(input);
+        var drive=TuningSpeeds||Hands.Manual?(Forward:0f,Turn:0f):FollowStickRouting.Robot(input);
         solver!.Drive(Locomotion.DeadZone(drive.Forward)*Speeds.Get("URDFStageTravel"),Locomotion.DeadZone(drive.Turn)*Speeds.Get("URDFStageHeading"),seconds);
-        solver!.MirrorFacing=mirrorFacing;result=NeutralMapper.Apply(solver.Solve(frame,seconds,InputTuning.Filter),mirrorFacing,Neutrals.Values,InputTuning.Filter,seconds);
+        solver!.MirrorFacing=mirrorFacing;
+        // Suppress tracked curls and their automatic point/wrist assist in manual or held mode.
+        var solveFrame=Hands.OverrideFingers?frame with{LeftFingers=null,RightFingers=null}:frame;
+        result=NeutralMapper.Apply(solver.Solve(solveFrame,seconds,InputTuning.Filter),mirrorFacing,Neutrals.Values,InputTuning.Filter,seconds);
+        Hands.Apply(input,!TuningSpeeds,mirrorFacing,seconds,result.Targets,
+            control=>Neutrals.Values.GetValueOrDefault(control.Key,control.Initial));
         if(!TrackWaistSwivel)result.Targets.Remove(nameof(ServoNames.B_WaistSwivel));
         if(pose.Accessory!=1)laserLowerTarget=null;
         if(laserLowerTarget is {} laser)result.Targets["B_LaserLower"]=laser;
-        Status=recordingActive?pose.RecordingMessage:"Following · "+(mirrorFacing?"Mirrored":"Unmirrored")+" · Left stick: Robot · Right stick: Me · "+result.Confidence+" · B: stop";
+        Status=recordingActive?pose.RecordingMessage:"Following · "+(mirrorFacing?"Mirrored":"Unmirrored")+" · "+(Hands.Manual?"Hand":"Movement")+" · "+result.Confidence+" · B: stop";
         // Offer the latest targets every frame. The bridge keeps only the newest and sends
         // it just before each scene request, so every scene moves by one even step.
         sendElapsed+=Math.Clamp(seconds,0,.05f);

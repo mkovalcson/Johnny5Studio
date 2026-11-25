@@ -1,2 +1,3 @@
 @echo off
-start "J5 Studio Desktop" "%~dp0ServoAnimator\ServoAnimator\bin\Release\net10.0-windows\AnimationEditorPlayer.exe"
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File "%~dp0tools\Start-Studio.ps1" -Application Desktop
+if errorlevel 1 pause

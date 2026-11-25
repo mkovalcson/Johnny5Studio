@@ -76,6 +76,8 @@ namespace ServoAnimator
                         DurationSeconds = i.DurationSeconds,
                         Description = i.Description,
                         IsLooping = i.IsLooping,
+                        IdleMood = i.IdleMood,
+                        Trigger = i.Trigger,
                     }).ToList(),
                 MovieSelectedIndex = MovieSelectedIndex,
                 SequenceCursorTime = SequenceCursorTime,

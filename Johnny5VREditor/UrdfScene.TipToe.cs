@@ -51,8 +51,8 @@ internal sealed partial class UrdfScene
         if (radians == _tipToeRadians) return false;
         _tipToeRadians = radians;
         foreach (var (extra, link) in _tipToeTransforms) extra.Matrix = ToMatrix3D(_tipToe.RootChildMotion(link, radians));
-        // The caster wheels roll in from behind; SetCasterSwivel adds this to their own travel.
-        _tipToeWheelRoll = _tipToe.At(radians).CasterRoll / _tipToe.CasterWheelRadius * CasterWheelVisualRadius;
+        // The caster steers and rolls with the four-bar's longitudinal travel.
+        _tipToeWheelRoll = _tipToe.At(radians).CasterRoll;
         ReapplyCasterSwivel();
         return true;
     }

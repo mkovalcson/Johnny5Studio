@@ -75,7 +75,7 @@ internal static partial class Program
               "Nod is its own curve, with its break on its outgoing segment");
         Check(!curves.Any(c => c.Servo == ServoNames.NeckTiltRight), "Tilt is not drawn unless its own spline is enabled");
         string folder = PreviewDirectory("spline-previews"); Directory.CreateDirectory(folder);
-        var editor = new CommandEditorWindow(doc, 1, null, null, null, null, null, folder,
+        var editor = new CommandEditorWindow(doc, 1, null, null, null, null, null, folder, folder,
             new[] { ServoNames.NeckTurn, ServoNames.NeckNodUp }, (_, _) => true);
         RenderControl((FrameworkElement)editor.Content, Path.Combine(folder, "BreakSplineEditor.png"), 1010, 280);
         string savePath = Path.Combine(folder, "BreakSplineRoundtrip.json"); doc.Save(savePath);

@@ -68,3 +68,30 @@ show an infinity badge. The tint does not change Movie timing or sequence select
 Movie description, sequence insert/remove/reorder changes, and loop flags are included.
 
 Use **File > Export Movie ZIP…** to transfer the Movie with every Sequence and its media/scene dependencies. **Import Movie ZIP…** restores those files under Configuration after a date/size comparison and Proceed/Cancel review, then opens the Movie. Robot and 3D scenery URDF models are assumed installed; separate URDF Model ZIP commands transfer them when needed. See [Save, export and reuse your work](Saving.md).
+
+## Expressive idle between sequences
+
+Right-click a sequence block and choose **Expressive idle after sequence**, then
+**Attentive**, **Curious**, **Tired**, or **Impatient**. An hourglass replaces the
+loop symbol. Selecting a mood turns looping off for that block; selecting Loop
+turns expressive idle off.
+
+The sequence plays once, then Johnny waits with subtle eye, head and flap
+movements. His sequence cursor stays at the end and audio finishes. Choose
+**Next**, press Right Arrow, or use the next sequence's assigned trigger to
+continue. The Movie Play button becomes **Next** during the wait. Stop ends idle.
+Selecting **Off** restores the normal end-of-sequence behavior. Save the movie
+to keep the selected mood. Older movies load with expressive idle off.
+
+Movements blend in over 1.5 seconds around the sequence's ending pose and respect
+control limits. When Drive HW is enabled and connected, the regular playback
+output rules also apply to the idle's head and eye commands. Test a new mood
+in the URDF preview before using it on a physical robot.
+
+## VR Player idle transport
+
+During standalone VR movie idle, **Pause idle** freezes the current idle pose,
+and **Resume idle** continues it on the same sequence. **Next** advances to the
+next sequence. At the final sequence, Next leaves the idle running; Stop ends
+playback and rewinds. The desktop buttons, VR Playback page, and compact
+transport use the same actions.

@@ -50,6 +50,8 @@ namespace ServoAnimator
         private readonly Action<ServoSpeed, ServoNames, RobotControls> _configureChildSpeedNow;
         private readonly ObservableCollection<CommandVM> _items = new();
         private readonly string _libraryCommandsFolder;
+        private readonly string _configRoot;
+        private readonly string _groupScope;
 
         public CommandEditorWindow(AnimationDocument doc, double time,
                                    Action<ServoSpeed, ServoNames, int> moveServoNow,
@@ -58,22 +60,28 @@ namespace ServoAnimator
                                    Action<ServoSpeed, ServoNames> configureGangSpeedNow,
                                    Action<ServoSpeed, ServoNames, RobotControls> configureChildSpeedNow,
                                    string libraryCommandsFolder,
+                                   string configRoot,
                                    IEnumerable<ServoNames> splineServos,
                                    Func<List<ServoCommand>, IReadOnlyDictionary<ServoNames, bool>, bool> commitCommands,
-                                   ServoCommand focusCommand = null)
+                                   ServoCommand focusCommand = null, string groupScope = null)
         {
             InitializeComponent();
             HelpSystem.EnableContextHelp(this, "commands");
             HelpSystem.SetTopic(CmdList, "commands");
             _sourceDoc = doc;
-            _session = new CommandEditSession(doc.Commands, time);
+            _groupScope = groupScope;
+            _session = new CommandEditSession(groupScope == null ? doc.Commands : doc.Commands.Where(c => c.GroupId == groupScope), time);
             _doc = new AnimationDocument { Commands = _session.Commands };
             _commitCommands = commitCommands;
             _splineDraft = new CommandSplineDraft(splineServos);
             // A new command is configured as a draft before comparing its final
             // target and value with existing timeline commands.
             if (focusCommand != null && !doc.Commands.Contains(focusCommand))
-                _doc.Commands.Add(focusCommand.Clone());
+            {
+                var draft = focusCommand.Clone();
+                if (groupScope != null) draft.GroupId = groupScope;
+                _doc.Commands.Add(draft);
+            }
             _timeKey = ServoCommand.TimeKey(time);
             _moveServoNow = moveServoNow;
             _moveServoNowText = moveServoNowText;
@@ -81,6 +89,7 @@ namespace ServoAnimator
             _configureGangSpeedNow = configureGangSpeedNow;
             _configureChildSpeedNow = configureChildSpeedNow;
             _libraryCommandsFolder = libraryCommandsFolder ?? "";
+            _configRoot = configRoot;
 
             Title = $"Edit Commands @ {_timeKey:F3} s";
 
@@ -103,6 +112,7 @@ namespace ServoAnimator
                         BackdropCommand.Read(command.TextValue).Validate(FolderSettings.Load()?.ConfigFolderOrDefault ?? AppContext.BaseDirectory);
                     foreach (var command in _doc.Commands.Where(c => c.Servo == ServoNames.FallApart))
                         FallApartCommand.Read(command.TextValue);
+                    foreach (var command in _doc.Commands.Where(c => c.Servo == ServoNames.CameraShot)) CameraShotCue.Read(command.TextValue);
                     foreach (var command in _doc.Commands.Where(c => c.Servo == ServoNames.TvFront)) TvFrontCommand.Read(command.TextValue);
                     foreach (var command in _doc.Commands.Where(c => c.Servo == ServoNames.TvShow)) TvShowCommand.Read(command.TextValue);
                     foreach (var command in _doc.Commands.Where(c => c.Servo == ServoNames.TvReturn)) TvReturnCommand.Read(command.TextValue);
@@ -133,6 +143,7 @@ namespace ServoAnimator
             var cmd = new ServoCommand
             {
                 OffsetSeconds = _timeKey,
+                GroupId = _groupScope ?? "",
                 Servo = previous?.Servo ?? CommandVM.ServoPickOptions[0].Servo,
                 Control = previous?.Control,
                 NumericValue = 0,
@@ -309,16 +320,38 @@ namespace ServoAnimator
 
             if (vm.Command.Servo == ServoNames.TvShow)
             {
-                try
+                TvShowCommand current;
+                try { current = TvShowCommand.Read(vm.TextValue); } catch { current = new TvShowCommand(); }
+                var form = new CommandSettingsWindow("TV Show",
+                    "Choose what to show on the backdrop TV. Leave the media path empty to blank the screen.") { Owner = this };
+                var extensions = string.Join(";", TvShowCommand.ImageExtensions.Concat(TvShowCommand.VideoExtensions).Select(ext => "*" + ext));
+                var media = form.AddFile("Image or video", current.Path, "Images and videos|" + extensions + "|All files|*.*",
+                    "Outside files are copied to Config/TvMedia when you apply.", _configRoot);
+                var fit = form.AddChoice("Fit", new[] { "Contain (show whole image)", "Cover (fill and crop)", "Stretch (fill to fit)" },
+                    (int)current.Fit, "How the media fits the TV screen");
+                var start = form.AddNumber("Video start (seconds)", current.StartSeconds, 0, double.PositiveInfinity,
+                    "Start this far into the video");
+                var duration = form.AddNumber("Video length (seconds)", current.DurationSeconds, 0, double.PositiveInfinity,
+                    "0 uses the full video. At the limit the TV holds the last frame.");
+                var loop = form.AddCheck("Loop video", current.Loop, "Restart the video when it reaches the end, within the playback length");
+                var volume = form.AddNumber("Video volume", current.Volume, 0, 100, "Volume in percent. 0 mutes the video");
+                form.Apply = () =>
                 {
-                    var settings = TvShowCommand.Read(vm.TextValue);
-                    var extensions = string.Join(";", TvShowCommand.ImageExtensions.Concat(TvShowCommand.VideoExtensions).Select(e => "*" + e));
-                    var dialog = new Microsoft.Win32.OpenFileDialog { Title = "TV Show image or video", Filter = "Images and videos|" + extensions + "|All files|*.*" };
-                    if (dialog.ShowDialog(this) != true) return;
-                    settings.Path = TvShowCommand.Import(FolderSettings.Load()?.ConfigFolderOrDefault ?? AppContext.BaseDirectory, dialog.FileName);
-                    vm.TextValue = settings.ToJson();
-                }
-                catch (Exception ex) { MessageBox.Show(this, ex.Message, "TV Show"); }
+                    var settings = new TvShowCommand
+                    {
+                        Path = media(),
+                        Fit = (TvFit)fit(),
+                        StartSeconds = start(),
+                        DurationSeconds = duration(),
+                        Loop = loop(),
+                        Volume = volume(),
+                    };
+                    settings.Validate();
+                    if (!settings.IsBlank)
+                        settings.Path = TvShowCommand.Import(_configRoot, ConfigPathService.Resolve(_configRoot, settings.Path));
+                    return settings.ToJson();
+                };
+                if (form.ShowDialog() == true) vm.TextValue = form.Result;
                 return;
             }
             if (vm.Command.Servo == ServoNames.HideLaser)
@@ -403,6 +436,23 @@ namespace ServoAnimator
                 if (form.ShowDialog() == true) vm.TextValue = form.Result;
                 return;
             }
+            if (vm.Command.Servo == ServoNames.CameraShot)
+            {
+                CameraShotCue current;
+                try { current = CameraShotCue.Read(vm.TextValue); } catch { current = new(); }
+                var form = new CommandSettingsWindow("Camera Shot",
+                    "Frame Johnny automatically in the desktop scene or VR Clean Output.") { Owner = this };
+                var shot = form.AddChoice("Shot", new[] { "Standard view", "Tight", "Wide", "Hand · Left", "Hand · Right" },
+                    (int)current.Shot, "Standard returns to the normal scene camera.");
+                var transition = form.AddChoice("Transition", new[] { "Cut", "Blend" }, current.Seconds == 0 ? 0 : 1,
+                    "Cut switches immediately. Blend uses the duration below.");
+                var seconds = form.AddNumber("Blend seconds", current.Seconds == 0 ? 2 : current.Seconds, .01, 60, "Default: 2 seconds.");
+                var front = form.AddNumber("Stage Front offset", current.StageFront, -360, 360,
+                    "Wide only. Degrees from the detected back-wall normal, or from the stage's +X direction when there is no named back wall.");
+                form.Apply = () => new CameraShotCue((CameraShot)shot(), transition() == 0 ? 0 : seconds(), front()).ToJson();
+                if (form.ShowDialog() == true) vm.TextValue = form.Result;
+                return;
+            }
             if (vm.Command.Servo == ServoNames.TvFront)
             {
                 TvFrontCommand current;
@@ -426,7 +476,7 @@ namespace ServoAnimator
             {
                 BeamCommand current;
                 try { current = BeamCommand.Read(vm.TextValue); } catch { current = new BeamCommand(); }
-                string root = FolderSettings.Load()?.ConfigFolderOrDefault ?? AppContext.BaseDirectory;
+                string root = _configRoot;
                 var form = new CommandSettingsWindow("URDF Beam",
                     "TNG-style transporter effect. The robot is invisible before a Beam In (and visible when the sequence has no beam commands); after a Beam Out it stays invisible until the next Beam In.", blackTheme: true) { Owner = this };
                 var direction = form.AddChoice("Direction", new[] { "Beam in (materialize)", "Beam out (dematerialize)" }, current.Direction == BeamDirection.Out ? 1 : 0,
@@ -435,10 +485,10 @@ namespace ServoAnimator
                 var particles = form.AddCheck("Particles", current.Particles, "Particles fall from the top of the URDF view when beaming in, and rise to it when beaming out");
                 bool isFile = !current.Sound.Equals(BeamCommand.DefaultSound, StringComparison.OrdinalIgnoreCase) && !current.Sound.Equals(BeamCommand.NoSound, StringComparison.OrdinalIgnoreCase);
                 var soundChoice = form.AddChoice("Sound", new[] { "Synthesized transporter sound", "No sound", "Audio file below" },
-                    isFile ? 2 : current.Sound.Equals(BeamCommand.NoSound, StringComparison.OrdinalIgnoreCase) ? 1 : 0, "Plays from the start of the beam");
+                    isFile ? 2 : current.Sound.Equals(BeamCommand.NoSound, StringComparison.OrdinalIgnoreCase) ? 1 : 0, "Plays from the start of the beam", out var selectSound);
                 var soundFile = form.AddFile("Audio file", isFile ? current.Sound : "", "Audio|*.wav;*.mp3;*.wma;*.m4a;*.aiff|All files|*.*",
-                    "Used when Sound is \"Audio file below\". Files outside Configuration are referenced where they are.");
-                var volume = form.AddNumber("Volume", current.Volume, 0, 100, "Sound volume in percent");
+                    "Outside files are copied to Config/Library/Audio when you apply.", root, () => selectSound(2));
+                var volume = form.AddNumber("Volume", current.Volume, 0, 100, "Sound volume in percent. 0 mutes the sound");
                 var rgb = form.AddCheck("RGB sparkle", current.Rgb, "Also sparkle the physical robot's eye and vent rings (needs the BEAM effect in the Arduino sketch)");
                 form.Apply = () =>
                 {
@@ -446,9 +496,7 @@ namespace ServoAnimator
                     if (soundChoice() == 2)
                     {
                         if (string.IsNullOrWhiteSpace(sound)) throw new InvalidOperationException("Choose an audio file, or pick another Sound option.");
-                        string full = System.IO.Path.IsPathRooted(sound) ? sound : System.IO.Path.Combine(root, sound);
-                        if (!System.IO.File.Exists(full)) throw new InvalidOperationException("Audio file not found: " + full);
-                        sound = ConfigPathService.IsWithin(root, full) ? System.IO.Path.GetRelativePath(root, full) : full;
+                        sound = BeamCommand.ImportSound(root, sound);
                     }
                     var settings = new BeamCommand { Direction = direction() == 1 ? BeamDirection.Out : BeamDirection.In, Seconds = seconds(),
                         Particles = particles(), Sound = sound, Volume = volume(), Rgb = rgb() };
@@ -575,6 +623,7 @@ namespace ServoAnimator
             foreach (var camera in Enum.GetValues<ServoNames>().Where(UrdfCameraCommands.IsCamera)) Add(camera, false);
             Add(ServoNames.LoadBackdrop, false);
             Add(ServoNames.FallApart, false);
+            Add(ServoNames.CameraShot, false);
             Add(ServoNames.TvFront, false);
             Add(ServoNames.TvShow, false);
             Add(ServoNames.TvReturn, false);

@@ -19,6 +19,7 @@ public sealed record VrFrame(long Sequence,string Status,string Model,float Robo
     public long[] RemovedNodes {get;init;}=[];
     public VrEditorMetrics Metrics {get;init;}=new();
     public VrTreads? Treads {get;init;}
+    public VrCaptureCamera? CaptureCamera {get;init;}
 }
 // Tread belts are a fixed set of mesh frames that the editor swaps as the belt travels.
 // Sending the frame list and each belt's travel lets the player pick the frame on every
@@ -30,12 +31,13 @@ public sealed record VrTreads(double PhaseStep,double LeftTravel,double RightTra
     // Same mapping as the editor's UrdfScene.SetTreadTravel: increasing manifest phases drive backwards.
     public static int FrameIndex(double travel,double phaseStep,int frames)=>(int)((Math.Floor(-travel/phaseStep)%frames+frames)%frames);
 }
+public sealed record VrCaptureCamera(Vector3 Eye,Vector3 Target);
 public sealed record VrEditorMetrics(double UiWaitMs=0,double MotionMs=0,double CaptureMs=0,double PoseMs=0,int CachedBranches=0,int VisitedBranches=0,int MetadataBuilds=0,int FingerprintBuilds=0);
 
 
 public static class SceneWire
 {
-    public const int Version=11,MaxPacket=512*1024*1024;
+    public const int Version=12,MaxPacket=512*1024*1024;
     public static byte[] Encode(VrFrame frame,ISet<long> knownMeshes,ISet<long> knownTextures)
     {
         using var memory=new MemoryStream();
@@ -54,6 +56,12 @@ public static class SceneWire
             PoseWire.Write(w,frame.Pose);
             var stats=frame.Metrics;w.Write(stats.UiWaitMs);w.Write(stats.MotionMs);w.Write(stats.CaptureMs);w.Write(stats.PoseMs);
             w.Write(stats.CachedBranches);w.Write(stats.VisitedBranches);w.Write(stats.MetadataBuilds);w.Write(stats.FingerprintBuilds);
+            w.Write(frame.CaptureCamera!=null);
+            if(frame.CaptureCamera is {} camera)
+            {
+                Vector(w,new Vector4(camera.Eye,0));
+                Vector(w,new Vector4(camera.Target,0));
+            }
             w.Write(frame.Treads!=null);
             if(frame.Treads is {} treads)
             {
@@ -79,6 +87,15 @@ public static class SceneWire
         var pose=PoseWire.Read(r);
         var metrics=new VrEditorMetrics(r.ReadDouble(),r.ReadDouble(),r.ReadDouble(),r.ReadDouble(),Count(r,200000),Count(r,200000),Count(r,20000),Count(r,20000));
         if(new[]{metrics.UiWaitMs,metrics.MotionMs,metrics.CaptureMs,metrics.PoseMs}.Any(v=>!double.IsFinite(v)||v<0))throw new InvalidDataException("Invalid editor timings.");
+        VrCaptureCamera? camera=null;
+        if(r.ReadBoolean())
+        {
+            var eye=Vector(r);var target=Vector(r);
+            if(!float.IsFinite(eye.X)||!float.IsFinite(eye.Y)||!float.IsFinite(eye.Z)||
+                !float.IsFinite(target.X)||!float.IsFinite(target.Y)||!float.IsFinite(target.Z))
+                throw new InvalidDataException("Invalid capture camera.");
+            camera=new(new(eye.X,eye.Y,eye.Z),new(target.X,target.Y,target.Z));
+        }
         VrTreads? treadState=null;
         if(r.ReadBoolean())
         {
@@ -88,7 +105,7 @@ public static class SceneWire
             for(int i=0;i<layers.Length;i++){long node=r.ReadInt64();bool isLeft=r.ReadBoolean();var frames=new long[Count(r,240)];for(int j=0;j<frames.Length;j++)frames[j]=r.ReadInt64();if(frames.Length<2)throw new InvalidDataException("Invalid tread frames.");layers[i]=new(node,isLeft,frames);}
             treadState=new(step,left,right,layers);
         }
-        return new(sequence,status,model,floor,height,stage,nodes,meshes,materials,textures,lights){Pose=pose,BaseSequence=baseSequence,RemovedNodes=removed,Metrics=metrics,Treads=treadState};
+        return new(sequence,status,model,floor,height,stage,nodes,meshes,materials,textures,lights){Pose=pose,BaseSequence=baseSequence,RemovedNodes=removed,Metrics=metrics,Treads=treadState,CaptureCamera=camera};
     }
     public static int Count(BinaryReader r,int maximum){int count=r.ReadInt32();if(count<0||count>maximum)throw new InvalidDataException("Invalid VR array size.");return count;}
     private static void Floats(BinaryWriter w,float[] values){w.Write(values.Length);foreach(float v in values)w.Write(v);}

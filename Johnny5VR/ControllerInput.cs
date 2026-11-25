@@ -43,11 +43,12 @@ internal sealed class ActionControllerInput
         Check(input.GetAnalogActionData(turn,ref t,(uint)Marshal.SizeOf<InputAnalogActionData_t>(),OpenVR.k_ulInvalidInputValueHandle));
         var la=Digital(menu,leftSource);var lb=Digital(back,leftSource);var ra=Digital(menu,rightSource);var rb=Digital(back,rightSource);
         var lc=Digital(grab,leftSource);var lt=Digital(select,leftSource);
+        var rc=Digital(grab,rightSource);var rt=Digital(select,rightSource);
         var a=Digital(menu);var trigger=Digital(select);var b=Digital(back);var g=Digital(grab);
         string State((bool Active,bool Down) value)=>!value.Active?"unbound":value.Down?"down":"up";
         string buttons=$"A:{State(a)} B:{State(b)} Trigger:{State(trigger)}";
         return new(m.bActive?new(m.x,m.y):Vector2.Zero,t.bActive?new(t.x,t.y):Vector2.Zero,
-            (m.bActive?"action bound":"action not bound")+" · "+buttons,t.bActive?"action bound":"action not bound",m.bActive||t.bActive||a.Active||trigger.Active||b.Active,"",a.Down,trigger.Down,b.Down,g.Down){LeftTrigger=lt.Down,BoundLeftTrigger=lt.Active,LeftStickClick=lc.Down,BoundLeftStickClick=lc.Active,LeftA=la.Down,LeftB=lb.Down,RightA=ra.Down,RightB=rb.Down,BoundLeftA=la.Active,BoundLeftB=lb.Active,BoundRightA=ra.Active,BoundRightB=rb.Active,ButtonStatus=buttons,BoundMenu=a.Active,BoundSelect=trigger.Active,BoundBack=b.Active,BoundGrab=g.Active};
+            (m.bActive?"action bound":"action not bound")+" · "+buttons,t.bActive?"action bound":"action not bound",m.bActive||t.bActive||a.Active||trigger.Active||b.Active,"",a.Down,trigger.Down,b.Down,g.Down){LeftTrigger=lt.Down,BoundLeftTrigger=lt.Active,RightTrigger=rt.Down,BoundRightTrigger=rt.Active,RightStickClick=rc.Down,BoundRightStickClick=rc.Active,LeftStickClick=lc.Down,BoundLeftStickClick=lc.Active,LeftA=la.Down,LeftB=lb.Down,RightA=ra.Down,RightB=rb.Down,BoundLeftA=la.Active,BoundLeftB=lb.Active,BoundRightA=ra.Active,BoundRightB=rb.Active,ButtonStatus=buttons,BoundMenu=a.Active,BoundSelect=trigger.Active,BoundBack=b.Active,BoundGrab=g.Active};
     }
     private (bool Active,bool Down) Digital(ulong action,ulong source=0){var state=new InputDigitalActionData_t();Check(input.GetDigitalActionData(action,ref state,(uint)Marshal.SizeOf<InputDigitalActionData_t>(),source));return(state.bActive,state.bActive&&state.bState);}
 
@@ -57,6 +58,8 @@ internal sealed record ControllerReading(Vector2 Move,Vector2 Right,string LeftS
 {
     internal bool LeftTrigger {get;init;} internal bool BoundLeftTrigger {get;init;}
     internal bool LeftStickClick {get;init;} internal bool BoundLeftStickClick {get;init;}
+    internal bool RightTrigger {get;init;} internal bool BoundRightTrigger {get;init;}
+    internal bool RightStickClick {get;init;} internal bool BoundRightStickClick {get;init;}
     internal bool LeftA {get;init;} internal bool LeftB {get;init;} internal bool RightA {get;init;} internal bool RightB {get;init;}
     internal bool BoundLeftA {get;init;} internal bool BoundLeftB {get;init;} internal bool BoundRightA {get;init;} internal bool BoundRightB {get;init;}
     internal ControllerReading ForFollowing()=>this with{Menu=RightA,Back=RightB};
@@ -97,7 +100,7 @@ internal sealed class ControllerInput
         ControllerReading Direct()
         {
             var left=ReadHand(ETrackedControllerRole.LeftHand);var right=ReadHand(ETrackedControllerRole.RightHand);
-            return new(left.Stick,right.Stick,left.Status,right.Status,left.Active||right.Active,"",left.Menu||right.Menu,left.Select||right.Select,left.Back||right.Back,left.Grab||right.Grab){LeftTrigger=left.Select,LeftStickClick=left.StickClick,LeftA=left.Menu,LeftB=left.Back,RightA=right.Menu,RightB=right.Back};
+            return new(left.Stick,right.Stick,left.Status,right.Status,left.Active||right.Active,"",left.Menu||right.Menu,left.Select||right.Select,left.Back||right.Back,left.Grab||right.Grab){LeftTrigger=left.Select,LeftStickClick=left.StickClick,RightTrigger=right.Select,RightStickClick=right.StickClick,LeftA=left.Menu,LeftB=left.Back,RightA=right.Menu,RightB=right.Back};
         }
         ControllerReading Bound()
         {
@@ -192,6 +195,6 @@ internal sealed class ControllerInputRoute
         var action=bound();
         return new(raw.Active&&raw.Move.LengthSquared()>.0025f?raw.Move:action.Move,raw.Active&&raw.Right.LengthSquared()>.0025f?raw.Right:action.Right,
             raw.LeftStatus+" · "+action.LeftStatus,raw.RightStatus+" · "+action.RightStatus,raw.Active||action.Active,action.Error,
-            action.BoundMenu?action.Menu:raw.Menu,action.BoundSelect?action.Select:raw.Select,action.BoundBack?action.Back:raw.Back,action.BoundGrab?action.Grab:raw.Grab){LeftTrigger=action.BoundLeftTrigger?action.LeftTrigger:raw.LeftTrigger,LeftStickClick=action.BoundLeftStickClick?action.LeftStickClick:raw.LeftStickClick,ButtonStatus=action.ButtonStatus,LeftA=action.BoundLeftA?action.LeftA:raw.LeftA,LeftB=action.BoundLeftB?action.LeftB:raw.LeftB,RightA=action.BoundRightA?action.RightA:raw.RightA,RightB=action.BoundRightB?action.RightB:raw.RightB};
+            action.BoundMenu?action.Menu:raw.Menu,action.BoundSelect?action.Select:raw.Select,action.BoundBack?action.Back:raw.Back,action.BoundGrab?action.Grab:raw.Grab){LeftTrigger=action.BoundLeftTrigger?action.LeftTrigger:raw.LeftTrigger,RightTrigger=action.BoundRightTrigger?action.RightTrigger:raw.RightTrigger,RightStickClick=action.BoundRightStickClick?action.RightStickClick:raw.RightStickClick,LeftStickClick=action.BoundLeftStickClick?action.LeftStickClick:raw.LeftStickClick,ButtonStatus=action.ButtonStatus,LeftA=action.BoundLeftA?action.LeftA:raw.LeftA,LeftB=action.BoundLeftB?action.LeftB:raw.LeftB,RightA=action.BoundRightA?action.RightA:raw.RightA,RightB=action.BoundRightB?action.RightB:raw.RightB};
     }
 }

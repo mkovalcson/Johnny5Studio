@@ -14,12 +14,16 @@ Use a separate copy of Config for each simultaneous editor session.
 
 - Desktop: `ServoAnimator/ServoAnimator/bin/Release/net10.0-windows/AnimationEditorPlayer.exe`
 - VR Player: `dotnet run --project Johnny5VR/Johnny5VR.csproj -c Release -- --config Config`
-- For VR editing, publish the fork to the location the Player looks for, then open VR Editor from the Player:
-
-```powershell
-$version = (Get-Content ServoAnimator/Build/PROJECT_VERSION.json -Raw | ConvertFrom-Json).version
-dotnet publish Johnny5VREditor/ServoAnimator.csproj -c Release -r win-x64 --self-contained true -o "Johnny5VR/packaging/editor-$version" "-p:StudioReleaseVersion=$version"
-```
+- Use the root **J5 Studio Desktop.cmd**, **J5 Studio VR Player.cmd**, or
+  **J5 Studio VR Editor.cmd** shortcuts to build the solution and launch the
+  current Release output. The script stops if the build fails.
+- In a development checkout, the VR Player opens the VR Editor from
+  `Johnny5VREditor/bin/Release/net10.0-windows` (Debug when running Debug).
+  Portable releases open their bundled `Editor` folder.
+- The Player verifies the Editor's version, source build identity and scene
+  protocol before opening it. Build all three apps after changing source.
+  The Player's **Build information** button and each editor's **About** dialog
+  show the identity and loaded application location.
 
 The Desktop deploy script uses local Config if it exists and ConfigTemplate otherwise. Run
 `Create-Deploy.ps1 -WhatIf` before using it. The optional integrations have their own setup:
@@ -34,7 +38,8 @@ next version for a release, first build the Desktop project directly with
 `dotnet build ServoAnimator/ServoAnimator/ServoAnimator.csproj -c Release`, or publish
 Desktop with an explicit version using its release script. Then publish both VR apps
 and build or pack the Stream Deck plug-in using the same checkout. The VR packaging
-script checks both published versions before making the ZIP. The MCP server reports
+script checks both published versions and uses the published Player to validate
+the Editor build identity and protocol before making the ZIP. The MCP server reports
 the checkout's release with `python Johnny5-Editor-MCP/johnny5_editor_mcp.py --version`
 using its installed Python environment. Desktop includes the same stamp alongside
 its Face Tracking files. Protocol versions advance independently.

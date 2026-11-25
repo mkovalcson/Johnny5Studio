@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Media.Media3D;
+using System.Windows.Threading;
 
 namespace ServoAnimator;
 
@@ -18,16 +19,62 @@ public sealed partial class RobotHeadView
     private TvState _tvState = TvState.Inactive;
     private string _tvImagePath, _tvVideoPath;
     private double? _tvVideoDuration;
-    private bool _tvVideoPlaying, _tvAudible = true;
+    private bool _tvVideoPlaying, _tvVideoReady, _tvAudible = true;
+    private TvShowCommand _tvOpeningShow;
+    private readonly DispatcherTimer _tvWarmup = new(DispatcherPriority.Background) { Interval = TimeSpan.FromMilliseconds(30) };
+    private TimeSpan _tvWarmupStart;
+    private long _tvWarmupDeadline, _tvNextResync;
+    private string _tvConfigRoot;
+    private bool _tvTransportPlaying;
+    private double _tvTransportRate;
     private int _tvRobotIndex = -1;
+    private BitmapSource[] _tvBufferedFrames;
+    private bool _tvPicturesPending;
+
+    internal void SetTvFrameBuffer(BitmapSource[] frames, bool pending)
+    {
+        _tvBufferedFrames = frames;
+        _tvPicturesPending = pending;
+    }
 
     private void InitializeTvLayer()
     {
         var content = new Grid(); content.Children.Add(_tvImage); content.Children.Add(_tvVideo);
         _tvFrame.Child = content; _tvLayer.Children.Add(_tvFrame);
         Children.Insert(Children.IndexOf(_viewport) + 1, _tvLayer);
-        _tvVideo.MediaOpened += (_, _) => _tvVideoDuration = _tvVideo.NaturalDuration.HasTimeSpan ? _tvVideo.NaturalDuration.TimeSpan.TotalSeconds : null;
-        _tvVideo.MediaFailed += (_, e) => { _status.Text = "TV Show: " + (e.ErrorException?.Message ?? "video failed"); _tvVideoPath = null; };
+        _tvVideo.MediaOpened += (_, _) =>
+        {
+            _tvVideoDuration = _tvVideo.NaturalDuration.HasTimeSpan ? _tvVideo.NaturalDuration.TimeSpan.TotalSeconds : null;
+            var show = _tvOpeningShow;
+            if (show == null) return;
+            BeginTvWarmup(show);
+        };
+        _tvWarmup.Tick += (_, _) =>
+        {
+            if (_tvVideo.Position >= _tvWarmupStart + TimeSpan.FromMilliseconds(80) ||
+                Environment.TickCount64 >= _tvWarmupDeadline) FinishTvWarmup();
+        };
+        _tvVideo.MediaEnded += (_, _) =>
+        {
+            if (_tvWarmup.IsEnabled) FinishTvWarmup();
+            else _tvVideoPlaying = false;
+        };
+        Unloaded += (_, _) =>
+        {
+            if (_tvWarmup.IsEnabled)
+            {
+                _tvWarmup.Stop();
+                _tvVideo.Pause();
+                _tvVideoPath = null;
+            }
+        };
+        _tvVideo.MediaFailed += (_, e) =>
+        {
+            _tvWarmup.Stop();
+            _tvVideoReady = _tvVideoPlaying = false;
+            _tvVideo.Visibility = Visibility.Collapsed;
+            _status.Text = "TV Show: " + (e.ErrorException?.Message ?? "video failed");
+        };
         SizeChanged += (_, _) => { if (_tvState.Active) UpdateCamera(); };
     }
 
@@ -131,13 +178,18 @@ public sealed partial class RobotHeadView
         state ??= TvState.Inactive;
         if (!state.Active && !_tvState.Active) return;
         _tvState = state; _tvAudible = audible;
+        _tvConfigRoot = configRoot;
+        _tvTransportPlaying = playing;
+        _tvTransportRate = rate;
         UpdateCamera();                                    // applies the blend, robot visibility and overlay layout
         var show = state.OverlayOpacity > 0 ? state.Show : null;
         if (show == null || show.IsBlank) { ShowTvImage(null, TvFit.Contain); PauseTvVideo(); _tvVideo.Visibility = Visibility.Collapsed; return; }
         string path = show.FullPath(configRoot);
-        if (!File.Exists(path)) { _status.Text = "TV Show: file not found: " + path; ShowTvImage(null, TvFit.Contain); PauseTvVideo(); return; }
+        if (!string.Equals(path, _tvVideoPath, StringComparison.OrdinalIgnoreCase) &&
+            !string.Equals(path, _tvImagePath, StringComparison.OrdinalIgnoreCase) && !File.Exists(path))
+        { _status.Text = "TV Show: file not found: " + path; PauseTvVideo(); return; }
         if (!show.IsVideo) { PauseTvVideo(); _tvVideo.Visibility = Visibility.Collapsed; ShowTvImage(path, show.Fit); return; }
-        ShowTvImage(null, show.Fit);
+
         SyncTvVideo(path, show, state.MediaSeconds, playing, rate);
     }
 
@@ -159,28 +211,114 @@ public sealed partial class RobotHeadView
         _tvImage.Stretch = StretchFor(fit); _tvImage.Visibility = Visibility.Visible;
     }
 
+    internal void PreloadTvVideo(TvShowCommand show, string configRoot)
+    {
+        string path = show.FullPath(configRoot);
+        if (_tvVideo.Visibility == Visibility.Visible || string.Equals(path, _tvVideoPath, StringComparison.OrdinalIgnoreCase) || !File.Exists(path))
+            return;
+        OpenTvVideo(path, show);
+    }
+
+    private void BeginTvWarmup(TvShowCommand show)
+    {
+        var (position, _) = TvTimeline.VideoPosition(show, show.StartSeconds, _tvVideoDuration);
+        _tvWarmupStart = TimeSpan.FromSeconds(position);
+        _tvWarmupDeadline = Environment.TickCount64 + 2000;
+        // MediaOpened also fires for a paused poster frame. Run the muted
+        // decoder before the cue so playback, including its audio clock, is warm.
+        _tvVideo.Position = _tvWarmupStart;
+        _tvVideo.SpeedRatio = 1;
+        _tvVideo.Play();
+        _tvWarmup.Start();
+    }
+
+    private void FinishTvWarmup()
+    {
+        _tvWarmup.Stop();
+        _tvVideo.Pause();
+        _tvVideo.Position = _tvWarmupStart;
+        _tvVideoReady = true;
+        var current = _tvState.Show;
+        if (_tvState.OverlayOpacity > 0 && current?.IsVideo == true &&
+            string.Equals(current.FullPath(_tvConfigRoot), _tvVideoPath, StringComparison.OrdinalIgnoreCase))
+            SyncTvVideo(_tvVideoPath, current, _tvState.MediaSeconds, _tvTransportPlaying, _tvTransportRate);
+    }
+
+    private void OpenTvVideo(string path, TvShowCommand show)
+    {
+        if (_tvWarmup.IsEnabled) { _tvWarmup.Stop(); _tvVideo.Pause(); }
+        PauseTvVideo();
+        _tvVideoReady = false;
+        _tvVideoDuration = null;
+        _tvVideoPath = path;
+        _tvOpeningShow = show;
+        _tvVideo.IsMuted = true;
+        _tvVideo.Visibility = Visibility.Collapsed;
+        _tvVideo.Source = new Uri(path);
+        _tvVideo.Pause();
+    }
+
     private void SyncTvVideo(string path, TvShowCommand show, double seconds, bool playing, double rate)
     {
         if (!string.Equals(path, _tvVideoPath, StringComparison.OrdinalIgnoreCase))
+            OpenTvVideo(path, show);
+        if (_tvBufferedFrames != null)
         {
-            _tvVideoPlaying = false; _tvVideoDuration = null; _tvVideoPath = path;
-            _tvVideo.Source = new Uri(path); _tvVideo.Pause();
+            _tvImagePath = null;
+            _tvImage.Stretch = StretchFor(show.Fit);
+            _tvImage.Source = TvFrameBuffer.PictureAt(_tvBufferedFrames, seconds - show.StartSeconds);
+            _tvImage.Visibility = Visibility.Visible;
+            _tvVideo.Visibility = Visibility.Collapsed;
         }
-        _tvVideo.Stretch = StretchFor(show.Fit); _tvVideo.Visibility = Visibility.Visible;
+        else if (_tvPicturesPending)
+        {
+            PauseTvVideo();
+            _tvVideo.Visibility = Visibility.Collapsed;
+            return;
+        }
+        if (!_tvVideoReady) return; // Keep the preceding still visible while the decoder warms up.
+
+        if (_tvBufferedFrames == null)
+        {
+            _tvVideo.Stretch = StretchFor(show.Fit);
+            _tvVideo.Visibility = Visibility.Visible;
+            _tvImage.Visibility = Visibility.Collapsed;
+        }
         _tvVideo.Volume = _tvAudible ? show.Volume / 100 : 0; _tvVideo.IsMuted = !_tvAudible || show.Volume <= 0;
-        var target = TimeSpan.FromSeconds(TvTimeline.MediaPosition(seconds, _tvVideoDuration, show.Loop));
-        bool ended = !show.Loop && _tvVideoDuration is > 0 && seconds >= _tvVideoDuration.Value;
+        var (position, ended) = TvTimeline.VideoPosition(show, seconds, _tvVideoDuration);
+        var target = TimeSpan.FromSeconds(position);
         if (playing && !ended)
         {
             _tvVideo.SpeedRatio = Math.Clamp(rate, .1, 4);
-            if (!_tvVideoPlaying) { _tvVideo.Position = target; _tvVideo.Play(); _tvVideoPlaying = true; }
-            else if (Math.Abs((_tvVideo.Position - target).TotalSeconds) > .15) _tvVideo.Position = target;
+            long now = Environment.TickCount64;
+            double drift = Math.Abs((_tvVideo.Position - target).TotalSeconds);
+            if (!_tvVideoPlaying)
+            {
+                if (drift > .04) _tvVideo.Position = target;
+                _tvVideo.Play();
+                _tvVideoPlaying = true;
+                _tvNextResync = now + 500;
+            }
+            else if (now >= _tvNextResync && drift > .3)
+            {
+                // Seeking can flush queued frames. Give the decoder time
+                // to advance before judging another clock discrepancy.
+                _tvVideo.Position = target;
+                _tvNextResync = now + 500;
+            }
         }
         else
         {
+            bool justEnded = ended && _tvVideoPlaying;
             PauseTvVideo();
-            if (Math.Abs((_tvVideo.Position - target).TotalSeconds) > .04) _tvVideo.Position = target;
+            if (justEnded || Math.Abs((_tvVideo.Position - target).TotalSeconds) > .04) _tvVideo.Position = target;
         }
+    }
+
+    internal void PauseTvTimeline()
+    {
+        _tvTransportPlaying = false;
+        PauseTvVideo();
     }
 
     private void PauseTvVideo()

@@ -1,6 +1,16 @@
 # Webcam Face Tracking
 
-Open Config > Webcam Face Tracking. J5 Animation Editor & Player runs MediaPipe Face Landmarker in a local Python helper. The camera starts only when requested here or by a Meeting using a webcam source.
+In **J5 Studio Desktop**, open **Config > Webcam Face Tracking**. In VR, use [Follow / Record](VrFollowing.md) for body capture.
+
+## First setup
+
+1. Choose a camera and click **Start camera**. Wait for **Tracking face**.
+2. Look straight ahead with a relaxed expression and click **Set neutral**.
+3. Select a mapping row and click **Learn range for selected mapping…**. Press **Start** in the dialog. Follow the movement prompt, then click **Accept range**.
+4. Click **Apply**, then turn on **Drive URDF preview using applied settings**. Watch the live meters and Johnny's response. Apply again after any tuning edits you want to try.
+5. Click **Save configuration** when you're ready to keep the settings for future sessions.
+
+Desktop runs MediaPipe Face Landmarker in a local Python helper.
 
 ## Camera and neutral
 
@@ -16,53 +26,27 @@ future launches. The footer distinguishes pending edits, applied-but-unsaved set
 and saved settings. Closing does not save pending edits; the last applied configuration
 remains active. Camera rate and mirror changes preview immediately on a running camera.
 
-**Test capture only (7 seconds)**, inside Performance details, temporarily pauses
-tracking, warms up capture for two seconds, then measures five seconds without
-face analysis, preview generation or intentional rate throttling. The result shows
-measured delivered/decoded FPS, average camera-read time, resolution, reported FPS,
-pixel format and capture backend. It remains visible when normal tracking resumes.
-The same selected camera, explicit MJPEG (MJPG) / 640 × 480 request and 30/60 fps
-target are used in both normal tracking and the capture-only test. Restart the camera
-after updating the tracker. Check the displayed pixel format: drivers can reject the
-request, so a reported YUY2 mode means MJPG was not negotiated.
-MJPG is applied after resolution and FPS because DirectShow can reset the pixel
-format when changing FPS. If the reported format still differs, both readouts show
-**MJPG request not accepted**. This verifies reported format selection, while the
-capture-only FPS measurement remains the check for actual delivery rate.
-
-A recent normal-tracking baseline is compared only when camera, target and available
-capture-mode metadata match. Capture-only throughput below target points toward the
-camera/capture path; capture near target with substantially slower normal tracking
-points toward the combined tracking pipeline. These short samples do not verify
-unique sensor exposures or prove a specific driver defect. **Cancel capture test**
-stops it; a stalled test times out. Tracking resumes afterward if it was running
-before the test and this window remains open. A stopped camera is released after
-the test. Closing the window cancels an active test without restarting tracking.
-
 - Camera index selects the camera (0 is normally the first). Start camera opens it; Stop camera releases it and turns off configuration preview.
 - **Tracking rate** selects **30 fps** (the default) or **60 fps**. Changing it restarts a running camera; it does not start a stopped camera. **Apply** retains the choice for this session; **Save configuration** retains it for future launches. Camera capture, processing-loop pacing and the editor's result handling use the selected rate.
 - **Mirror webcam** flips the incoming video horizontally before face analysis, so both tracking and the camera preview use the mirrored image. Toggle it beside Tracking rate for a quick comparison. A running camera restarts automatically; a stopped camera stays stopped. Apply or Save configuration as described above. It defaults to off. Mirroring in both the webcam software and editor cancels out; use one or the other. After switching, use **Set neutral** again if needed.
-- **Processing: … fps average** reports completed face-tracking frames per elapsed second, averaged over about one second. It counts processing attempts even when no face is found and includes capture/processing overhead. The small camera picture still refreshes independently, about five times per second. The readout shows measuring during warm-up and clears when results stop arriving. A camera or processor that cannot sustain 60 fps will show its lower actual rate; selecting 60 fps does not guarantee that throughput.
-- **Capture** shows the resolution of received frames and the camera driver's reported FPS. The driver rate is a reported setting, not independently measured camera throughput. Missing metadata is shown as unavailable. The tracker currently requests 640 × 480 independently of settings in the camera manufacturer's application.
-- **Camera wait** averages the time acquiring/decoding each frame. **Face processing** averages color conversion, face analysis and derived-signal calculations. Both use the same approximately one-second window as the FPS average. Face processing excludes camera wait, preview preparation and intentional rate pacing. These timings help identify where time is spent but do not independently prove the camera's delivered FPS. They clear when results stop arriving.
 - Set neutral captures your relaxed, forward-facing position. Apply activates it; Save configuration also persists it. Piston pitch and roll neutral offsets are stored separately; changing piston gains or ranges does not erase them.
 - Apply validates and activates the mapping set without saving. The **+** button below the final mapping row creates a disabled mapping. The **X** at the far right of a row removes that mapping from the draft. Apply commits additions and removals for this session; Save configuration also persists them.
-- Drive URDF preview tests applied mappings without physical output from this configuration window. Close the window to record; closing keeps the camera running.
+- Drive URDF preview tests the last applied mappings without physical output from this configuration window. Toggling it leaves pending mapping edits in the draft. Click Apply when ready to try those edits. Close the window to record; closing keeps the camera running.
 
 ## Mapping columns
 
-The everyday table shows On, Face movement, Robot control, Speed, Reverse and remove.
+The everyday table shows On, Face movement, Robot control, live input/target meters, Speed, Reverse and remove.
 **Advanced mapping settings** is checked by default and shows input/output ranges, dead zone,
 smoothing and neutral. Uncheck it for the simpler table. The window initially opens at 1292 × 944.
 On enables the row. Face movement selects an expression or derived measurement. Robot
 control selects a logical servo or individual child. The dark dropdowns include all
 supported signals and numeric controls. Use the table's horizontal scrollbar for advanced columns.
 
-**Input minimum** and **Input maximum** describe the expected input after neutral subtraction. Head angles are degrees; expression scores generally use 0–1; LPiston/RPiston use −1–+1. **Output minimum** and **Output maximum** are native editor units, not degrees. Output is limited to that range. Reverse swaps the output direction. **Dead zone** is a fraction of normalized input span around neutral. **Smoothing (ms)** controls the live low-pass response (0 disables it). **Neutral** is the per-row input offset. Its display uses up to five decimal places; the saved value retains its full precision, which is also available while editing.
+**Input minimum** and **Input maximum** describe the expected input after neutral subtraction. Head angles are degrees; expression scores generally use 0–1; LPiston/RPiston use −1–+1. **Output minimum** and **Output maximum** are native editor units, not degrees. Output is limited to that range. Reverse swaps the output direction. **Dead zone** is a fraction of normalized input span around neutral. **Smoothing (ms)** controls the live low-pass response (0 disables it). **Neutral** is the per-row input offset. The grid displays up to four decimal places. Display rounding does not change stored values.
 
 The readout inside Performance details shows raw signal → mapped value; subsequent smoothing and motion limits can make actual movement lag that value. Changing a target does not automatically set suitable input ranges: adjust them for the selected signal.
 
-Default enabled signals are headYaw, headPitch, headRoll and squint. Other signals can be assigned to eyes, brows/flaps, irises or any available numeric target. Approximate gazeX/gazeY output holds during detected blinks.
+Default enabled signals are headYaw, headPitch, headRoll and squint. Other signals can be assigned to eyes, flaps, irises or any available numeric target. Approximate gazeX/gazeY output holds during detected blinks.
 
 **Speed** chooses Default, Slow, Fast or Crawl from Servo Configuration for that target, independently of controller speed actions. New rows use Default. **N/C · Keep current** retains the last profile on each actuator; the URDF uses Default when none is known. Existing files without per-row Speed keep N/C until you choose a profile. Speed selection applies whenever the webcam drives an output; the enforcement checkbox controls calibrated URDF movement and recording. Eye Pop uses its calibrated extension/retraction times rather than Maestro speed profiles.
 
@@ -89,3 +73,58 @@ Choose Record, select a Webcam source, arm controls, and press Ready to Record. 
 Ordinary webcam preview/recording requires an active editor, recording, tracking or robot window. Meeting mode deliberately continues while Teams has focus. Head angles are camera-relative, not torso-relative. Gaze is an expression-based estimate, not calibrated screen gaze. Video and raw landmarks are not saved as animation data.
 
 The installed prebuilt MediaPipe runtime includes usage telemetry. Its maintainers state that camera input is not uploaded; local inference should nevertheless not be described as network-free. Setup instructions are in the face-tracking solution README.
+
+## Live mapping meters
+
+Each mapping has live input and target meters, also visible with Advanced mapping
+settings hidden. Input is relative to that row's neutral. The white line marks
+neutral, the gold band marks the dead zone, and the ends represent the input limits.
+The output meter shows the target calculated from the current draft, with a cyan
+marker for the last applied target after smoothing when that mapping is previewing.
+These are logical targets; servo speed limits can make the rendered or physical
+actuator follow more slowly. Tracking loss clears the input instead of showing an
+old sample. Hover over a meter to see its ranges and marker explanations.
+
+## Learn an input range
+
+Select a mapping row and click **Learn range for selected mapping**. Start the
+camera and face it first. The dialog gives instructions for the selected movement,
+starts a three-second countdown when you press **Start**, then measures six seconds of comfortable movement. For head
+turn, look left and right; for jaw opening, relax, open and close your mouth.
+
+The measurement uses distinct valid face frames, rejects insufficient movement,
+and trims isolated extremes. Review the input minimum and maximum, then choose
+**Accept range**, **Retry**, or **Cancel**. Accept updates only that mapping's draft
+input range relative to its existing neutral. It preserves output limits, smoothing,
+reverse and neutral. **Apply** tries the learned range; **Save configuration**
+also keeps it for next time. A stationary face or missing signal explains why
+the range could not be accepted.
+
+## Camera performance and capture tests
+
+- **Processing: … fps average** reports completed face-tracking frames per elapsed second, averaged over about one second. It counts processing attempts even when no face is found and includes capture/processing overhead. The small camera picture still refreshes independently, about five times per second. The readout shows measuring during warm-up and clears when results stop arriving. A camera or processor that cannot sustain 60 fps will show its lower actual rate; selecting 60 fps does not guarantee that throughput.
+- **Capture** shows the resolution of received frames and the camera driver's reported FPS. The driver rate is a reported setting, not independently measured camera throughput. Missing metadata is shown as unavailable. The tracker currently requests 640 × 480 independently of settings in the camera manufacturer's application.
+- **Camera wait** averages the time acquiring/decoding each frame. **Face processing** averages color conversion, face analysis and derived-signal calculations. Both use the same approximately one-second window as the FPS average. Face processing excludes camera wait, preview preparation and intentional rate pacing. These timings help identify where time is spent but do not independently prove the camera's delivered FPS. They clear when results stop arriving.
+
+**Test capture only (7 seconds)**, inside Performance details, temporarily pauses
+tracking, warms up capture for two seconds, then measures five seconds without
+face analysis, preview generation or intentional rate throttling. The result shows
+measured delivered/decoded FPS, average camera-read time, resolution, reported FPS,
+pixel format and capture backend. It remains visible when normal tracking resumes.
+The same selected camera, explicit MJPEG (MJPG) / 640 × 480 request and 30/60 fps
+target are used in both normal tracking and the capture-only test. Restart the camera
+after updating the tracker. Check the displayed pixel format: drivers can reject the
+request, so a reported YUY2 mode means MJPG was not negotiated.
+MJPG is applied after resolution and FPS because DirectShow can reset the pixel
+format when changing FPS. If the reported format still differs, both readouts show
+**MJPG request not accepted**. This verifies reported format selection, while the
+capture-only FPS measurement remains the check for actual delivery rate.
+
+A recent normal-tracking baseline is compared only when camera, target and available
+capture-mode metadata match. Capture-only throughput below target points toward the
+camera/capture path; capture near target with substantially slower normal tracking
+points toward the combined tracking pipeline. These short samples do not verify
+unique sensor exposures or prove a specific driver defect. **Cancel capture test**
+stops it; a stalled test times out. Tracking resumes afterward if it was running
+before the test and this window remains open. A stopped camera is released after
+the test. Closing the window cancels an active test without restarting tracking.

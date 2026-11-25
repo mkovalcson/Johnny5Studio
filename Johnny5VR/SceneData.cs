@@ -55,6 +55,7 @@ internal sealed partial class UrdfReader
             *Matrix4x4.CreateTranslation(settings.Horizontal,0,-settings.Distance);
         var robotPlacement=Matrix4x4.CreateScale(robotScale)*Matrix4x4.CreateTranslation(0,0,-bottom*robotScale)*placement;
         rig.SetPlacement(robotPlacement);
+        rig.SetShotBounds(robot.Select(part=>(part.Bone,part.T)),robotScale*settings.Scale);
         foreach(var p in robot)if(rig.Treads?.Layers.ContainsKey(p.Name)!=true)Add(p.T,p.Color,robotPlacement,p.Bone,p.Morph,p.Iris,p.Mouth);
         var animatedTreads=treadParts.Select(layer=>new TreadFrameSet(layer.Definition.Side,layer.Frames.Select(frame=>
         {
@@ -64,6 +65,17 @@ internal sealed partial class UrdfReader
         {
             var stage=Read(settings.Resolve(settings.Backdrop),progress);
             var setup=settings.PlaybackStage;
+            var wall=stage.Where(part=>part.Name=="backdrop_wall_back_visual")
+                .MaxBy(part=>Vector3.Cross(part.T.B-part.T.A,part.T.C-part.T.A).LengthSquared());
+            var normal=Vector3.UnitX;
+            if(wall!=null)
+            {
+                var face=Vector3.Cross(wall.T.B-wall.T.A,wall.T.C-wall.T.A);
+                face.Z=0;
+                if(face.LengthSquared()>1e-8f)
+                    normal=Vector3.Dot(face,wall.T.A)>0?-face:face;
+            }
+            rig.SetShotStageFront(Vector3.TransformNormal(normal,placement));
             var floor=stage.Where(p=>p.Name=="backdrop_floor_visual").ToArray();
             if(setup?.DetectFloor==true && stage.FirstOrDefault(p=>p.FloorLink!="") is {} tagged)
                 floor=stage.Where(p=>p.FloorLink==tagged.FloorLink).ToArray();

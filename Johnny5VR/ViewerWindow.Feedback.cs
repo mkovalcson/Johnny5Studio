@@ -7,7 +7,9 @@ internal sealed partial class ViewerWindow
     private TrackBar? feedbackLevel;
     private Label? feedbackPercent;
     private bool refreshingFeedback;
-    private void PlayControllerFeedback(FollowToggle toggle)=>controllerFeedback.Play(toggle,settings.ControllerConfirmation,settings.ControllerFeedbackVolume);
+    private void PlayControllerFeedback(FollowToggle toggle)=>controllerFeedback.Play(toggle,
+        (toggle is FollowToggle.Hand or FollowToggle.Movement)&&settings.ControllerConfirmation!=FeedbackConfirmation.Off
+            ?FeedbackConfirmation.Voice:settings.ControllerConfirmation,settings.ControllerFeedbackVolume);
     private void SetControllerFeedback(FeedbackConfirmation? mode=null,float? volume=null)
     {
         if(mode is {} m)settings.ControllerConfirmation=m;

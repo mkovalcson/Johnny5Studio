@@ -132,7 +132,7 @@ namespace ServoAnimator
         /// <summary>Which servos carry a text value instead of a number.</summary>
         public static bool IsTextValued(ServoNames s) => ControlDefinitions.IsTextValued(s);
 
-        public static bool IsUrdfOnly(ServoNames s) => UrdfCameraCommands.IsCamera(s) || s == ServoNames.TrackForward || s == ServoNames.LoadBackdrop || s == ServoNames.FallApart || s is ServoNames.TvFront or ServoNames.TvShow or ServoNames.TvReturn or ServoNames.UrdfBeam or ServoNames.LcdShow or ServoNames.HideLaser or ServoNames.ToolboxSwap or ServoNames.FireLaser or ServoNames.VideoClip || UrdfStageSettings.IsMotion(s) || BodyControlCatalog.IsBody(s) || s is ServoNames.URDFSpin or ServoNames.URDFRotate
+        public static bool IsUrdfOnly(ServoNames s) => s == ServoNames.CameraShot || UrdfCameraCommands.IsCamera(s) || s == ServoNames.TrackForward || s == ServoNames.LoadBackdrop || s == ServoNames.FallApart || s is ServoNames.TvFront or ServoNames.TvShow or ServoNames.TvReturn or ServoNames.UrdfBeam or ServoNames.LcdShow or ServoNames.HideLaser or ServoNames.ToolboxSwap or ServoNames.FireLaser or ServoNames.VideoClip || UrdfStageSettings.IsMotion(s) || BodyControlCatalog.IsBody(s) || s is ServoNames.URDFSpin or ServoNames.URDFRotate
             or ServoNames.URDFSlide or ServoNames.URDFVertical or ServoNames.URDFZoom;
         public static string DisplayName(ServoNames s) => BodyControlCatalog.IsPairedGang(s) ? AnimationNames.Words(s.ToString()) + " · Ganged" : s == ServoNames.TrackForward ? "Track Forward" : s == ServoNames.LoadBackdrop ? "Load Scene" : s == ServoNames.FallApart ? "Disassemble" : s == ServoNames.TvFront ? "URDF TV Front" : s == ServoNames.TvShow ? "TV Show" : s == ServoNames.TvReturn ? "URDF TV Return" : s == ServoNames.UrdfBeam ? "URDF Beam" : s == ServoNames.LcdShow ? "LCD Show" : s == ServoNames.HideLaser ? "Hide Laser" : s == ServoNames.ToolboxSwap ? "Toolbox Swap" : s == ServoNames.FireLaser ? "Fire Laser" : s == ServoNames.VideoClip ? "Video Clip" : AnimationNames.Words(s.ToString());
 
@@ -357,6 +357,7 @@ namespace ServoAnimator
         public double DurationSeconds { get; set; }
         public string Description { get; set; } = "";
         public bool IsLooping { get; set; }
+        public IdleMood IdleMood { get; set; }
         public string Trigger { get; set; } = "";
         /// <summary>Transient editor status used only for the Movie block label.</summary>
         public bool IsModified { get; set; }
@@ -388,6 +389,9 @@ namespace ServoAnimator
         [JsonPropertyName("sequenceTriggers")]
         public List<string> SequenceTriggers { get; set; } = new();
 
+        [JsonPropertyName("sequenceIdles")]
+        public List<IdleMood> SequenceIdles { get; set; } = new();
+
         private static readonly JsonSerializerOptions MovieJsonOpts = new()
         {
             WriteIndented = true,
@@ -405,6 +409,9 @@ namespace ServoAnimator
             movie.Sequences ??= new List<string>();
             movie.SequenceLoops ??= new List<bool>();
             movie.SequenceTriggers ??= new List<string>();
+            movie.SequenceIdles ??= new List<IdleMood>();
+            for(int i=0;i<movie.SequenceLoops.Count;i++)
+                if(ExpressiveIdle.For(movie,i)!=IdleMood.None)movie.SequenceLoops[i]=false;
             if (string.IsNullOrWhiteSpace(movie.CreatedDate))
             {
                 DateTime created = File.Exists(path) ? File.GetCreationTime(path) : DateTime.Today;
@@ -418,6 +425,9 @@ namespace ServoAnimator
             Description ??= "";
             Sequences ??= new List<string>();
             SequenceLoops ??= new List<bool>();
+            SequenceIdles ??= new List<IdleMood>();
+            for(int i=0;i<SequenceLoops.Count;i++)
+                if(ExpressiveIdle.For(this,i)!=IdleMood.None)SequenceLoops[i]=false;
             if (string.IsNullOrWhiteSpace(CreatedDate))
                 CreatedDate = DateTime.Today.ToString("yyyy-MM-dd");
             File.WriteAllText(path, ConfigurationPaths.SerializeFile(this, path, MovieJsonOpts));
